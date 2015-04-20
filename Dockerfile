@@ -33,6 +33,7 @@ RUN \
 
 # Setup home environment
 RUN useradd dev
+RUN echo "dev ALL = NOPASSWD: ALL" > /etc/sudoers.d/00-dev
 RUN mkdir /home/dev && chown -R dev: /home/dev
 RUN mkdir -p /home/dev/go /home/dev/bin /home/dev/lib /home/dev/include /home/dev/tmp
 ENV PATH /home/dev/bin:$PATH
