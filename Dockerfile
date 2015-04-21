@@ -16,6 +16,7 @@ RUN apt-get install -y git \
   tmux \
   mercurial \
   wget \
+  host \
   zip
 
 RUN locale-gen en_US en_US.UTF-8 && \
