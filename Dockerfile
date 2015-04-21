@@ -14,7 +14,9 @@ RUN apt-get install -y git \
   build-essential \
   tcpdump \
   tmux \
-  wget
+  mercurial \
+  wget \
+  zip
 
 RUN locale-gen en_US en_US.UTF-8 && \
   dpkg-reconfigure locales 
@@ -35,11 +37,17 @@ RUN \
 RUN useradd dev
 RUN echo "dev ALL = NOPASSWD: ALL" > /etc/sudoers.d/00-dev
 RUN mkdir /home/dev && chown -R dev: /home/dev
-RUN mkdir -p /home/dev/go /home/dev/bin /home/dev/lib /home/dev/include /home/dev/tmp
+RUN mkdir -p /home/dev/go/src /home/dev/bin /home/dev/lib /home/dev/include /home/dev/tmp
 ENV PATH /home/dev/bin:$PATH
 ENV PKG_CONFIG_PATH /home/dev/lib/pkgconfig
 ENV LD_LIBRARY_PATH /home/dev/lib
-ENV GOPATH /home/dev/go:$GOPATH
+ENV GOPATH /home/dev/go
+ENV PATH $GOPATH/bin:$PATH
+
+# Build & Install terraform
+RUN git clone https://github.com/freshbooks/terraform.git $GOPATH/src/github.com/hashicorp/terraform && \
+  cd $GOPATH/src/github.com/hashicorp/terraform && \
+  XC_OS=linux XC_ARCH=amd64 make updatedeps bin
 
 # Create a shared data volume
 # We need to create an empty file, otherwise the volume will
