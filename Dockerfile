@@ -17,6 +17,7 @@ RUN apt-get install -y git \
   mercurial \
   wget \
   host \
+  dnsutils \
   zip
 
 RUN locale-gen en_US en_US.UTF-8 && \
