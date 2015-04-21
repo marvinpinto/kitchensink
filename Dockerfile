@@ -71,6 +71,8 @@ run ln -s /var/shared/.profile
 run ln -s /var/shared/.tmux.conf
 run ln -s /var/shared/.vim
 run ln -s /var/shared/.vimrc
+run ln -s /var/shared/Dropbox/freshbooks
+run ln -s /var/shared/Dropbox/projects
 
 RUN chown -R dev: /home/dev
 USER dev
