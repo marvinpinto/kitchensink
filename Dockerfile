@@ -35,6 +35,15 @@ RUN \
   mv fleet-v0.10.0-linux-amd64/fleetctl /usr/local/bin && \
   rm -rf fleet-v0.10.0-linux-amd64.tar.gz fleet-v0.10.0-linux-amd64
 
+# Install etcd-ca to /usr/local/bin
+RUN cd /tmp \
+  && git clone https://github.com/coreos/etcd-ca \
+  && cd etcd-ca \
+  && ./build \
+  && mv ./bin/etcd-ca /usr/local/bin \
+  && cd /tmp \
+  && rm -rf etcd-ca
+
 # Setup home environment
 RUN useradd dev
 RUN echo "dev ALL = NOPASSWD: ALL" > /etc/sudoers.d/00-dev
