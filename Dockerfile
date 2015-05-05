@@ -56,7 +56,7 @@ ENV GOPATH /home/dev/go
 ENV PATH $GOPATH/bin:$PATH
 
 # Build & Install terraform
-RUN git clone https://github.com/freshbooks/terraform.git $GOPATH/src/github.com/hashicorp/terraform && \
+RUN git clone https://github.com/hashicorp/terraform.git $GOPATH/src/github.com/hashicorp/terraform && \
   cd $GOPATH/src/github.com/hashicorp/terraform && \
   XC_OS=linux XC_ARCH=amd64 make updatedeps bin
 
