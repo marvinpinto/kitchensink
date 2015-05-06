@@ -67,6 +67,8 @@ RUN apt-get install -y software-properties-common \
   && apt-get install -y \
   ruby2.2 \
   ruby2.2-dev \
+  nodejs \
+  npm \
   && gem install --no-document jekyll \
   && apt-get clean \
   && apt-get autoremove -y --purge \
