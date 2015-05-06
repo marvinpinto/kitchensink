@@ -60,6 +60,18 @@ RUN git clone https://github.com/hashicorp/terraform.git $GOPATH/src/github.com/
   cd $GOPATH/src/github.com/hashicorp/terraform && \
   XC_OS=linux XC_ARCH=amd64 make updatedeps bin
 
+# Install jekyll + dependencies
+RUN apt-get install -y software-properties-common \
+  && apt-add-repository -y ppa:brightbox/ruby-ng \
+  && apt-get update \
+  && apt-get install -y \
+  ruby2.2 \
+  ruby2.2-dev \
+  && gem install --no-document jekyll \
+  && apt-get clean \
+  && apt-get autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 # Create a shared data volume
 # We need to create an empty file, otherwise the volume will
 # belong to root.
