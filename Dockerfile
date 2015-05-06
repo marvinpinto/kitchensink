@@ -69,7 +69,7 @@ RUN apt-get install -y software-properties-common \
   ruby2.2-dev \
   nodejs \
   npm \
-  && gem install --no-document jekyll \
+  && gem install --no-document jekyll compass \
   && apt-get clean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
