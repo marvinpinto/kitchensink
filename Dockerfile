@@ -67,8 +67,18 @@ RUN apt-get install -y software-properties-common \
   && apt-get install -y \
   ruby2.2 \
   ruby2.2-dev \
-  npm \
   && gem install --no-document bundler \
+  && apt-get clean \
+  && apt-get autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Install keybase + related
+RUN apt-get update \
+  && apt-get install -y \
+  nodejs-legacy \
+  npm \
+  && npm install -g keybase-installer \
+  && /usr/local/bin/keybase-installer \
   && apt-get clean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
