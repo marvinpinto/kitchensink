@@ -83,6 +83,15 @@ RUN apt-get update \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# Install ledger
+RUN apt-get install -y software-properties-common \
+  && apt-add-repository -y ppa:mbudde/ledger \
+  && apt-get update \
+  && apt-get install -y ledger \
+  && apt-get clean \
+  && apt-get autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 # Create a shared data volume
 # We need to create an empty file, otherwise the volume will
 # belong to root.
