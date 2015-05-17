@@ -19,6 +19,7 @@ RUN apt-get install -y git \
   host \
   dnsutils \
   tree \
+  dos2unix \
   zip
 
 # Configure timezone and locale
