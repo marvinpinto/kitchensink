@@ -2,8 +2,8 @@
 FROM ubuntu:14.04
 
 # Install a bunch of utilities
-RUN apt-get update -y
-RUN apt-get install -y git \
+RUN apt-get update \
+  && apt-get install -y git \
   python \
   curl \
   vim \
@@ -20,7 +20,10 @@ RUN apt-get install -y git \
   dnsutils \
   tree \
   dos2unix \
-  zip
+  zip \
+  && apt-get clean \
+  && apt-get autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Configure timezone and locale
 RUN echo "America/Toronto" > /etc/timezone; dpkg-reconfigure -f noninteractive tzdata
@@ -64,7 +67,8 @@ RUN git clone https://github.com/hashicorp/terraform.git $GOPATH/src/github.com/
   XC_OS=linux XC_ARCH=amd64 make updatedeps bin
 
 # Install jekyll + dependencies
-RUN apt-get install -y software-properties-common \
+RUN apt-get update \
+  && apt-get install -y software-properties-common \
   && apt-add-repository -y ppa:brightbox/ruby-ng \
   && apt-get update \
   && apt-get install -y \
