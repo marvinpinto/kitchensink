@@ -20,8 +20,9 @@ RUN apt-get install -y git \
   dnsutils \
   zip
 
-RUN locale-gen en_US en_US.UTF-8 && \
-  dpkg-reconfigure locales 
+# Configure timezone and locale
+RUN echo "America/Toronto" > /etc/timezone; dpkg-reconfigure -f noninteractive tzdata
+RUN export LANGUAGE=en_US.UTF-8; export LANG=en_US.UTF-8; export LC_ALL=en_US.UTF-8; locale-gen en_US.UTF-8; DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
 
 # Install go
 RUN curl https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz | tar -C /usr/local -zx
