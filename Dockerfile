@@ -92,6 +92,13 @@ RUN apt-get install -y software-properties-common \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# Create a tmux wrapper to work around
+# https://github.com/docker/docker/issues/8755
+RUN touch /home/dev/bin/tmux \
+  && chown dev: /home/dev/bin/tmux \
+  && chmod +x /home/dev/bin/tmux \
+  && echo -ne '#!'"/bin/bash\n/usr/bin/script -c /usr/bin/tmux /dev/null" > /home/dev/bin/tmux
+
 # Create a shared data volume
 # We need to create an empty file, otherwise the volume will
 # belong to root.
