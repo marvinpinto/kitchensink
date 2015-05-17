@@ -110,6 +110,13 @@ RUN wget -O /tmp/docker.sh https://get.docker.com/ \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# Install the wercker cli
+RUN wget -O /tmp/wercker.sh https://install.wercker.com \
+  && /bin/sh /tmp/wercker.sh \
+  && apt-get clean \
+  && apt-get autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 # Create a shared data volume
 # We need to create an empty file, otherwise the volume will
 # belong to root.
