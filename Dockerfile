@@ -18,6 +18,7 @@ RUN apt-get install -y git \
   wget \
   host \
   dnsutils \
+  tree \
   zip
 
 # Configure timezone and locale
