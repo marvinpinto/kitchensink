@@ -102,6 +102,14 @@ RUN touch /home/dev/bin/tmux \
   && chmod +x /home/dev/bin/tmux \
   && echo -ne '#!'"/bin/bash\n/usr/bin/script -c /usr/bin/tmux /dev/null" > /home/dev/bin/tmux
 
+# Install docker
+RUN wget -O /tmp/docker.sh https://get.docker.com/ \
+  && /bin/sh /tmp/docker.sh \
+  && usermod -aG docker dev \
+  && apt-get clean \
+  && apt-get autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 # Create a shared data volume
 # We need to create an empty file, otherwise the volume will
 # belong to root.
