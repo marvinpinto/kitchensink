@@ -21,6 +21,7 @@ RUN apt-get update \
   tree \
   dos2unix \
   zip \
+  aspell \
   && apt-get clean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
