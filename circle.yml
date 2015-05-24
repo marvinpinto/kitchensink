@@ -16,6 +16,7 @@ test:
     - docker run -it --entrypoint='/usr/bin/which' marvin/devbox strace
     - docker run -it --entrypoint='/usr/bin/which' marvin/devbox wget
     - docker run -it --entrypoint='/usr/bin/test' marvin/devbox -f /etc/bash_completion.d/git-prompt
+    - "[[ $(docker run -it --entrypoint='/usr/local/bin/fleetctl' marvin/devbox --version) =~ 0.10.1 ]]"
 
 deployment:
   hub:

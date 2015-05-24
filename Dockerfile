@@ -48,11 +48,13 @@ ENV GOROOT /usr/local/go
 ENV PATH /usr/local/go/bin:$PATH
 
 # Install fleetctl to /usr/local/bin
-RUN \
-  wget https://github.com/coreos/fleet/releases/download/v0.10.0/fleet-v0.10.0-linux-amd64.tar.gz && \
-  tar -zxvf fleet-v0.10.0-linux-amd64.tar.gz && \
-  mv fleet-v0.10.0-linux-amd64/fleetctl /usr/local/bin && \
-  rm -rf fleet-v0.10.0-linux-amd64.tar.gz fleet-v0.10.0-linux-amd64
+RUN mkdir -p /tmp/fleetctl \
+  && cd /tmp/fleetctl \
+  && wget https://github.com/coreos/fleet/releases/download/v0.10.1/fleet-v0.10.1-linux-amd64.tar.gz \
+  && tar -zxvf fleet-v0.10.1-linux-amd64.tar.gz \
+  && mv fleet-v0.10.1-linux-amd64/fleetctl /usr/local/bin \
+  && cd /tmp \
+  && rm -rf fleetctl
 
 # Install etcd-ca to /usr/local/bin
 RUN cd /tmp \
