@@ -9,7 +9,7 @@ dependencies:
 
 test:
   override:
-    - /bin/true
+    - "[[ $(docker run -it --entrypoint='/usr/bin/git' marvin/devbox --version) =~ 2.4.1 ]]"
 
 deployment:
   hub:
