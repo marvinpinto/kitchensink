@@ -44,8 +44,6 @@ RUN export LANGUAGE=en_US.UTF-8; export LANG=en_US.UTF-8; export LC_ALL=en_US.UT
 
 # Install go
 RUN curl https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz | tar -C /usr/local -zx
-ENV GOROOT /usr/local/go
-ENV PATH /usr/local/go/bin:$PATH
 
 # Install fleetctl to /usr/local/bin
 RUN mkdir -p /tmp/fleetctl \
@@ -113,8 +111,7 @@ RUN mkdir -p /home/dev/go/src /home/dev/bin /home/dev/lib /home/dev/include /hom
 ENV PATH /home/dev/bin:$PATH
 ENV PKG_CONFIG_PATH /home/dev/lib/pkgconfig
 ENV LD_LIBRARY_PATH /home/dev/lib
-ENV GOPATH /home/dev/go
-ENV PATH $GOPATH/bin:$PATH
+ENV PATH /usr/local/go/bin:$PATH
 
 # Create a shared data volume
 # We need to create an empty file, otherwise the volume will
