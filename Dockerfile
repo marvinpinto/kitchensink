@@ -66,6 +66,18 @@ RUN mkdir -p /tmp/terraform \
   && cd /tmp \
   && rm -rf terraform
 
+# Install keybase + related
+RUN apt-get update \
+  && apt-get install -y \
+    nodejs-legacy \
+    npm \
+  && npm install -g keybase-installer \
+  && /usr/local/bin/keybase-installer \
+  && apt-get clean autoclean \
+  && apt-get autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && rm -rf /var/lib/{apt,dpkg,cache,log}/
+
 # Setup home environment
 RUN useradd dev
 RUN echo "dev ALL = NOPASSWD: ALL" > /etc/sudoers.d/00-dev
@@ -76,17 +88,6 @@ ENV PKG_CONFIG_PATH /home/dev/lib/pkgconfig
 ENV LD_LIBRARY_PATH /home/dev/lib
 ENV GOPATH /home/dev/go
 ENV PATH $GOPATH/bin:$PATH
-
-# Install keybase + related
-RUN apt-get update \
-  && apt-get install -y \
-  nodejs-legacy \
-  npm \
-  && npm install -g keybase-installer \
-  && /usr/local/bin/keybase-installer \
-  && apt-get clean \
-  && apt-get autoremove -y --purge \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install ledger
 RUN apt-get install -y software-properties-common \
