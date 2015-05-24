@@ -99,13 +99,6 @@ ENV LD_LIBRARY_PATH /home/dev/lib
 ENV GOPATH /home/dev/go
 ENV PATH $GOPATH/bin:$PATH
 
-# Create a tmux wrapper to work around
-# https://github.com/docker/docker/issues/8755
-RUN touch /home/dev/bin/tmux \
-  && chown dev: /home/dev/bin/tmux \
-  && chmod +x /home/dev/bin/tmux \
-  && echo -ne '#!'"/bin/bash\n/usr/bin/script -c /usr/bin/tmux /dev/null" > /home/dev/bin/tmux
-
 # Install docker
 RUN wget -O /tmp/docker.sh https://get.docker.com/ \
   && /bin/sh /tmp/docker.sh \
@@ -140,7 +133,6 @@ run ln -s /var/shared/.bashrc
 run ln -s /var/shared/.gitconfig
 run ln -s /var/shared/.gitignore_global
 run ln -s /var/shared/.profile
-run ln -s /var/shared/.tmux.conf
 run ln -s /var/shared/.vim
 run ln -s /var/shared/.vimrc
 run ln -s /var/shared/Dropbox/freshbooks
