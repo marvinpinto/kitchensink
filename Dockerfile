@@ -114,26 +114,26 @@ RUN useradd dev \
 # We need to create an empty file, otherwise the volume will
 # belong to root.
 # This is probably a Docker bug.
-RUN mkdir /var/shared/
-RUN touch /var/shared/placeholder
-RUN chown -R dev:dev /var/shared
+RUN mkdir /var/shared/ \
+  && touch /var/shared/placeholder \
+  && chown -R dev:dev /var/shared
 VOLUME /var/shared
 
 # Link in shared parts of the home directory
 WORKDIR /home/dev
-run ln -s /var/shared/.ssh
-run ln -s /var/shared/.bash_logout
-run ln -s /var/shared/.bash_profile
-run ln -s /var/shared/.bashrc
-run ln -s /var/shared/.gitconfig
-run ln -s /var/shared/.gitignore_global
-run ln -s /var/shared/.profile
-run ln -s /var/shared/.vim
-run ln -s /var/shared/.vimrc
-run ln -s /var/shared/Dropbox/freshbooks
-run ln -s /var/shared/Dropbox/projects
-run ln -s /var/shared/Dropbox/gnupg .gnupg
-RUN chown -R dev: /home/dev
+RUN ln -s /var/shared/.ssh \
+  && ln -s /var/shared/.bash_logout \
+  && ln -s /var/shared/.bash_profile\
+  && ln -s /var/shared/.bashrc \
+  && ln -s /var/shared/.gitconfig \
+  && ln -s /var/shared/.gitignore_global \
+  && ln -s /var/shared/.profile \
+  && ln -s /var/shared/.vim \
+  && ln -s /var/shared/.vimrc \
+  && ln -s /var/shared/Dropbox/freshbooks \
+  && ln -s /var/shared/Dropbox/projects \
+  && ln -s /var/shared/Dropbox/gnupg .gnupg \
+  && chown -R dev: /home/dev
 
 # Set the environment variables
 ENV HOME /home/dev
