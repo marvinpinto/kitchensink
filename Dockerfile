@@ -103,15 +103,12 @@ RUN wget -O /tmp/wercker.sh https://install.wercker.com \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # Setup home environment
-RUN useradd dev
-RUN echo "dev ALL = NOPASSWD: ALL" > /etc/sudoers.d/00-dev
-RUN mkdir /home/dev && chown -R dev: /home/dev
-RUN usermod -aG docker dev
-RUN mkdir -p /home/dev/go/src /home/dev/bin /home/dev/lib /home/dev/include /home/dev/tmp
-ENV PATH /home/dev/bin:$PATH
-ENV PKG_CONFIG_PATH /home/dev/lib/pkgconfig
-ENV LD_LIBRARY_PATH /home/dev/lib
-ENV PATH /usr/local/go/bin:$PATH
+RUN useradd dev \
+  && echo "dev ALL = NOPASSWD: ALL" > /etc/sudoers.d/00-dev \
+  &&  mkdir /home/dev \
+  && chown -R dev: /home/dev \
+  && usermod -aG docker dev \
+  &&  mkdir -p /home/dev/bin /home/dev/tmp
 
 # Create a shared data volume
 # We need to create an empty file, otherwise the volume will
@@ -124,7 +121,6 @@ VOLUME /var/shared
 
 # Link in shared parts of the home directory
 WORKDIR /home/dev
-ENV HOME /home/dev
 run ln -s /var/shared/.ssh
 run ln -s /var/shared/.bash_logout
 run ln -s /var/shared/.bash_profile
@@ -137,8 +133,13 @@ run ln -s /var/shared/.vimrc
 run ln -s /var/shared/Dropbox/freshbooks
 run ln -s /var/shared/Dropbox/projects
 run ln -s /var/shared/Dropbox/gnupg .gnupg
-
 RUN chown -R dev: /home/dev
+
+# Set the environment variables
+ENV HOME /home/dev
+ENV PATH /home/dev/bin:$PATH
+ENV PATH /usr/local/go/bin:$PATH
+
 USER dev
 
 ENTRYPOINT "/bin/bash"
