@@ -56,6 +56,16 @@ RUN mkdir -p /tmp/fleetctl \
   && cd /tmp \
   && rm -rf fleetctl
 
+# Install terraform to /usr/local/bin
+RUN mkdir -p /tmp/terraform \
+  && cd /tmp/terraform \
+  && wget https://dl.bintray.com/mitchellh/terraform/terraform_0.5.1_linux_amd64.zip \
+  && unzip terraform_0.5.1_linux_amd64.zip \
+  && mv terraform /usr/local/bin \
+  && mv terraform-* /usr/local/bin \
+  && cd /tmp \
+  && rm -rf terraform
+
 # Setup home environment
 RUN useradd dev
 RUN echo "dev ALL = NOPASSWD: ALL" > /etc/sudoers.d/00-dev
@@ -66,11 +76,6 @@ ENV PKG_CONFIG_PATH /home/dev/lib/pkgconfig
 ENV LD_LIBRARY_PATH /home/dev/lib
 ENV GOPATH /home/dev/go
 ENV PATH $GOPATH/bin:$PATH
-
-# Build & Install terraform
-RUN git clone https://github.com/hashicorp/terraform.git $GOPATH/src/github.com/hashicorp/terraform && \
-  cd $GOPATH/src/github.com/hashicorp/terraform && \
-  XC_OS=linux XC_ARCH=amd64 make updatedeps bin
 
 # Install jekyll + dependencies
 RUN apt-get update \
