@@ -20,6 +20,7 @@ test:
     - docker run -it --entrypoint='/usr/bin/which' marvin/devbox terraform
     - docker run -it --entrypoint='/usr/bin/which' marvin/devbox keybase
     - docker run -it --entrypoint='/usr/bin/which' marvin/devbox ledger
+    - docker run -it --entrypoint='/usr/bin/which' marvin/devbox docker
 
 deployment:
   hub:

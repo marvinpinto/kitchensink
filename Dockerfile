@@ -88,24 +88,25 @@ RUN apt-get install -y software-properties-common \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
+# Install docker
+RUN wget -O /tmp/docker.sh https://get.docker.com/ \
+  && /bin/sh /tmp/docker.sh \
+  && apt-get clean autoclean \
+  && apt-get autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && rm -rf /var/lib/{apt,dpkg,cache,log}/
+
 # Setup home environment
 RUN useradd dev
 RUN echo "dev ALL = NOPASSWD: ALL" > /etc/sudoers.d/00-dev
 RUN mkdir /home/dev && chown -R dev: /home/dev
+RUN usermod -aG docker dev
 RUN mkdir -p /home/dev/go/src /home/dev/bin /home/dev/lib /home/dev/include /home/dev/tmp
 ENV PATH /home/dev/bin:$PATH
 ENV PKG_CONFIG_PATH /home/dev/lib/pkgconfig
 ENV LD_LIBRARY_PATH /home/dev/lib
 ENV GOPATH /home/dev/go
 ENV PATH $GOPATH/bin:$PATH
-
-# Install docker
-RUN wget -O /tmp/docker.sh https://get.docker.com/ \
-  && /bin/sh /tmp/docker.sh \
-  && usermod -aG docker dev \
-  && apt-get clean \
-  && apt-get autoremove -y --purge \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install the wercker cli
 RUN wget -O /tmp/wercker.sh https://install.wercker.com \
