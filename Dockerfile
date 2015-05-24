@@ -77,19 +77,6 @@ ENV LD_LIBRARY_PATH /home/dev/lib
 ENV GOPATH /home/dev/go
 ENV PATH $GOPATH/bin:$PATH
 
-# Install jekyll + dependencies
-RUN apt-get update \
-  && apt-get install -y software-properties-common \
-  && apt-add-repository -y ppa:brightbox/ruby-ng \
-  && apt-get update \
-  && apt-get install -y \
-  ruby2.2 \
-  ruby2.2-dev \
-  && gem install --no-document bundler \
-  && apt-get clean \
-  && apt-get autoremove -y --purge \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
 # Install keybase + related
 RUN apt-get update \
   && apt-get install -y \
