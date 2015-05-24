@@ -13,30 +13,30 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-# Install a bunch of utilities
+# Install some utilities I need
 RUN apt-get update \
   && apt-get install -y \
-  python \
-  curl \
-  vim \
-  strace \
-  diffstat \
-  pkg-config \
-  cmake \
-  build-essential \
-  tcpdump \
-  tmux \
-  mercurial \
-  wget \
-  host \
-  dnsutils \
-  tree \
-  dos2unix \
-  zip \
-  aspell \
-  && apt-get clean \
+    python \
+    curl \
+    vim \
+    strace \
+    diffstat \
+    pkg-config \
+    cmake \
+    build-essential \
+    tcpdump \
+    mercurial \
+    wget \
+    host \
+    dnsutils \
+    tree \
+    dos2unix \
+    zip \
+    bash-completion \
+  && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # Configure timezone and locale
 RUN echo "America/Toronto" > /etc/timezone; dpkg-reconfigure -f noninteractive tzdata

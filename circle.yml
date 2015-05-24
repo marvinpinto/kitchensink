@@ -10,6 +10,12 @@ dependencies:
 test:
   override:
     - "[[ $(docker run -it --entrypoint='/usr/bin/git' marvin/devbox --version) =~ 2.4.1 ]]"
+    - docker run -it --entrypoint='/usr/bin/which' marvin/devbox curl
+    - docker run -it --entrypoint='/usr/bin/which' marvin/devbox python
+    - docker run -it --entrypoint='/usr/bin/which' marvin/devbox vim
+    - docker run -it --entrypoint='/usr/bin/which' marvin/devbox strace
+    - docker run -it --entrypoint='/usr/bin/which' marvin/devbox wget
+    - docker run -it --entrypoint='/usr/bin/test' marvin/devbox -f /etc/bash_completion.d/git-prompt
 
 deployment:
   hub:
