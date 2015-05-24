@@ -19,6 +19,7 @@ test:
     - "[[ $(docker run -it --entrypoint='/usr/local/bin/fleetctl' marvin/devbox --version) =~ 0.10.1 ]]"
     - docker run -it --entrypoint='/usr/bin/which' marvin/devbox terraform
     - docker run -it --entrypoint='/usr/bin/which' marvin/devbox keybase
+    - docker run -it --entrypoint='/usr/bin/which' marvin/devbox ledger
 
 deployment:
   hub:

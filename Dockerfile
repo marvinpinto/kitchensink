@@ -78,6 +78,16 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
+# Install ledger
+RUN apt-get install -y software-properties-common \
+  && apt-add-repository -y ppa:mbudde/ledger \
+  && apt-get update \
+  && apt-get install -y ledger \
+  && apt-get clean autoclean \
+  && apt-get autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && rm -rf /var/lib/{apt,dpkg,cache,log}/
+
 # Setup home environment
 RUN useradd dev
 RUN echo "dev ALL = NOPASSWD: ALL" > /etc/sudoers.d/00-dev
@@ -88,15 +98,6 @@ ENV PKG_CONFIG_PATH /home/dev/lib/pkgconfig
 ENV LD_LIBRARY_PATH /home/dev/lib
 ENV GOPATH /home/dev/go
 ENV PATH $GOPATH/bin:$PATH
-
-# Install ledger
-RUN apt-get install -y software-properties-common \
-  && apt-add-repository -y ppa:mbudde/ledger \
-  && apt-get update \
-  && apt-get install -y ledger \
-  && apt-get clean \
-  && apt-get autoremove -y --purge \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Create a tmux wrapper to work around
 # https://github.com/docker/docker/issues/8755
