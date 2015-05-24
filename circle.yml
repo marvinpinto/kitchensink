@@ -21,6 +21,7 @@ test:
     - docker run -it --entrypoint='/usr/bin/which' marvin/devbox keybase
     - docker run -it --entrypoint='/usr/bin/which' marvin/devbox ledger
     - docker run -it --entrypoint='/usr/bin/which' marvin/devbox docker
+    - docker run -it --entrypoint='/usr/bin/which' marvin/devbox wercker
 
 deployment:
   hub:

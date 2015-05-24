@@ -96,6 +96,14 @@ RUN wget -O /tmp/docker.sh https://get.docker.com/ \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
+# Install the wercker cli
+RUN wget -O /tmp/wercker.sh https://install.wercker.com \
+  && /bin/sh /tmp/wercker.sh \
+  && apt-get clean autoclean \
+  && apt-get autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && rm -rf /var/lib/{apt,dpkg,cache,log}/
+
 # Setup home environment
 RUN useradd dev
 RUN echo "dev ALL = NOPASSWD: ALL" > /etc/sudoers.d/00-dev
@@ -107,13 +115,6 @@ ENV PKG_CONFIG_PATH /home/dev/lib/pkgconfig
 ENV LD_LIBRARY_PATH /home/dev/lib
 ENV GOPATH /home/dev/go
 ENV PATH $GOPATH/bin:$PATH
-
-# Install the wercker cli
-RUN wget -O /tmp/wercker.sh https://install.wercker.com \
-  && /bin/sh /tmp/wercker.sh \
-  && apt-get clean \
-  && apt-get autoremove -y --purge \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Create a shared data volume
 # We need to create an empty file, otherwise the volume will
