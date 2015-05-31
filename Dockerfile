@@ -102,6 +102,16 @@ RUN wget -O /tmp/wercker.sh https://install.wercker.com \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
+# Install packer to /usr/local/bin
+RUN mkdir -p /tmp/packer \
+  && cd /tmp/packer \
+  && wget https://dl.bintray.com/mitchellh/packer/packer_0.7.5_linux_amd64.zip \
+  && unzip packer_0.7.5_linux_amd64.zip \
+  && mv packer /usr/local/bin \
+  && mv packer-* /usr/local/bin \
+  && cd /tmp \
+  && rm -rf packer
+
 # Setup home environment
 RUN useradd dev \
   && echo "dev ALL = NOPASSWD: ALL" > /etc/sudoers.d/00-dev \

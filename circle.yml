@@ -25,6 +25,7 @@ test:
     - "[[ $(docker run -it --entrypoint='/usr/local/go/bin/go' marvin/devbox version) =~ 1.4.2 ]]"
     - "[[ $(docker run -it --entrypoint='/usr/bin/groups' marvin/devbox dev) =~ docker ]]"
     - "[[ $(docker run -it --entrypoint='/usr/bin/groups' marvin/devbox dev) =~ dev ]]"
+    - docker run -it --entrypoint='/usr/bin/which' marvin/devbox packer
 
 deployment:
   hub:
