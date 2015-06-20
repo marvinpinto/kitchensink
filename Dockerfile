@@ -7,7 +7,7 @@ RUN apt-get update \
   && apt-add-repository -y ppa:git-core/ppa \
   && apt-get update \
   && apt-get install -y \
-    git=1:2.4.2-0ppa1~ubuntu14.04* \
+    git=1:2.4.4-0ppa1~ubuntu14.04* \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \

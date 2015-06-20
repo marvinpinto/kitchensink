@@ -9,7 +9,7 @@ dependencies:
 
 test:
   override:
-    - "[[ $(docker run -it --entrypoint='/usr/bin/git' marvin/devbox --version) =~ 2.4.2 ]]"
+    - "[[ $(docker run -it --entrypoint='/usr/bin/git' marvin/devbox --version) =~ 2.4.4 ]]"
     - docker run -it --entrypoint='/usr/bin/which' marvin/devbox curl
     - docker run -it --entrypoint='/usr/bin/which' marvin/devbox python
     - docker run -it --entrypoint='/usr/bin/which' marvin/devbox vim
