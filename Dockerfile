@@ -112,6 +112,15 @@ RUN mkdir -p /tmp/packer \
   && cd /tmp \
   && rm -rf packer
 
+# Install python + friends
+RUN apt-get update \
+  && apt-get install -y python python-dev python-pip libmysqlclient-dev \
+  && pip install virtualenv \
+  && apt-get clean autoclean \
+  && apt-get autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && rm -rf /var/lib/{apt,dpkg,cache,log}/
+
 # Setup home environment
 RUN useradd dev \
   && echo "dev ALL = NOPASSWD: ALL" > /etc/sudoers.d/00-dev \
