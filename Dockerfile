@@ -121,6 +121,9 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
+# Install AWS cli
+RUN pip install awscli
+
 # Setup home environment
 RUN useradd dev \
   && echo "dev ALL = NOPASSWD: ALL" > /etc/sudoers.d/00-dev \
