@@ -1,13 +1,13 @@
 # vim: set filetype=dockerfile :
 FROM ubuntu:14.04
 
-# Install git 2.4.2
+# Install git
 RUN apt-get update \
   && apt-get install -y software-properties-common \
   && apt-add-repository -y ppa:git-core/ppa \
   && apt-get update \
   && apt-get install -y \
-    git=1:2.4.4-0ppa1~ubuntu14.04* \
+    git \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
