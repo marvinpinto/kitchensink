@@ -124,6 +124,23 @@ RUN apt-get update \
 # Install AWS cli
 RUN pip install awscli
 
+# Install Java
+RUN apt-get update \
+  && apt-get install -y openjdk-7-jdk \
+  && apt-get clean autoclean \
+  && apt-get autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && rm -rf /var/lib/{apt,dpkg,cache,log}/
+
+# Install Maven
+RUN apt-add-repository ppa:andrei-pozolotin/maven3 \
+  && apt-get update \
+  && apt-get install -y maven3 \
+  && apt-get clean autoclean \
+  && apt-get autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && rm -rf /var/lib/{apt,dpkg,cache,log}/
+
 # Setup home environment
 RUN useradd dev \
   && echo "dev ALL = NOPASSWD: ALL" > /etc/sudoers.d/00-dev \
