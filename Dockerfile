@@ -145,13 +145,15 @@ RUN mkdir -p /tmp/java \
   && rm -rf java
 
 # Install Maven
-RUN apt-add-repository ppa:andrei-pozolotin/maven3 \
-  && apt-get update \
-  && apt-get install -y maven3 \
-  && apt-get clean autoclean \
-  && apt-get autoremove -y --purge \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-  && rm -rf /var/lib/{apt,dpkg,cache,log}/
+RUN mkdir -p /tmp/maven \
+  && cd /tmp/maven \
+  && wget http://apache.mirror.rafal.ca/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz \
+  && tar xzf apache-maven-3.3.3-bin.tar.gz \
+  && mv apache-maven-3.3.3 /usr/share/maven3 \
+  && update-alternatives --install /usr/bin/mvn mvn /usr/share/maven3/bin/mvn 1 \
+  && update-alternatives --set mvn /usr/share/maven3/bin/mvn \
+  && cd /tmp \
+  && rm -rf maven
 
 # Setup home environment
 RUN useradd dev \
