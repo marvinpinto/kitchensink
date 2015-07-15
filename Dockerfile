@@ -127,12 +127,22 @@ RUN apt-get update \
 RUN pip install awscli
 
 # Install Java
-RUN apt-get update \
-  && apt-get install -y openjdk-7-jdk \
-  && apt-get clean autoclean \
-  && apt-get autoremove -y --purge \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-  && rm -rf /var/lib/{apt,dpkg,cache,log}/
+RUN mkdir -p /tmp/java \
+  && cd /tmp/java \
+  && wget \
+      --no-check-certificate \
+      --no-cookies \
+      --header "Cookie: oraclelicense=accept-securebackup-cookie" \
+      http://download.oracle.com/otn-pub/java/jdk/8u51-b16/jdk-8u51-linux-x64.tar.gz \
+  && tar xzf jdk-8u51-linux-x64.tar.gz \
+  && mkdir -p /usr/lib/jvm \
+  && mv jdk1.8.0_51 /usr/lib/jvm/ \
+  && update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk1.8.0_51/bin/javac 1 \
+  && update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk1.8.0_51/bin/java 1 \
+  && update-alternatives --set javac /usr/lib/jvm/jdk1.8.0_51/bin/javac \
+  && update-alternatives --set java /usr/lib/jvm/jdk1.8.0_51/bin/java \
+  && cd /tmp \
+  && rm -rf java
 
 # Install Maven
 RUN apt-add-repository ppa:andrei-pozolotin/maven3 \
