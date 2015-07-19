@@ -1,6 +1,9 @@
 # vim: set filetype=dockerfile :
 FROM ubuntu:14.04
 
+# Add the trusty-proposed repo
+RUN echo "deb http://archive.ubuntu.com/ubuntu/ trusty-proposed restricted main multiverse universe" > /etc/apt/sources.list
+
 # Install git
 RUN apt-get update \
   && apt-get install -y software-properties-common \
