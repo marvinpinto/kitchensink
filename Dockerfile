@@ -119,7 +119,7 @@ RUN mkdir -p /tmp/packer \
 
 # Install python + friends
 RUN apt-get update \
-  && apt-get install -y python python-dev python-pip libmysqlclient-dev \
+  && apt-get install -y python python-dev python-pip libmysqlclient-dev python3.4-venv \
   && pip install virtualenv \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
