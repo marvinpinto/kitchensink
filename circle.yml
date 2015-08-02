@@ -26,7 +26,6 @@ test:
     - "[[ $(docker run -it --entrypoint='/usr/bin/groups' marvin/devbox dev) =~ docker ]]"
     - "[[ $(docker run -it --entrypoint='/usr/bin/groups' marvin/devbox dev) =~ dev ]]"
     - docker run -it --entrypoint='/usr/bin/which' marvin/devbox packer
-    - docker run -it --entrypoint='/usr/local/bin/virtualenv' marvin/devbox --version
     - docker run -it --entrypoint='/usr/bin/pip' marvin/devbox --version
     - docker run -it --entrypoint='/usr/bin/java' marvin/devbox -version
     - docker run -it --entrypoint='/usr/bin/javac' marvin/devbox -version

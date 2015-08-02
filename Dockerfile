@@ -2,7 +2,7 @@
 FROM ubuntu:14.04
 
 # Add the trusty-proposed repo
-RUN echo "deb http://archive.ubuntu.com/ubuntu/ trusty-proposed restricted main multiverse universe" > /etc/apt/sources.list
+RUN echo "deb http://archive.ubuntu.com/ubuntu/ trusty-proposed restricted main multiverse universe" >> /etc/apt/sources.list
 
 # Install git
 RUN apt-get update \
@@ -20,6 +20,7 @@ RUN apt-get update \
 RUN apt-get update \
   && apt-get install -y \
     python \
+    python-pip \
     curl \
     vim \
     strace \
@@ -117,10 +118,9 @@ RUN mkdir -p /tmp/packer \
   && cd /tmp \
   && rm -rf packer
 
-# Install python + friends
+# Install python3 + friends
 RUN apt-get update \
-  && apt-get install -y python python-dev python-pip libmysqlclient-dev python3.4-venv \
-  && pip install virtualenv \
+  && apt-get install -y python3 python3-dev python3-pip python3.4-venv \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
