@@ -28,6 +28,7 @@ test:
     - docker run -it --entrypoint='/usr/bin/java' marvin/devbox -version
     - docker run -it --entrypoint='/usr/bin/javac' marvin/devbox -version
     - docker run -it --entrypoint='/usr/bin/mvn' marvin/devbox --version
+    - docker run -it --entrypoint='/usr/bin/which' marvin/devbox gem
 
 deployment:
   hub:

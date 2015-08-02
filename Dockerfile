@@ -139,6 +139,14 @@ RUN mkdir -p /tmp/maven \
   && cd /tmp \
   && rm -rf maven
 
+# Install ruby
+RUN apt-get update \
+  && apt-get install -y ruby ruby-dev \
+  && apt-get clean autoclean \
+  && apt-get autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && rm -rf /var/lib/{apt,dpkg,cache,log}/
+
 # Setup home environment
 RUN useradd dev \
   && echo "dev ALL = NOPASSWD: ALL" > /etc/sudoers.d/00-dev \
