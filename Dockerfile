@@ -51,16 +51,6 @@ RUN echo "America/Toronto" > /etc/timezone \
 # Install go
 RUN curl https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz | tar -C /usr/local -zx
 
-# Install terraform to /usr/local/bin
-RUN mkdir -p /tmp/terraform \
-  && cd /tmp/terraform \
-  && wget https://dl.bintray.com/mitchellh/terraform/terraform_0.5.1_linux_amd64.zip \
-  && unzip terraform_0.5.1_linux_amd64.zip \
-  && mv terraform /usr/local/bin \
-  && mv terraform-* /usr/local/bin \
-  && cd /tmp \
-  && rm -rf terraform
-
 # Install keybase + related
 RUN apt-get update \
   && apt-get install -y \

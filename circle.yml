@@ -16,7 +16,6 @@ test:
     - docker run -it --entrypoint='/usr/bin/which' marvin/devbox strace
     - docker run -it --entrypoint='/usr/bin/which' marvin/devbox wget
     - docker run -it --entrypoint='/usr/bin/test' marvin/devbox -f /etc/bash_completion.d/git-prompt
-    - docker run -it --entrypoint='/usr/bin/which' marvin/devbox terraform
     - docker run -it --entrypoint='/usr/bin/which' marvin/devbox keybase
     - docker run -it --entrypoint='/usr/bin/which' marvin/devbox ledger
     - docker run -it --entrypoint='/usr/bin/which' marvin/devbox docker
