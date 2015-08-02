@@ -51,15 +51,6 @@ RUN echo "America/Toronto" > /etc/timezone \
 # Install go
 RUN curl https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz | tar -C /usr/local -zx
 
-# Install fleetctl to /usr/local/bin
-RUN mkdir -p /tmp/fleetctl \
-  && cd /tmp/fleetctl \
-  && wget https://github.com/coreos/fleet/releases/download/v0.10.1/fleet-v0.10.1-linux-amd64.tar.gz \
-  && tar -zxvf fleet-v0.10.1-linux-amd64.tar.gz \
-  && mv fleet-v0.10.1-linux-amd64/fleetctl /usr/local/bin \
-  && cd /tmp \
-  && rm -rf fleetctl
-
 # Install terraform to /usr/local/bin
 RUN mkdir -p /tmp/terraform \
   && cd /tmp/terraform \
