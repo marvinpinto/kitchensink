@@ -1,6 +1,6 @@
 # Throwaway Docker Development Environment
 
-[![Circle CI](https://circleci.com/gh/marvinpinto/docker-devbox.svg?style=svg)](https://circleci.com/gh/marvinpinto/docker-devbox)
+[![Build Status](https://travis-ci.org/marvinpinto/docker-devbox.svg?branch=master)](https://travis-ci.org/marvinpinto/docker-devbox)
 
 Wouldn't it be nice if you didn't have to install a kitchen-sink worth of tools
 on your host dev machine! Well, you don't have to with Docker!
@@ -25,6 +25,12 @@ not for me.
 
 I don't actually know how this would work or if this would even be useful on
 OSX. Sorry :dissapointed:
+
+## Where can I get a hold of this Docker image?
+```
+docker pull quay.io/marvin/devbox
+```
+More details available at [quay.io/repository/marvin/devbox][3]
 
 ## How do I use it?
 
@@ -69,13 +75,16 @@ function devbox () {
       -v /var/run/docker.sock:/var/run/docker.sock \
       -e SSH_AUTH_SOCK=$SSH_AUTH_SOCK \
       -w $workdir \
-      marvin/devbox)
+      quay.io/marvin/devbox)
   fi
   docker exec -it $dockerid /bin/bash
 }
 ```
 
+## Credit
+
 This idea was very much inspired by [github.com/shykes/devbox][2]
 
 [1]: https://github.com/marvinpinto/dotfiles/blob/master/roles/bash/files/bashrc
 [2]: https://github.com/shykes/devbox
+[3]: https://quay.io/repository/marvin/devbox
