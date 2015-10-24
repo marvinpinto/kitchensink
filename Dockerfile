@@ -82,14 +82,6 @@ RUN wget -O /tmp/docker.sh https://get.docker.com/ \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-# Install the wercker cli
-RUN wget -O /tmp/wercker.sh https://install.wercker.com \
-  && /bin/sh /tmp/wercker.sh \
-  && apt-get clean autoclean \
-  && apt-get autoremove -y --purge \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-  && rm -rf /var/lib/{apt,dpkg,cache,log}/
-
 # Install packer to /usr/local/bin
 RUN mkdir -p /tmp/packer \
   && cd /tmp/packer \
@@ -118,7 +110,7 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-# Install AWS cli
+# Install a bunch of utilities through pip
 RUN pip install awscli virtualenv boto
 
 # Install Java
