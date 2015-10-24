@@ -21,6 +21,7 @@ RUN apt-get update \
   && apt-get install -y \
     python \
     python-pip \
+    python-dev \
     curl \
     vim \
     strace \
@@ -99,6 +100,16 @@ RUN mkdir -p /tmp/packer \
   && cd /tmp \
   && rm -rf packer
 
+# Install terraform to /usr/local/bin
+RUN mkdir -p /tmp/terraform \
+  && cd /tmp/terraform \
+  && wget https://dl.bintray.com/mitchellh/terraform/terraform_0.6.6_linux_amd64.zip \
+  && unzip terraform_0.6.6_linux_amd64.zip \
+  && rm terraform*.zip \
+  && mv terraform* /usr/local/bin \
+  && cd /tmp \
+  && rm -rf terraform
+
 # Install python3 + friends
 RUN apt-get update \
   && apt-get install -y python3 python3-dev python3-pip python3.4-venv \
@@ -108,7 +119,7 @@ RUN apt-get update \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # Install AWS cli
-RUN pip install awscli
+RUN pip install awscli virtualenv boto
 
 # Install Java
 RUN mkdir -p /tmp/java \
@@ -142,6 +153,16 @@ RUN mkdir -p /tmp/maven \
 # Install ruby
 RUN apt-get update \
   && apt-get install -y ruby ruby-dev \
+  && apt-get clean autoclean \
+  && apt-get autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && rm -rf /var/lib/{apt,dpkg,cache,log}/
+
+# Install ansible
+RUN apt-get install -y software-properties-common \
+  && apt-add-repository -y ppa:ansible/ansible \
+  && apt-get update \
+  && apt-get install -y ansible \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
