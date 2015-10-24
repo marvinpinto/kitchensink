@@ -1,0 +1,27 @@
+language: python
+sudo: true
+
+services:
+  - 'docker'
+
+env:
+  global:
+    - secure: "Sz2zt93JTOGg8UTSLKf5iqRAyLhCi3ztMHWh1PuG8sf1TgRzWOn/7FS3swTk0tZRNCoZUoPkCDStML3QmFPDyf5ZlW6Ti0cO1Adih7ScHXA4Lp+CoyxWcdkLYfpr9GRyS49K7DphFp1EwI/ruRn+1le7AOWYZTel7cpmlHyIPqBajUjCscivv8Twl4VXRoQLbe7ANSrX+fL008MPbKGh/UEfYw9fM30JylNA+uB5ljAQ2NATy+DYydCtfkKfhaSOL8l1t1YRfYA4sH2cxcjzku0ymz3YXoDqwoYZ1L5Qo6nMvr9SQu7XJ7KUjTC77YU38LcxyMGxTgASdcLRRnwo5d8zNMFNyznm9km3YLYPLJRPHcgPUvCMloxxDL+haHbxgafpCphOK1+2ZfKErkcgZY7PC8ItQkxCG34HEhhTgkPyM5I10w5AGU/ZktjmLoj+9QF7d4oZv6jhg2mcYx6aOmtV9pcBkHAYExrqTAUYBSU6cUDeNbe110RksjeIQHkSYdA08wtHyVknJ7uan4hupKnJZzL8ZfOfbhVCTZmrtxGRZ4bpQ4hXzyq6MZDZttipyXp1zaxGRW8HkFyb6VkenNG/SBy/hEfS16SMHG+NatwG94y5xMuMN2kvt2TQYGcRMjBvgBc82htc3o9Jc0jrWb4A8G3CN8t7Y1Njos3c/fE="
+    - secure: "QkIXtnhY/oI+OWfTg1zwjBNOk1OId+6ujrk8KnoI4UOnh9MViQUMx6sfFWPn1rxy1EMZq9UM4qTXXWUXwM2PoIdjCFlZWVUdte8FsjHk51qfCNxptv7V9FQB0xzF2itgZivw5rpm7mGzSW810kRixczP3iEkFk9FseCeIpAt1pkuk1D9xe0jjtiYJc8cW9a/UoVF9O0UZxrgBRu42EQEX1fQMsYePhOSD3aAegHLcoqlLP40wfuIBTj3uYTYqgAKcb4Aep0jpSW/6grhQPo+zaBLqCAntF5dfYZZo1dXmOqfsBS2Yzc1aR7A4PdnWNIfEFO9gZuTi2JktUbNGxmVpQJILtch5kULfXm3pPoPcTl+7JNVZjsWItWPd21403Os3VwpilorpTpysZjBVnkypq14/39VrykosuNTi3S/OTfx2wuJUQOGL8tnRBfz5ohiexYbxh055WWaKGvHZXGuFaDLT7ep3ef3bRfEhdFU6jZhkiGrvnba0cecAU3fYtTFm9abv6XLiCrTwz4rfH8buoJuwGn8g9SkOMgwsXWc5G2r7nETRDFL67v3Jm7a9V4pSRWZDHnfuTdK1fE3phYKpIkBnFMSrwhpP+xnOad8BUTkg/pkxFE6nlWF7+bABq4ZFEhv1BCBjKLsWBoVC7xbLngjmVHK4Jk92KtQHwo3YAA="
+
+script:
+  - 'docker info'
+  - 'docker --version'
+  - 'docker build --no-cache --rm -t quay.io/marvin/devbox:master .'
+
+deploy:
+- provider: script
+  script: 'docker login -e="." -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" quay.io && docker push quay.io/marvin/devbox:master'
+  on:
+    repo: marvinpinto/docker-devbox
+    branch: master
+
+notifications:
+  email: false
+  irc:
+    - secure: "Y5ZXefNfyouSSCyD+A6zi9LFJz/+L0NH7W9woUo4D2/Ee2KOPE7yIhe/WaYFeigxqFusWOntDIJA5qEyCGBCOldePbtKQuKlekWehkq1i5LLfeAu5FmRQU2wVzME957KyKzC8pARcExSqVaZWW5fvUI5VVCGbrp1iJhzzsPEMZ4SfYQpahdbIFTHPkM851FqMYPSUvDducIwE40aaoabwmS0pNPgZ0DMl1cUf5gGeWSYyWtO9Hj/iS9QgCKa2XRUhQ2Dy1sShBnu3Wloc+gQJU+k7a0yKI7aDp2qGUdi3L1MDTIZZ4CQ9KEyXD8Zj3nG/X6j69EO5s7ext/La9NFroZvf6updgAtZXi/Ug01nFqviQ7MvKN/YmCVs+9tMjzB8I9DKZpHbK9RYxpHa4dvDWmdzyPtirouLLgtLyUtYuvh8AFZAF02HYeka7AJ8uCoPAO0K5QfrR1eM9Ag7tKsy29MtQ2lvAuR3zh73jA8Aqiw1bbLypSxIovijufOyz+7VHyEIGvcnlZwllGiUacdsLFog4rBws8Fm8r54VjDJkwXmzO6DDSfmOG+N5EfMV+FO7+V+dn2Xuy97bHH6/Almqq5jEBaB8niw1njR6HLLbFl99vzQErLpKSWiBE7tQ/0AtZqSxBLqWgYSi9gG3bYHLZ9+o1ijwEMrwLt0NIUysM="
