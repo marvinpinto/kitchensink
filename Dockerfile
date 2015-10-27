@@ -111,7 +111,7 @@ RUN apt-get update \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # Install a bunch of utilities through pip
-RUN pip install awscli virtualenv boto
+RUN pip install awscli virtualenv boto dopy
 
 # Install Java
 RUN mkdir -p /tmp/java \
