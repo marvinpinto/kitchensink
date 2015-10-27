@@ -113,6 +113,9 @@ RUN apt-get update \
 # Install a bunch of utilities through pip
 RUN pip install awscli virtualenv boto dopy
 
+# Install Ansible 2.0 beta
+RUN pip install http://releases.ansible.com/ansible/ansible-2.0.0-0.4.beta2.tar.gz
+
 # Install Java
 RUN mkdir -p /tmp/java \
   && cd /tmp/java \
@@ -152,16 +155,6 @@ RUN apt-get update \
 
 # Install the Travis CI gem
 RUN gem install travis --no-rdoc --no-ri
-
-# Install ansible
-RUN apt-get install -y software-properties-common \
-  && apt-add-repository -y ppa:ansible/ansible \
-  && apt-get update \
-  && apt-get install -y ansible \
-  && apt-get clean autoclean \
-  && apt-get autoremove -y --purge \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-  && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # Setup home environment
 RUN useradd dev \
