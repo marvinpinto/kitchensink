@@ -50,7 +50,7 @@ RUN echo "America/Toronto" > /etc/timezone \
   && DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
 
 # Install go
-RUN curl https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz | tar -C /usr/local -zx
+RUN curl https://storage.googleapis.com/golang/go1.5.1.linux-amd64.tar.gz | tar -C /usr/local -zx
 
 # Install keybase + related
 RUN apt-get update \
