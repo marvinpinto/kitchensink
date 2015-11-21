@@ -153,8 +153,8 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-# Install the Travis CI gem
-RUN gem install travis --no-rdoc --no-ri
+# Install a few gems
+RUN gem install travis bundle --no-rdoc --no-ri
 
 # Setup home environment
 RUN useradd dev \
