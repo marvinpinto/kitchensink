@@ -194,6 +194,7 @@ ENV HOME /home/dev
 ENV PATH /home/dev/bin:$PATH
 ENV PATH /usr/local/go/bin:$PATH
 ENV GOPATH /tmp/go
+ENV PATH $GOPATH/bin:$PATH
 
 USER dev
 
