@@ -38,6 +38,8 @@ RUN apt-get update \
     dos2unix \
     zip \
     bash-completion \
+    aspell \
+    aspell-en \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
