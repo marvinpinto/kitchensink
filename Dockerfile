@@ -113,7 +113,7 @@ RUN apt-get update \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # Install a bunch of utilities through pip
-RUN pip install awscli virtualenv boto dopy
+RUN pip install awscli virtualenv boto dopy cookiecutter
 
 # Install Ansible 2.0 beta
 RUN pip install http://releases.ansible.com/ansible/ansible-2.0.0-0.4.beta2.tar.gz
