@@ -70,6 +70,15 @@ RUN npm install -g keybase-installer \
 # Install ember-cli
 RUN npm install -g ember-cli@2.2.0-beta.1
 
+# Install phantomjs
+RUN mkdir -p /tmp/phantomjs \
+  && cd /tmp/phantomjs \
+  && wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.8-linux-x86_64.tar.bz2 \
+  && tar xfj phantomjs-1.9.8-linux-x86_64.tar.bz2 \
+  && mv phantomjs-1.9.8-linux-x86_64/bin/* /usr/local/bin \
+  && cd /tmp \
+  && rm -rf phantomjs
+
 # Install ledger
 RUN apt-get install -y software-properties-common \
   && apt-add-repository -y ppa:mbudde/ledger \
