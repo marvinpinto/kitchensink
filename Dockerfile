@@ -40,6 +40,7 @@ RUN apt-get update \
     bash-completion \
     aspell \
     aspell-en \
+    automake \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
@@ -66,6 +67,31 @@ RUN wget -O /tmp/nodejs.sh https://deb.nodesource.com/setup_5.x \
 # Install keybase + related
 RUN npm install -g keybase-installer \
   && /usr/bin/keybase-installer
+
+# Install ember-cli
+RUN npm install -g ember-cli@2.2.0-beta.1
+
+# Install phantomjs
+RUN mkdir -p /tmp/phantomjs \
+  && cd /tmp/phantomjs \
+  && wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-14.04.tar.bz2 \
+  && tar xfj phantomjs-2.0.0-ubuntu-14.04.tar.bz2 \
+  && mv phantomjs /usr/local/bin \
+  && cd /tmp \
+  && rm -rf phantomjs
+
+# Build and install watchman from source
+RUN mkdir -p /tmp/watchman \
+  && cd /tmp/watchman \
+  && git clone https://github.com/facebook/watchman.git \
+  && cd watchman \
+  && git checkout v4.3.0 \
+  && ./autogen.sh \
+  && ./configure \
+  && make \
+  && sudo make install \
+  && cd /tmp \
+  && rm -rf watchman
 
 # Install ledger
 RUN apt-get install -y software-properties-common \
