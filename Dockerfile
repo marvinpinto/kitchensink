@@ -42,6 +42,7 @@ RUN apt-get update \
     aspell-en \
     libjpeg-dev \
     automake \
+    editorconfig \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
