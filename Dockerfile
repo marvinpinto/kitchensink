@@ -74,9 +74,9 @@ RUN npm install -g ember-cli@2.2.0-beta.1
 # Install phantomjs
 RUN mkdir -p /tmp/phantomjs \
   && cd /tmp/phantomjs \
-  && wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.8-linux-x86_64.tar.bz2 \
-  && tar xfj phantomjs-1.9.8-linux-x86_64.tar.bz2 \
-  && mv phantomjs-1.9.8-linux-x86_64/bin/* /usr/local/bin \
+  && wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-14.04.tar.bz2 \
+  && tar xfj phantomjs-2.0.0-ubuntu-14.04.tar.bz2 \
+  && mv phantomjs /usr/local/bin \
   && cd /tmp \
   && rm -rf phantomjs
 
