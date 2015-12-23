@@ -40,6 +40,7 @@ RUN apt-get update \
     bash-completion \
     aspell \
     aspell-en \
+    automake \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
@@ -78,6 +79,19 @@ RUN mkdir -p /tmp/phantomjs \
   && mv phantomjs-1.9.8-linux-x86_64/bin/* /usr/local/bin \
   && cd /tmp \
   && rm -rf phantomjs
+
+# Build and install watchman from source
+RUN mkdir -p /tmp/watchman \
+  && cd /tmp/watchman \
+  && git clone https://github.com/facebook/watchman.git \
+  && cd watchman \
+  && git checkout v4.3.0 \
+  && ./autogen.sh \
+  && ./configure \
+  && make \
+  && sudo make install \
+  && cd /tmp \
+  && rm -rf watchman
 
 # Install ledger
 RUN apt-get install -y software-properties-common \
