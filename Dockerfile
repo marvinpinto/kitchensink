@@ -54,17 +54,18 @@ RUN echo "America/Toronto" > /etc/timezone \
 # Install go
 RUN curl https://storage.googleapis.com/golang/go1.5.1.linux-amd64.tar.gz | tar -C /usr/local -zx
 
-# Install keybase + related
-RUN apt-get update \
-  && apt-get install -y \
-    nodejs-legacy \
-    npm \
-  && npm install -g keybase-installer \
-  && /usr/local/bin/keybase-installer \
+# Install nodejs
+RUN wget -O /tmp/nodejs.sh https://deb.nodesource.com/setup_5.x \
+  && /bin/bash /tmp/nodejs.sh \
+  && apt-get install -y nodejs \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
+
+# Install keybase + related
+RUN npm install -g keybase-installer \
+  && /usr/bin/keybase-installer
 
 # Install ledger
 RUN apt-get install -y software-properties-common \
