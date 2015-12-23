@@ -67,6 +67,9 @@ RUN wget -O /tmp/nodejs.sh https://deb.nodesource.com/setup_5.x \
 RUN npm install -g keybase-installer \
   && /usr/bin/keybase-installer
 
+# Install ember-cli
+RUN npm install -g ember-cli@2.2.0-beta.1
+
 # Install ledger
 RUN apt-get install -y software-properties-common \
   && apt-add-repository -y ppa:mbudde/ledger \
