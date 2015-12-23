@@ -40,6 +40,7 @@ RUN apt-get update \
     bash-completion \
     aspell \
     aspell-en \
+    libjpeg-dev \
     automake \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
