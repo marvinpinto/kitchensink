@@ -224,8 +224,11 @@ RUN ln -s /var/shared/.ssh \
   && chown -R marvin: /home/marvin
 
 # Set up the golang development environment
-RUN mkdir -p /goprojects/{bin,pkg,src}
-RUN mkdir -p /goprojects/src/github.com/{marvinpinto,opensentinel}
+RUN mkdir -p /goprojects/bin
+RUN mkdir -p /goprojects/pkg
+RUN mkdir -p /goprojects/src
+RUN mkdir -p /goprojects/src/github.com/marvinpinto
+RUN mkdir -p /goprojects/src/github.com/opensentinel
 RUN chown -R marvin: /goprojects
 ENV GOPATH /goprojects
 
