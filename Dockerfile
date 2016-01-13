@@ -191,12 +191,12 @@ RUN apt-get update \
 RUN gem install travis bundle --no-rdoc --no-ri
 
 # Setup home environment
-RUN useradd dev \
-  && echo "dev ALL = NOPASSWD: ALL" > /etc/sudoers.d/00-dev \
-  &&  mkdir /home/dev \
-  && chown -R dev: /home/dev \
-  && usermod -aG docker dev \
-  &&  mkdir -p /home/dev/bin /home/dev/tmp
+RUN useradd marvin \
+  && echo "marvin ALL = NOPASSWD: ALL" > /etc/sudoers.d/00-marvin \
+  &&  mkdir /home/marvin \
+  && chown -R marvin: /home/marvin \
+  && usermod -aG docker marvin \
+  &&  mkdir -p /home/marvin/bin /home/marvin/tmp
 
 # Create a shared data volume
 # We need to create an empty file, otherwise the volume will
@@ -204,11 +204,11 @@ RUN useradd dev \
 # This is probably a Docker bug.
 RUN mkdir /var/shared/ \
   && touch /var/shared/placeholder \
-  && chown -R dev:dev /var/shared
+  && chown -R marvin: /var/shared
 VOLUME /var/shared
 
 # Link in shared parts of the home directory
-WORKDIR /home/dev
+WORKDIR /home/marvin
 RUN ln -s /var/shared/.ssh \
   && ln -s /var/shared/.bash_logout \
   && ln -s /var/shared/.bash_profile\
@@ -221,20 +221,20 @@ RUN ln -s /var/shared/.ssh \
   && ln -s /var/shared/Dropbox/freshbooks \
   && ln -s /var/shared/Dropbox/projects \
   && ln -s /var/shared/Dropbox/gnupg .gnupg \
-  && chown -R dev: /home/dev
+  && chown -R marvin: /home/marvin
 
-# Set up the golang dev environment
+# Set up the golang development environment
 RUN mkdir -p /goprojects/{bin,pkg,src}
 RUN mkdir -p /goprojects/src/github.com/{marvinpinto,opensentinel}
-RUN chown -R dev: /goprojects
+RUN chown -R marvin: /goprojects
 ENV GOPATH /goprojects
 
 # Set the environment variables
-ENV HOME /home/dev
-ENV PATH /home/dev/bin:$PATH
+ENV HOME /home/marvin
+ENV PATH /home/marvin/bin:$PATH
 ENV PATH /usr/local/go/bin:$PATH
 ENV PATH $GOPATH/bin:$PATH
 
-USER dev
+USER marvin
 
 ENTRYPOINT "/bin/bash"
