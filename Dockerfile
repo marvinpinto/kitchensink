@@ -223,12 +223,16 @@ RUN ln -s /var/shared/.ssh \
   && ln -s /var/shared/Dropbox/gnupg .gnupg \
   && chown -R dev: /home/dev
 
+# Set up the golang dev environment
+RUN mkdir -p /goprojects/{bin,pkg,src}
+RUN mkdir -p /goprojects/src/github.com/{marvinpinto,opensentinel}
+RUN chown -R dev: /goprojects
+ENV GOPATH /goprojects
+
 # Set the environment variables
 ENV HOME /home/dev
 ENV PATH /home/dev/bin:$PATH
 ENV PATH /usr/local/go/bin:$PATH
-ENV GOPATH /tmp/go
-ENV GOBIN /tmp/go/bin
 ENV PATH $GOPATH/bin:$PATH
 
 USER dev
