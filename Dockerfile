@@ -55,7 +55,7 @@ RUN echo "America/Toronto" > /etc/timezone \
   && DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
 
 # Install go
-RUN curl https://storage.googleapis.com/golang/go1.5.2.linux-amd64.tar.gz | tar -C /usr/local -zx
+RUN curl https://storage.googleapis.com/golang/go1.5.3.linux-amd64.tar.gz | tar -C /usr/local -zx
 
 # Install nodejs
 RUN wget -O /tmp/nodejs.sh https://deb.nodesource.com/setup_5.x \
