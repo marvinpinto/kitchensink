@@ -16,6 +16,16 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
+# Install the latest 2.7.x version of python
+RUN apt-get update \
+  && apt-add-repository -y ppa:fkrull/deadsnakes-python2.7 \
+  && apt-get update \
+  && apt-get install -y python2.7 \
+  && apt-get clean autoclean \
+  && apt-get autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && rm -rf /var/lib/{apt,dpkg,cache,log}/
+
 # Install some utilities I need
 RUN apt-get update \
   && apt-get install -y \
@@ -71,7 +81,7 @@ RUN npm install -g keybase-installer \
   && /usr/bin/keybase-installer
 
 # Install ember-cli
-RUN npm install -g ember-cli@2.2.0-beta.1
+RUN npm install -g ember-cli@2.3.0-beta.1
 
 # Install bower
 RUN npm install -g bower@1.7.1
@@ -135,6 +145,16 @@ RUN mkdir -p /tmp/terraform \
   && mv terraform* /usr/local/bin \
   && cd /tmp \
   && rm -rf terraform
+
+# Install ngrok to /usr/local/bin
+RUN mkdir -p /tmp/ngrok \
+  && cd /tmp/ngrok \
+  && wget https://dl.ngrok.com/ngrok_2.0.19_linux_amd64.zip \
+  && unzip ngrok_2.0.19_linux_amd64.zip \
+  && rm ngrok*.zip \
+  && mv ngrok /usr/local/bin \
+  && cd /tmp \
+  && rm -rf ngrok
 
 # Install python3 + friends
 RUN apt-get update \
