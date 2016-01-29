@@ -16,6 +16,16 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
+# Install the latest 2.7.x version of python
+RUN apt-get update \
+  && apt-add-repository -y ppa:fkrull/deadsnakes-python2.7 \
+  && apt-get update \
+  && apt-get install -y python2.7 \
+  && apt-get clean autoclean \
+  && apt-get autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && rm -rf /var/lib/{apt,dpkg,cache,log}/
+
 # Install some utilities I need
 RUN apt-get update \
   && apt-get install -y \
