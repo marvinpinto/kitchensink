@@ -136,6 +136,16 @@ RUN mkdir -p /tmp/terraform \
   && cd /tmp \
   && rm -rf terraform
 
+# Install ngrok to /usr/local/bin
+RUN mkdir -p /tmp/ngrok \
+  && cd /tmp/ngrok \
+  && wget https://dl.ngrok.com/ngrok_2.0.19_linux_amd64.zip \
+  && unzip ngrok_2.0.19_linux_amd64.zip \
+  && rm ngrok*.zip \
+  && mv ngrok /usr/local/bin \
+  && cd /tmp \
+  && rm -rf ngrok
+
 # Install python3 + friends
 RUN apt-get update \
   && apt-get install -y python3 python3-dev python3-pip python3.4-venv \
