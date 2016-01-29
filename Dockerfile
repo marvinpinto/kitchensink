@@ -71,7 +71,7 @@ RUN npm install -g keybase-installer \
   && /usr/bin/keybase-installer
 
 # Install ember-cli
-RUN npm install -g ember-cli@2.2.0-beta.1
+RUN npm install -g ember-cli@2.3.0-beta.1
 
 # Install bower
 RUN npm install -g bower@1.7.1
