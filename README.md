@@ -1,6 +1,7 @@
 # Throwaway Docker Development Environment
 
-[![Build Status](https://travis-ci.org/marvinpinto/docker-devbox.svg?branch=master)](https://travis-ci.org/marvinpinto/docker-devbox)
+[![Build Status](https://img.shields.io/travis/marvinpinto/docker-devbox/master.svg?style=flat-square)](https://travis-ci.org/marvinpinto/docker-devbox)
+[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.txt)
 
 Wouldn't it be nice if you didn't have to install a kitchen-sink worth of tools
 on your host dev machine! Well, you don't have to with Docker!
