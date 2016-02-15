@@ -2,7 +2,7 @@
 
 <img alt="kitchen sink logo" height="200px" src="logo.png">
 
-[![Build Status](https://img.shields.io/travis/marvinpinto/docker-devbox/master.svg?style=flat-square)](https://travis-ci.org/marvinpinto/docker-devbox)
+[![Build Status](https://img.shields.io/travis/marvinpinto/kitchensink/master.svg?style=flat-square)](https://travis-ci.org/marvinpinto/kitchensink)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.txt)
 
 Wouldn't it be nice if you didn't have to install a kitchen-sink worth of tools
