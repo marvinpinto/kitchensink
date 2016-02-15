@@ -1,10 +1,12 @@
-# Throwaway Docker Development Environment
+# A Kitchen Sink Development Environment
 
-[![Build Status](https://img.shields.io/travis/marvinpinto/docker-devbox/master.svg?style=flat-square)](https://travis-ci.org/marvinpinto/docker-devbox)
+<img alt="kitchen sink logo" height="200px" src="logo.png">
+
+[![Build Status](https://img.shields.io/travis/marvinpinto/kitchensink/master.svg?style=flat-square)](https://travis-ci.org/marvinpinto/kitchensink)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.txt)
 
 Wouldn't it be nice if you didn't have to install a kitchen-sink worth of tools
-on your host dev machine! Well, you don't have to with Docker!
+on your host dev machine? Well, you don't have to with Docker!
 
 The nice thing about these throwaway environments is that I can mess around and
 install all the crap I need inside an environment and only persist it if I want
@@ -84,8 +86,11 @@ function devbox () {
 
 ## Credit
 
-This idea was very much inspired by [github.com/shykes/devbox][2]
+This idea was very much inspired by [github.com/shykes/devbox][2].
+
+The logo was made by [github.com/des4maisons][4].
 
 [1]: https://github.com/marvinpinto/dotfiles/blob/master/roles/bash/files/bashrc
 [2]: https://github.com/shykes/devbox
 [3]: https://quay.io/repository/marvin/devbox
+[4]: https://github.com/des4maisons
