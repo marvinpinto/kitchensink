@@ -129,8 +129,8 @@ RUN wget -O /tmp/docker.sh https://get.docker.com/ \
 # Install packer to /usr/local/bin
 RUN mkdir -p /tmp/packer \
   && cd /tmp/packer \
-  && wget https://dl.bintray.com/mitchellh/packer/packer_0.7.5_linux_amd64.zip \
-  && unzip packer_0.7.5_linux_amd64.zip \
+  && wget https://releases.hashicorp.com/packer/0.8.6/packer_0.8.6_linux_amd64.zip \
+  && unzip packer_0.8.6_linux_amd64.zip \
   && mv packer /usr/local/bin \
   && mv packer-* /usr/local/bin \
   && cd /tmp \
