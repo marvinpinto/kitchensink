@@ -139,8 +139,8 @@ RUN mkdir -p /tmp/packer \
 # Install terraform to /usr/local/bin
 RUN mkdir -p /tmp/terraform \
   && cd /tmp/terraform \
-  && wget https://dl.bintray.com/mitchellh/terraform/terraform_0.6.6_linux_amd64.zip \
-  && unzip terraform_0.6.6_linux_amd64.zip \
+  && wget https://releases.hashicorp.com/terraform/0.6.11/terraform_0.6.11_linux_amd64.zip \
+  && unzip terraform_0.6.11_linux_amd64.zip \
   && rm terraform*.zip \
   && mv terraform* /usr/local/bin \
   && cd /tmp \
