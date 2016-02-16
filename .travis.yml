@@ -12,13 +12,13 @@ env:
 script:
   - 'docker info'
   - 'docker --version'
-  - 'docker build --no-cache --rm -t quay.io/marvin/devbox:latest .'
+  - 'docker build --no-cache --rm -t quay.io/marvin/kitchensink:latest .'
 
 deploy:
 - provider: script
-  script: 'docker login -e="." -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" quay.io && docker push quay.io/marvin/devbox:latest'
+  script: 'docker login -e="." -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" quay.io && docker push quay.io/marvin/kitchensink:latest'
   on:
-    repo: marvinpinto/docker-devbox
+    repo: marvinpinto/kitchensink
     branch: master
 
 notifications:

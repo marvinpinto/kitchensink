@@ -4,6 +4,7 @@
 
 [![Build Status](https://img.shields.io/travis/marvinpinto/kitchensink/master.svg?style=flat-square)](https://travis-ci.org/marvinpinto/kitchensink)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.txt)
+[![Quay.io](https://quay.io/repository/marvin/kitchensink/status)](https://quay.io/repository/marvin/kitchensink)
 
 Wouldn't it be nice if you didn't have to install a kitchen-sink worth of tools
 on your host dev machine? Well, you don't have to with Docker!
@@ -31,9 +32,9 @@ OSX. Sorry :dissapointed:
 
 ## Where can I get a hold of this Docker image?
 ```
-docker pull quay.io/marvin/devbox
+docker pull quay.io/marvin/kitchensink
 ```
-More details available at [quay.io/repository/marvin/devbox][3]
+More details available at [quay.io/repository/marvin/kitchensink][3]
 
 ## How do I use it?
 
@@ -43,24 +44,24 @@ I created a bashrc function to handle bringing these up whenever I need them
 So, issuing something like:
 
 ```
-$ devbox rails-is-fun
+$ sink rails-is-fun
 ```
 
 will bring up a named docker container called `rails-is-fun`. And if I issue
 the same command again in another terminal window, it will connect to the
 *same* container! Neat, right?
 
-Here is an example of the `devbox` function. You can find the current version
+Here is an example of the `sink` function. You can find the current version
 of the function _I_ use over in my [dotfiles][1] repo!
 
 ```bash
 # Bash function to attach to, or spin up a new (named) docker container
-function devbox () {
+function sink () {
   local boxname=$1
   local workdir="/home/dev"
 
   if [ -z "$boxname" ]; then
-    echo "usage: devbox <box name>"
+    echo "usage: sink <box name>"
     return 1
   fi
 
@@ -78,7 +79,7 @@ function devbox () {
       -v /var/run/docker.sock:/var/run/docker.sock \
       -e SSH_AUTH_SOCK=$SSH_AUTH_SOCK \
       -w $workdir \
-      quay.io/marvin/devbox)
+      quay.io/marvin/kitchensink)
   fi
   docker exec -it $dockerid /bin/bash
 }
@@ -92,5 +93,5 @@ The logo was made by [github.com/des4maisons][4].
 
 [1]: https://github.com/marvinpinto/dotfiles/blob/master/roles/bash/files/bashrc
 [2]: https://github.com/shykes/devbox
-[3]: https://quay.io/repository/marvin/devbox
+[3]: https://quay.io/repository/marvin/kitchensink
 [4]: https://github.com/des4maisons
