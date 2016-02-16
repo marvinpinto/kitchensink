@@ -206,9 +206,11 @@ RUN mkdir -p /tmp/maven \
   && cd /tmp \
   && rm -rf maven
 
-# Install ruby
-RUN apt-get update \
-  && apt-get install -y ruby ruby-dev \
+# Install ruby 2.3
+RUN apt-get -qq update \
+  && apt-add-repository -y ppa:brightbox/ruby-ng \
+  && apt-get -qq update \
+  && apt-get install -y ruby2.3 ruby2.3-dev zlib1g-dev \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
