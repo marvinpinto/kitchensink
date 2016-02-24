@@ -5,10 +5,10 @@ FROM ubuntu:14.04
 RUN echo "deb http://archive.ubuntu.com/ubuntu/ trusty-proposed restricted main multiverse universe" >> /etc/apt/sources.list
 
 # Install git
-RUN apt-get update \
+RUN apt-get -qq update \
   && apt-get install -y software-properties-common \
   && apt-add-repository -y ppa:git-core/ppa \
-  && apt-get update \
+  && apt-get -qq update \
   && apt-get install -y \
     git \
   && apt-get clean autoclean \
@@ -17,9 +17,9 @@ RUN apt-get update \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # Install the latest 2.7.x version of python
-RUN apt-get update \
+RUN apt-get -qq update \
   && apt-add-repository -y ppa:fkrull/deadsnakes-python2.7 \
-  && apt-get update \
+  && apt-get -qq update \
   && apt-get install -y python2.7 \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
@@ -27,7 +27,7 @@ RUN apt-get update \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # Install some utilities I need
-RUN apt-get update \
+RUN apt-get -qq update \
   && apt-get install -y \
     python \
     python-pip \
@@ -111,7 +111,7 @@ RUN mkdir -p /tmp/watchman \
 # Install ledger
 RUN apt-get install -y software-properties-common \
   && apt-add-repository -y ppa:mbudde/ledger \
-  && apt-get update \
+  && apt-get -qq update \
   && apt-get install -y ledger \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
@@ -157,7 +157,7 @@ RUN mkdir -p /tmp/ngrok \
   && rm -rf ngrok
 
 # Install python3 + friends
-RUN apt-get update \
+RUN apt-get -qq update \
   && apt-get install -y python3 python3-dev python3-pip python3.4-venv \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
@@ -168,7 +168,7 @@ RUN apt-get update \
 RUN pip install awscli virtualenv boto dopy cookiecutter docker-compose
 
 # Install the released version of ansible
-RUN apt-get update \
+RUN apt-get -qq update \
   && apt-add-repository -y ppa:ansible/ansible \
   && apt-get -qq update \
   && apt-get install -y ansible \
