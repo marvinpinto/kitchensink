@@ -271,6 +271,7 @@ ENV HOME /home/marvin
 ENV PATH /home/marvin/bin:$PATH
 ENV PATH /usr/local/go/bin:$PATH
 ENV PATH $GOPATH/bin:$PATH
+ENV PATH /home/marvin/.local/bin:$PATH
 
 USER marvin
 
