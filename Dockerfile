@@ -86,6 +86,11 @@ RUN npm install -g ember-cli@2.3.0-beta.1
 # Install bower
 RUN npm install -g bower@1.7.1
 
+# Install the statically linked version of wkhtmltopdf
+RUN wget -O /tmp/wkhtmltopdf https://github.com/h4cc/wkhtmltopdf-amd64/raw/master/bin/wkhtmltopdf-amd64 \
+  && mv /tmp/wkhtmltopdf /usr/local/bin/ \
+  && chmod +x /usr/local/bin/wkhtmltopdf
+
 # Install phantomjs
 RUN mkdir -p /tmp/phantomjs \
   && cd /tmp/phantomjs \
