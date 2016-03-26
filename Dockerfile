@@ -224,6 +224,15 @@ RUN apt-get -qq update \
 # Install a few gems
 RUN gem install travis bundle --no-rdoc --no-ri
 
+# Install the lego letsencrypt client
+RUN mkdir -p /tmp/lego \
+  && cd /tmp/lego \
+  && wget -O lego.tar.xz https://github.com/xenolf/lego/releases/download/v0.3.0/lego_linux_amd64.tar.xz \
+  && tar xf lego.tar.xz \
+  && mv lego/lego /usr/local/bin/ \
+  && cd /tmp \
+  && rm -rf lego
+
 # Setup home environment
 RUN useradd marvin \
   && echo "marvin ALL = NOPASSWD: ALL" > /etc/sudoers.d/00-marvin \
