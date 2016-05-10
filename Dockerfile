@@ -233,6 +233,18 @@ RUN mkdir -p /tmp/lego \
   && cd /tmp \
   && rm -rf lego
 
+# Install git-lfs
+RUN curl -L https://packagecloud.io/github/git-lfs/gpgkey | sudo apt-key add - \
+  && apt-get -qq update \
+  && apt-get install -y apt-transport-https \
+  && echo "deb https://packagecloud.io/github/git-lfs/ubuntu/ trusty main" >> /etc/apt/sources.list.d/github_git-lfs.list \
+  && apt-get -qq update \
+  && apt-get install -y git-lfs \
+  && apt-get clean autoclean \
+  && apt-get autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && rm -rf /var/lib/{apt,dpkg,cache,log}/
+
 # Setup home environment
 RUN useradd marvin \
   && echo "marvin ALL = NOPASSWD: ALL" > /etc/sudoers.d/00-marvin \
