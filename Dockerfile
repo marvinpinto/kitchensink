@@ -68,7 +68,7 @@ RUN echo "America/Toronto" > /etc/timezone \
 RUN curl https://storage.googleapis.com/golang/go1.5.3.linux-amd64.tar.gz | tar -C /usr/local -zx
 
 # Install nodejs
-RUN wget -O /tmp/nodejs.sh https://deb.nodesource.com/setup_5.x \
+RUN wget --no-verbose -O /tmp/nodejs.sh https://deb.nodesource.com/setup_5.x \
   && /bin/bash /tmp/nodejs.sh \
   && apt-get install -y nodejs \
   && apt-get clean autoclean \
@@ -87,14 +87,14 @@ RUN npm install -g ember-cli@2.4.2
 RUN npm install -g bower@1.7.1
 
 # Install the statically linked version of wkhtmltopdf
-RUN wget -O /tmp/wkhtmltopdf https://github.com/h4cc/wkhtmltopdf-amd64/raw/master/bin/wkhtmltopdf-amd64 \
+RUN wget --no-verbose -O /tmp/wkhtmltopdf https://github.com/h4cc/wkhtmltopdf-amd64/raw/master/bin/wkhtmltopdf-amd64 \
   && mv /tmp/wkhtmltopdf /usr/local/bin/ \
   && chmod +x /usr/local/bin/wkhtmltopdf
 
 # Install phantomjs
 RUN mkdir -p /tmp/phantomjs \
   && cd /tmp/phantomjs \
-  && wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-14.04.tar.bz2 \
+  && wget --no-verbose https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-14.04.tar.bz2 \
   && tar xfj phantomjs-2.0.0-ubuntu-14.04.tar.bz2 \
   && mv phantomjs /usr/local/bin \
   && cd /tmp \
@@ -124,7 +124,7 @@ RUN apt-get install -y software-properties-common \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # Install docker
-RUN wget -O /tmp/docker.sh https://get.docker.com/ \
+RUN wget --no-verbose -O /tmp/docker.sh https://get.docker.com/ \
   && /bin/sh /tmp/docker.sh \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
@@ -134,7 +134,7 @@ RUN wget -O /tmp/docker.sh https://get.docker.com/ \
 # Install packer to /usr/local/bin
 RUN mkdir -p /tmp/packer \
   && cd /tmp/packer \
-  && wget https://releases.hashicorp.com/packer/0.8.6/packer_0.8.6_linux_amd64.zip \
+  && wget --no-verbose https://releases.hashicorp.com/packer/0.8.6/packer_0.8.6_linux_amd64.zip \
   && unzip packer_0.8.6_linux_amd64.zip \
   && mv packer /usr/local/bin \
   && mv packer-* /usr/local/bin \
@@ -144,7 +144,7 @@ RUN mkdir -p /tmp/packer \
 # Install terraform to /usr/local/bin
 RUN mkdir -p /tmp/terraform \
   && cd /tmp/terraform \
-  && wget https://releases.hashicorp.com/terraform/0.6.11/terraform_0.6.11_linux_amd64.zip \
+  && wget --no-verbose https://releases.hashicorp.com/terraform/0.6.11/terraform_0.6.11_linux_amd64.zip \
   && unzip terraform_0.6.11_linux_amd64.zip \
   && rm terraform*.zip \
   && mv terraform* /usr/local/bin \
@@ -154,7 +154,7 @@ RUN mkdir -p /tmp/terraform \
 # Install ngrok to /usr/local/bin
 RUN mkdir -p /tmp/ngrok \
   && cd /tmp/ngrok \
-  && wget https://dl.ngrok.com/ngrok_2.0.19_linux_amd64.zip \
+  && wget --no-verbose https://dl.ngrok.com/ngrok_2.0.19_linux_amd64.zip \
   && unzip ngrok_2.0.19_linux_amd64.zip \
   && rm ngrok*.zip \
   && mv ngrok /usr/local/bin \
@@ -186,6 +186,7 @@ RUN apt-get -qq update \
 RUN mkdir -p /tmp/java \
   && cd /tmp/java \
   && wget \
+      --no-verbose \
       --no-check-certificate \
       --no-cookies \
       --header "Cookie: oraclelicense=accept-securebackup-cookie" \
@@ -203,7 +204,7 @@ RUN mkdir -p /tmp/java \
 # Install Maven
 RUN mkdir -p /tmp/maven \
   && cd /tmp/maven \
-  && wget http://apache.mirror.rafal.ca/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz \
+  && wget --no-verbose http://apache.mirror.rafal.ca/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz \
   && tar xzf apache-maven-3.3.3-bin.tar.gz \
   && mv apache-maven-3.3.3 /usr/share/maven3 \
   && update-alternatives --install /usr/bin/mvn mvn /usr/share/maven3/bin/mvn 1 \
@@ -227,7 +228,7 @@ RUN gem install travis bundle --no-rdoc --no-ri
 # Install the lego letsencrypt client
 RUN mkdir -p /tmp/lego \
   && cd /tmp/lego \
-  && wget -O lego.tar.xz https://github.com/xenolf/lego/releases/download/v0.3.0/lego_linux_amd64.tar.xz \
+  && wget --no-verbose -O lego.tar.xz https://github.com/xenolf/lego/releases/download/v0.3.0/lego_linux_amd64.tar.xz \
   && tar xf lego.tar.xz \
   && mv lego/lego /usr/local/bin/ \
   && cd /tmp \
