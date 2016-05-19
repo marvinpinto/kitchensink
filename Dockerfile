@@ -81,10 +81,10 @@ RUN npm install -g keybase-installer \
   && /usr/bin/keybase-installer
 
 # Install ember-cli
-RUN npm install -g ember-cli@2.4.2
+RUN npm install -g ember-cli@2.5.0
 
 # Install bower
-RUN npm install -g bower@1.7.1
+RUN npm install -g bower@1.7.9
 
 # Install the statically linked version of wkhtmltopdf
 RUN wget --no-verbose -O /tmp/wkhtmltopdf https://github.com/h4cc/wkhtmltopdf-amd64/raw/master/bin/wkhtmltopdf-amd64 \
