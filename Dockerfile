@@ -53,6 +53,8 @@ RUN apt-get -qq update \
     libjpeg-dev \
     automake \
     editorconfig \
+    imagemagick \
+    bc \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
