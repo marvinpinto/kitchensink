@@ -256,6 +256,12 @@ RUN useradd marvin \
   && usermod -aG docker marvin \
   &&  mkdir -p /home/marvin/bin /home/marvin/tmp
 
+# Install the diff-highlight script
+RUN mkdir -p /home/marvin/bin \
+  && wget -O /home/marvin/bin/diff-highlight https://raw.githubusercontent.com/git/git/master/contrib/diff-highlight/diff-highlight \
+  && chown marvin: /home/marvin/bin/diff-highlight \
+  && chmod +x /home/marvin/bin/diff-highlight
+
 # Create a shared data volume
 # We need to create an empty file, otherwise the volume will
 # belong to root.
