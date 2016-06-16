@@ -55,6 +55,8 @@ RUN apt-get -qq update \
     editorconfig \
     imagemagick \
     bc \
+    lcov \
+    man \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
