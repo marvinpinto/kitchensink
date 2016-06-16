@@ -98,9 +98,9 @@ RUN wget --no-verbose -O /tmp/wkhtmltopdf https://github.com/h4cc/wkhtmltopdf-am
 # Install phantomjs
 RUN mkdir -p /tmp/phantomjs \
   && cd /tmp/phantomjs \
-  && wget --no-verbose https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-14.04.tar.bz2 \
-  && tar xfj phantomjs-2.0.0-ubuntu-14.04.tar.bz2 \
-  && mv phantomjs /usr/local/bin \
+  && wget --quiet https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 \
+  && tar xfj phantomjs-2.1.1-linux-x86_64.tar.bz2 \
+  && mv phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin \
   && cd /tmp \
   && rm -rf phantomjs
 
