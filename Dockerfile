@@ -148,8 +148,8 @@ RUN mkdir -p /tmp/packer \
 # Install terraform to /usr/local/bin
 RUN mkdir -p /tmp/terraform \
   && cd /tmp/terraform \
-  && wget --no-verbose https://releases.hashicorp.com/terraform/0.6.11/terraform_0.6.11_linux_amd64.zip \
-  && unzip terraform_0.6.11_linux_amd64.zip \
+  && wget --no-verbose https://releases.hashicorp.com/terraform/0.6.16/terraform_0.6.16_linux_amd64.zip \
+  && unzip terraform_0.6.16_linux_amd64.zip \
   && rm terraform*.zip \
   && mv terraform* /usr/local/bin \
   && cd /tmp \
@@ -174,7 +174,7 @@ RUN apt-get -qq update \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # Install a bunch of utilities through pip
-RUN pip install awscli virtualenv boto dopy cookiecutter docker-compose
+RUN pip install awscli virtualenv boto dopy cookiecutter docker-compose requests==2.7.0
 
 # Install the released version of ansible
 RUN apt-get -qq update \
