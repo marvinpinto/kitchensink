@@ -227,7 +227,7 @@ RUN apt-get -qq update \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # Install a few gems
-RUN gem install travis bundle --no-rdoc --no-ri
+RUN gem install travis bundle reckon --no-rdoc --no-ri
 
 # Install the lego letsencrypt client
 RUN mkdir -p /tmp/lego \
