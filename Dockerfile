@@ -158,8 +158,8 @@ RUN mkdir -p /tmp/terraform \
 # Install ngrok to /usr/local/bin
 RUN mkdir -p /tmp/ngrok \
   && cd /tmp/ngrok \
-  && wget --no-verbose https://dl.ngrok.com/ngrok_2.0.19_linux_amd64.zip \
-  && unzip ngrok_2.0.19_linux_amd64.zip \
+  && wget --no-verbose https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip \
+  && unzip ngrok-stable-linux-amd64.zip \
   && rm ngrok*.zip \
   && mv ngrok /usr/local/bin \
   && cd /tmp \
