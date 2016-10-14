@@ -148,8 +148,8 @@ RUN mkdir -p /tmp/packer \
 # Install terraform to /usr/local/bin
 RUN mkdir -p /tmp/terraform \
   && cd /tmp/terraform \
-  && wget --no-verbose https://releases.hashicorp.com/terraform/0.6.16/terraform_0.6.16_linux_amd64.zip \
-  && unzip terraform_0.6.16_linux_amd64.zip \
+  && wget --no-verbose https://releases.hashicorp.com/terraform/0.7.5/terraform_0.7.5_linux_amd64.zip \
+  && unzip terraform_0.7.5_linux_amd64.zip \
   && rm terraform*.zip \
   && mv terraform* /usr/local/bin \
   && cd /tmp \
@@ -158,8 +158,8 @@ RUN mkdir -p /tmp/terraform \
 # Install ngrok to /usr/local/bin
 RUN mkdir -p /tmp/ngrok \
   && cd /tmp/ngrok \
-  && wget --no-verbose https://dl.ngrok.com/ngrok_2.0.19_linux_amd64.zip \
-  && unzip ngrok_2.0.19_linux_amd64.zip \
+  && wget --no-verbose https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip \
+  && unzip ngrok-stable-linux-amd64.zip \
   && rm ngrok*.zip \
   && mv ngrok /usr/local/bin \
   && cd /tmp \
@@ -208,9 +208,9 @@ RUN mkdir -p /tmp/java \
 # Install Maven
 RUN mkdir -p /tmp/maven \
   && cd /tmp/maven \
-  && wget --no-verbose http://apache.mirror.rafal.ca/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz \
-  && tar xzf apache-maven-3.3.3-bin.tar.gz \
-  && mv apache-maven-3.3.3 /usr/share/maven3 \
+  && wget --no-verbose http://apache.mirror.rafal.ca/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz \
+  && tar xzf apache-maven-3.3.9-bin.tar.gz \
+  && mv apache-maven-3.3.9 /usr/share/maven3 \
   && update-alternatives --install /usr/bin/mvn mvn /usr/share/maven3/bin/mvn 1 \
   && update-alternatives --set mvn /usr/share/maven3/bin/mvn \
   && cd /tmp \
@@ -227,12 +227,12 @@ RUN apt-get -qq update \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # Install a few gems
-RUN gem install travis bundle --no-rdoc --no-ri
+RUN gem install travis bundle reckon --no-rdoc --no-ri
 
 # Install the lego letsencrypt client
 RUN mkdir -p /tmp/lego \
   && cd /tmp/lego \
-  && wget --no-verbose -O lego.tar.xz https://github.com/xenolf/lego/releases/download/v0.3.0/lego_linux_amd64.tar.xz \
+  && wget --no-verbose -O lego.tar.xz https://github.com/xenolf/lego/releases/download/v0.3.1/lego_linux_amd64.tar.xz \
   && tar xf lego.tar.xz \
   && mv lego/lego /usr/local/bin/ \
   && cd /tmp \
