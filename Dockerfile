@@ -265,19 +265,11 @@ RUN curl -L https://toolbelt.heroku.com/apt/release.key | sudo apt-key add - \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/ \
   && heroku --version
 
-# Setup home environment
-RUN useradd marvin \
-  && echo "marvin ALL = NOPASSWD: ALL" > /etc/sudoers.d/00-marvin \
-  &&  mkdir /home/marvin \
-  && chown -R marvin: /home/marvin \
-  && usermod -aG docker marvin \
-  &&  mkdir -p /home/marvin/bin /home/marvin/tmp
-
 # Install the diff-highlight script
-RUN mkdir -p /home/marvin/bin \
-  && wget -O /home/marvin/bin/diff-highlight https://raw.githubusercontent.com/git/git/master/contrib/diff-highlight/diff-highlight \
-  && chown marvin: /home/marvin/bin/diff-highlight \
-  && chmod +x /home/marvin/bin/diff-highlight
+RUN mkdir -p /root/bin \
+  && wget -O /root/bin/diff-highlight https://raw.githubusercontent.com/git/git/master/contrib/diff-highlight/diff-highlight \
+  && chown root: /root/bin/diff-highlight \
+  && chmod +x /root/bin/diff-highlight
 
 # Create a shared data volume
 # We need to create an empty file, otherwise the volume will
@@ -285,11 +277,11 @@ RUN mkdir -p /home/marvin/bin \
 # This is probably a Docker bug.
 RUN mkdir /var/shared/ \
   && touch /var/shared/placeholder \
-  && chown -R marvin: /var/shared
+  && chown -R root: /var/shared
 VOLUME /var/shared
 
 # Link in shared parts of the home directory
-WORKDIR /home/marvin
+WORKDIR /root
 RUN ln -s /var/shared/.ssh \
   && ln -s /var/shared/.bash_logout \
   && ln -s /var/shared/.bash_profile\
@@ -302,7 +294,7 @@ RUN ln -s /var/shared/.ssh \
   && ln -s /var/shared/Dropbox/freshbooks \
   && ln -s /var/shared/Dropbox/projects \
   && ln -s /var/shared/Dropbox/gnupg .gnupg \
-  && chown -R marvin: /home/marvin
+  && chown -R root: /root
 
 # Set up the golang development environment
 RUN mkdir -p /goprojects/bin
@@ -310,16 +302,16 @@ RUN mkdir -p /goprojects/pkg
 RUN mkdir -p /goprojects/src
 RUN mkdir -p /goprojects/src/github.com/marvinpinto
 RUN mkdir -p /goprojects/src/github.com/opensentinel
-RUN chown -R marvin: /goprojects
+RUN chown -R root: /goprojects
 ENV GOPATH /goprojects
 
 # Set the environment variables
-ENV HOME /home/marvin
-ENV PATH /home/marvin/bin:$PATH
+ENV HOME /root
+ENV PATH /root/bin:$PATH
 ENV PATH /usr/local/go/bin:$PATH
 ENV PATH $GOPATH/bin:$PATH
-ENV PATH /home/marvin/.local/bin:$PATH
+ENV PATH /root/.local/bin:$PATH
 
-USER marvin
+USER root
 
 ENTRYPOINT "/bin/bash"
