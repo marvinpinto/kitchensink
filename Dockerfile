@@ -237,7 +237,8 @@ VOLUME /var/shared
 
 # Link in shared parts of the home directory
 WORKDIR /root
-RUN ln -s /var/shared/.ssh \
+RUN rm -f .bashrc .profile \
+  && ln -s /var/shared/.ssh \
   && ln -s /var/shared/.bash_logout \
   && ln -s /var/shared/.bash_profile\
   && ln -s /var/shared/.bashrc \
