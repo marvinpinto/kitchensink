@@ -186,36 +186,6 @@ RUN apt-get -qq update \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-# Install Java
-RUN mkdir -p /tmp/java \
-  && cd /tmp/java \
-  && wget \
-      --no-verbose \
-      --no-check-certificate \
-      --no-cookies \
-      --header "Cookie: oraclelicense=accept-securebackup-cookie" \
-      http://download.oracle.com/otn-pub/java/jdk/8u51-b16/jdk-8u51-linux-x64.tar.gz \
-  && tar xzf jdk-8u51-linux-x64.tar.gz \
-  && mkdir -p /usr/lib/jvm \
-  && mv jdk1.8.0_51 /usr/lib/jvm/ \
-  && update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk1.8.0_51/bin/javac 1 \
-  && update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk1.8.0_51/bin/java 1 \
-  && update-alternatives --set javac /usr/lib/jvm/jdk1.8.0_51/bin/javac \
-  && update-alternatives --set java /usr/lib/jvm/jdk1.8.0_51/bin/java \
-  && cd /tmp \
-  && rm -rf java
-
-# Install Maven
-RUN mkdir -p /tmp/maven \
-  && cd /tmp/maven \
-  && wget --no-verbose http://apache.mirror.rafal.ca/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz \
-  && tar xzf apache-maven-3.3.9-bin.tar.gz \
-  && mv apache-maven-3.3.9 /usr/share/maven3 \
-  && update-alternatives --install /usr/bin/mvn mvn /usr/share/maven3/bin/mvn 1 \
-  && update-alternatives --set mvn /usr/share/maven3/bin/mvn \
-  && cd /tmp \
-  && rm -rf maven
-
 # Install ruby 2.3
 RUN apt-get -qq update \
   && apt-add-repository -y ppa:brightbox/ruby-ng \
@@ -250,34 +220,11 @@ RUN curl -L https://packagecloud.io/github/git-lfs/gpgkey | sudo apt-key add - \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-# Install the wercker CLI
-RUN curl -L https://github.com/wercker/wercker/releases/download/1.0.547/wercker_linux_amd64 -o /usr/local/bin/wercker \
-  && chmod 0755 /usr/local/bin/wercker
-
-# Install Heroku Toolbelt
-RUN curl -L https://toolbelt.heroku.com/apt/release.key | sudo apt-key add - \
-  && echo "deb http://toolbelt.heroku.com/ubuntu ./" > /etc/apt/sources.list.d/heroku.list \
-  && apt-get -qq update \
-  && apt-get install -y heroku-toolbelt postgresql \
-  && apt-get clean autoclean \
-  && apt-get autoremove -y --purge \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-  && rm -rf /var/lib/{apt,dpkg,cache,log}/ \
-  && heroku --version
-
-# Setup home environment
-RUN useradd marvin \
-  && echo "marvin ALL = NOPASSWD: ALL" > /etc/sudoers.d/00-marvin \
-  &&  mkdir /home/marvin \
-  && chown -R marvin: /home/marvin \
-  && usermod -aG docker marvin \
-  &&  mkdir -p /home/marvin/bin /home/marvin/tmp
-
 # Install the diff-highlight script
-RUN mkdir -p /home/marvin/bin \
-  && wget -O /home/marvin/bin/diff-highlight https://raw.githubusercontent.com/git/git/master/contrib/diff-highlight/diff-highlight \
-  && chown marvin: /home/marvin/bin/diff-highlight \
-  && chmod +x /home/marvin/bin/diff-highlight
+RUN mkdir -p /root/bin \
+  && wget -O /root/bin/diff-highlight https://raw.githubusercontent.com/git/git/master/contrib/diff-highlight/diff-highlight \
+  && chown root: /root/bin/diff-highlight \
+  && chmod +x /root/bin/diff-highlight
 
 # Create a shared data volume
 # We need to create an empty file, otherwise the volume will
@@ -285,12 +232,13 @@ RUN mkdir -p /home/marvin/bin \
 # This is probably a Docker bug.
 RUN mkdir /var/shared/ \
   && touch /var/shared/placeholder \
-  && chown -R marvin: /var/shared
+  && chown -R root: /var/shared
 VOLUME /var/shared
 
 # Link in shared parts of the home directory
-WORKDIR /home/marvin
-RUN ln -s /var/shared/.ssh \
+WORKDIR /root
+RUN rm -f .bashrc .profile \
+  && ln -s /var/shared/.ssh \
   && ln -s /var/shared/.bash_logout \
   && ln -s /var/shared/.bash_profile\
   && ln -s /var/shared/.bashrc \
@@ -302,7 +250,7 @@ RUN ln -s /var/shared/.ssh \
   && ln -s /var/shared/Dropbox/freshbooks \
   && ln -s /var/shared/Dropbox/projects \
   && ln -s /var/shared/Dropbox/gnupg .gnupg \
-  && chown -R marvin: /home/marvin
+  && chown -R root: /root
 
 # Set up the golang development environment
 RUN mkdir -p /goprojects/bin
@@ -310,16 +258,16 @@ RUN mkdir -p /goprojects/pkg
 RUN mkdir -p /goprojects/src
 RUN mkdir -p /goprojects/src/github.com/marvinpinto
 RUN mkdir -p /goprojects/src/github.com/opensentinel
-RUN chown -R marvin: /goprojects
+RUN chown -R root: /goprojects
 ENV GOPATH /goprojects
 
 # Set the environment variables
-ENV HOME /home/marvin
-ENV PATH /home/marvin/bin:$PATH
+ENV HOME /root
+ENV PATH /root/bin:$PATH
 ENV PATH /usr/local/go/bin:$PATH
 ENV PATH $GOPATH/bin:$PATH
-ENV PATH /home/marvin/.local/bin:$PATH
+ENV PATH /root/.local/bin:$PATH
 
-USER marvin
+USER root
 
 ENTRYPOINT "/bin/bash"
