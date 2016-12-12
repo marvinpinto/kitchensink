@@ -250,10 +250,6 @@ RUN curl -L https://packagecloud.io/github/git-lfs/gpgkey | sudo apt-key add - \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-# Install the wercker CLI
-RUN curl -L https://github.com/wercker/wercker/releases/download/1.0.547/wercker_linux_amd64 -o /usr/local/bin/wercker \
-  && chmod 0755 /usr/local/bin/wercker
-
 # Install the diff-highlight script
 RUN mkdir -p /root/bin \
   && wget -O /root/bin/diff-highlight https://raw.githubusercontent.com/git/git/master/contrib/diff-highlight/diff-highlight \
