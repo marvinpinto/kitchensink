@@ -57,6 +57,10 @@ RUN apt-get -qq update \
     bc \
     lcov \
     man \
+    gnupg2 \
+    gnupg-agent \
+    pinentry-curses \
+  && ln -s /usr/bin/gpg2 /usr/local/bin/gpg \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
@@ -247,9 +251,9 @@ RUN rm -f .bashrc .profile \
   && ln -s /var/shared/.profile \
   && ln -s /var/shared/.vim \
   && ln -s /var/shared/.vimrc \
+  && ln -s /var/shared/.gnupg \
   && ln -s /var/shared/Dropbox/freshbooks \
   && ln -s /var/shared/Dropbox/projects \
-  && ln -s /var/shared/Dropbox/gnupg .gnupg \
   && chown -R root: /root
 
 # Set up the golang development environment
