@@ -131,14 +131,6 @@ RUN apt-get install -y software-properties-common \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-# Install docker
-RUN wget --no-verbose -O /tmp/docker.sh https://get.docker.com/ \
-  && /bin/sh /tmp/docker.sh \
-  && apt-get clean autoclean \
-  && apt-get autoremove -y --purge \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-  && rm -rf /var/lib/{apt,dpkg,cache,log}/
-
 # Install packer to /usr/local/bin
 RUN mkdir -p /tmp/packer \
   && cd /tmp/packer \
@@ -178,7 +170,7 @@ RUN apt-get -qq update \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # Install a bunch of utilities through pip
-RUN pip install awscli virtualenv boto dopy cookiecutter docker-compose requests==2.7.0
+RUN pip install awscli virtualenv boto dopy cookiecutter requests
 
 # Install the released version of ansible
 RUN apt-get -qq update \
