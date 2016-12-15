@@ -84,10 +84,6 @@ RUN wget --no-verbose -O /tmp/nodejs.sh https://deb.nodesource.com/setup_5.x \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-# Install keybase + related
-RUN npm install -g keybase-installer \
-  && /usr/bin/keybase-installer
-
 # Install ember-cli
 RUN npm install -g ember-cli@2.5.0
 
