@@ -84,6 +84,9 @@ RUN wget --no-verbose -O /tmp/nodejs.sh https://deb.nodesource.com/setup_5.x \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
+# Install the npm bash completion script
+RUN wget --no-verbose -O /etc/bash_completion.d/npm https://raw.githubusercontent.com/npm/npm/v4.1.0/lib/utils/completion.sh
+
 # Install ember-cli
 RUN npm install -g ember-cli@2.5.0
 
