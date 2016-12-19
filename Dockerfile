@@ -181,6 +181,25 @@ RUN apt-get -qq update \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
+# Install Java
+RUN mkdir -p /tmp/java \
+ && cd /tmp/java \
+ && wget \
+     --no-verbose \
+     --no-check-certificate \
+     --no-cookies \
+     --header "Cookie: oraclelicense=accept-securebackup-cookie" \
+     http://download.oracle.com/otn-pub/java/jdk/8u51-b16/jdk-8u51-linux-x64.tar.gz \
+ && tar xzf jdk-8u51-linux-x64.tar.gz \
+ && mkdir -p /usr/lib/jvm \
+ && mv jdk1.8.0_51 /usr/lib/jvm/ \
+ && update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk1.8.0_51/bin/javac 1 \
+ && update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk1.8.0_51/bin/java 1 \
+ && update-alternatives --set javac /usr/lib/jvm/jdk1.8.0_51/bin/javac \
+ && update-alternatives --set java /usr/lib/jvm/jdk1.8.0_51/bin/java \
+ && cd /tmp \
+ && rm -rf java
+
 # Install ruby 2.3
 RUN apt-get -qq update \
   && apt-add-repository -y ppa:brightbox/ruby-ng \
