@@ -159,7 +159,9 @@ RUN mkdir -p /tmp/ngrok \
   && rm ngrok*.zip \
   && mv ngrok /usr/local/bin \
   && cd /tmp \
-  && rm -rf ngrok
+  && rm -rf ngrok \
+  && mkdir -p /root/.ngrok2 \
+  && echo "web_addr: '0.0.0.0:4040'" > /root/.ngrok2/ngrok.yml
 
 # Install python3 + friends
 RUN apt-get -qq update \
