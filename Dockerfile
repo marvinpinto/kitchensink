@@ -60,6 +60,7 @@ RUN apt-get -qq update \
     gnupg2 \
     gnupg-agent \
     pinentry-curses \
+    psmisc \
   && ln -s /usr/bin/gpg2 /usr/local/bin/gpg \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
