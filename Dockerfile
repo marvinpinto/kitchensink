@@ -77,7 +77,7 @@ RUN echo "America/Toronto" > /etc/timezone \
 RUN curl https://storage.googleapis.com/golang/go1.5.3.linux-amd64.tar.gz | tar -C /usr/local -zx
 
 # Install nodejs
-RUN wget --no-verbose -O /tmp/nodejs.sh https://deb.nodesource.com/setup_5.x \
+RUN wget --no-verbose -O /tmp/nodejs.sh https://deb.nodesource.com/setup_6.x \
   && /bin/bash /tmp/nodejs.sh \
   && apt-get install -y nodejs \
   && apt-get clean autoclean \
