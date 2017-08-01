@@ -160,9 +160,7 @@ RUN mkdir -p /tmp/ngrok \
   && rm ngrok*.zip \
   && mv ngrok /usr/local/bin \
   && cd /tmp \
-  && rm -rf ngrok \
-  && mkdir -p /root/.ngrok2 \
-  && echo "web_addr: '0.0.0.0:4040'" > /root/.ngrok2/ngrok.yml
+  && rm -rf ngrok
 
 # Install python3 + friends
 RUN apt-get -qq update \
@@ -278,6 +276,7 @@ RUN rm -f .bashrc .profile \
   && ln -s /var/shared/.vim \
   && ln -s /var/shared/.vimrc \
   && ln -s /var/shared/.gnupg \
+  && ln -s /var/shared/.ngrok2 \
   && ln -s /var/shared/Dropbox/freshbooks \
   && ln -s /var/shared/Dropbox/projects \
   && chown -R root: /root
