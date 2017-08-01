@@ -61,6 +61,7 @@ RUN apt-get -qq update \
     gnupg-agent \
     pinentry-curses \
     psmisc \
+    apt-transport-https \
   && ln -s /usr/bin/gpg2 /usr/local/bin/gpg \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
@@ -228,7 +229,6 @@ RUN mkdir -p /tmp/lego \
 # Install git-lfs
 RUN curl -L https://packagecloud.io/github/git-lfs/gpgkey | sudo apt-key add - \
   && apt-get -qq update \
-  && apt-get install -y apt-transport-https \
   && echo "deb https://packagecloud.io/github/git-lfs/ubuntu/ trusty main" >> /etc/apt/sources.list.d/github_git-lfs.list \
   && apt-get -qq update \
   && apt-get install -y git-lfs \
@@ -242,6 +242,19 @@ RUN mkdir -p /root/bin \
   && wget -O /root/bin/diff-highlight https://raw.githubusercontent.com/git/git/master/contrib/diff-highlight/diff-highlight \
   && chown root: /root/bin/diff-highlight \
   && chmod +x /root/bin/diff-highlight
+
+# Install the yarn package manager
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - \
+  && echo "deb https://dl.yarnpkg.com/debian/ stable main" >> /etc/apt/sources.list.d/yarn.list \
+  && apt-get -qq update \
+  && apt-get install -y yarn \
+  && apt-get clean autoclean \
+  && apt-get autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && rm -rf /var/lib/{apt,dpkg,cache,log}/
+
+# Install the yarn bash completion script
+RUN wget --no-verbose -O /etc/bash_completion.d/yarn https://raw.githubusercontent.com/dsifford/yarn-completion/master/yarn-completion.bash
 
 # Create a shared data volume
 # We need to create an empty file, otherwise the volume will
