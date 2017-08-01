@@ -238,7 +238,7 @@ RUN curl -L https://packagecloud.io/github/git-lfs/gpgkey | sudo apt-key add - \
 
 # Install the diff-highlight script
 RUN mkdir -p /root/bin \
-  && wget -O /root/bin/diff-highlight https://raw.githubusercontent.com/git/git/master/contrib/diff-highlight/diff-highlight \
+  && wget -O /root/bin/diff-highlight https://raw.githubusercontent.com/git/git/fd99e2bda0ca6a361ef03c04d6d7fdc7a9c40b78/contrib/diff-highlight/diff-highlight \
   && chown root: /root/bin/diff-highlight \
   && chmod +x /root/bin/diff-highlight
 
