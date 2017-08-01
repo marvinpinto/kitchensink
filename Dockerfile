@@ -17,7 +17,7 @@ RUN apt-get -qq update \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # Install the latest 2.7.x version of python
-RUN apt-get -qq update \
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5BB92C09DB82666C \
   && apt-add-repository -y ppa:fkrull/deadsnakes-python2.7 \
   && apt-get -qq update \
   && apt-get install -y python2.7 \
@@ -61,6 +61,7 @@ RUN apt-get -qq update \
     gnupg-agent \
     pinentry-curses \
     psmisc \
+    apt-transport-https \
   && ln -s /usr/bin/gpg2 /usr/local/bin/gpg \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
@@ -159,9 +160,7 @@ RUN mkdir -p /tmp/ngrok \
   && rm ngrok*.zip \
   && mv ngrok /usr/local/bin \
   && cd /tmp \
-  && rm -rf ngrok \
-  && mkdir -p /root/.ngrok2 \
-  && echo "web_addr: '0.0.0.0:4040'" > /root/.ngrok2/ngrok.yml
+  && rm -rf ngrok
 
 # Install python3 + friends
 RUN apt-get -qq update \
@@ -184,22 +183,23 @@ RUN apt-get -qq update \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-# Install Java
+# Install Java - download URLs: http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
 RUN mkdir -p /tmp/java \
  && cd /tmp/java \
  && wget \
+     -O jdk.tar.gz \
      --no-verbose \
      --no-check-certificate \
      --no-cookies \
      --header "Cookie: oraclelicense=accept-securebackup-cookie" \
-     http://download.oracle.com/otn-pub/java/jdk/8u51-b16/jdk-8u51-linux-x64.tar.gz \
- && tar xzf jdk-8u51-linux-x64.tar.gz \
+     http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-x64.tar.gz \
+ && tar xzf jdk.tar.gz \
  && mkdir -p /usr/lib/jvm \
- && mv jdk1.8.0_51 /usr/lib/jvm/ \
- && update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk1.8.0_51/bin/javac 1 \
- && update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk1.8.0_51/bin/java 1 \
- && update-alternatives --set javac /usr/lib/jvm/jdk1.8.0_51/bin/javac \
- && update-alternatives --set java /usr/lib/jvm/jdk1.8.0_51/bin/java \
+ && mv jdk1.8.0_144 /usr/lib/jvm/ \
+ && update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk1.8.0_144/bin/javac 1 \
+ && update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk1.8.0_144/bin/java 1 \
+ && update-alternatives --set javac /usr/lib/jvm/jdk1.8.0_144/bin/javac \
+ && update-alternatives --set java /usr/lib/jvm/jdk1.8.0_144/bin/java \
  && cd /tmp \
  && rm -rf java
 
@@ -228,7 +228,6 @@ RUN mkdir -p /tmp/lego \
 # Install git-lfs
 RUN curl -L https://packagecloud.io/github/git-lfs/gpgkey | sudo apt-key add - \
   && apt-get -qq update \
-  && apt-get install -y apt-transport-https \
   && echo "deb https://packagecloud.io/github/git-lfs/ubuntu/ trusty main" >> /etc/apt/sources.list.d/github_git-lfs.list \
   && apt-get -qq update \
   && apt-get install -y git-lfs \
@@ -239,9 +238,22 @@ RUN curl -L https://packagecloud.io/github/git-lfs/gpgkey | sudo apt-key add - \
 
 # Install the diff-highlight script
 RUN mkdir -p /root/bin \
-  && wget -O /root/bin/diff-highlight https://raw.githubusercontent.com/git/git/master/contrib/diff-highlight/diff-highlight \
+  && wget -O /root/bin/diff-highlight https://raw.githubusercontent.com/git/git/fd99e2bda0ca6a361ef03c04d6d7fdc7a9c40b78/contrib/diff-highlight/diff-highlight \
   && chown root: /root/bin/diff-highlight \
   && chmod +x /root/bin/diff-highlight
+
+# Install the yarn package manager
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - \
+  && echo "deb https://dl.yarnpkg.com/debian/ stable main" >> /etc/apt/sources.list.d/yarn.list \
+  && apt-get -qq update \
+  && apt-get install -y yarn \
+  && apt-get clean autoclean \
+  && apt-get autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && rm -rf /var/lib/{apt,dpkg,cache,log}/
+
+# Install the yarn bash completion script
+RUN wget --no-verbose -O /etc/bash_completion.d/yarn https://raw.githubusercontent.com/dsifford/yarn-completion/master/yarn-completion.bash
 
 # Create a shared data volume
 # We need to create an empty file, otherwise the volume will
@@ -265,6 +277,7 @@ RUN rm -f .bashrc .profile \
   && ln -s /var/shared/.vim \
   && ln -s /var/shared/.vimrc \
   && ln -s /var/shared/.gnupg \
+  && ln -s /var/shared/.ngrok2 \
   && ln -s /var/shared/Dropbox/freshbooks \
   && ln -s /var/shared/Dropbox/projects \
   && chown -R root: /root
