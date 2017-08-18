@@ -297,6 +297,7 @@ ENV PATH /root/bin:$PATH
 ENV PATH /usr/local/go/bin:$PATH
 ENV PATH $GOPATH/bin:$PATH
 ENV PATH /root/.local/bin:$PATH
+ENV PATH /root/.gem/ruby/2.3.0/bin:$PATH
 
 USER root
 
