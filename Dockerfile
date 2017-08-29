@@ -91,12 +91,6 @@ RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | b
 # Install the npm bash completion script
 RUN wget --no-verbose -O /etc/bash_completion.d/npm https://raw.githubusercontent.com/npm/npm/v4.1.0/lib/utils/completion.sh
 
-# Install ember-cli
-RUN npm install -g ember-cli@2.5.0
-
-# Install bower
-RUN npm install -g bower@1.7.9
-
 # Install the statically linked version of wkhtmltopdf
 RUN wget --no-verbose -O /tmp/wkhtmltopdf https://github.com/h4cc/wkhtmltopdf-amd64/raw/master/bin/wkhtmltopdf-amd64 \
   && mv /tmp/wkhtmltopdf /usr/local/bin/ \
