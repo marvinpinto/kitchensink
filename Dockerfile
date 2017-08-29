@@ -77,14 +77,16 @@ RUN echo "America/Toronto" > /etc/timezone \
 # Install go
 RUN curl https://storage.googleapis.com/golang/go1.5.3.linux-amd64.tar.gz | tar -C /usr/local -zx
 
-# Install nodejs
-RUN wget --no-verbose -O /tmp/nodejs.sh https://deb.nodesource.com/setup_6.x \
-  && /bin/bash /tmp/nodejs.sh \
-  && apt-get install -y nodejs \
-  && apt-get clean autoclean \
-  && apt-get autoremove -y --purge \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-  && rm -rf /var/lib/{apt,dpkg,cache,log}/
+# Install nvm and the LTS & current version of NodeJS
+# Note that 6.11.2 is the current LTS version, and 8.4.0 is the current stable version
+ENV NVM_DIR /usr/local/nvm
+ENV NODE_VERSION 8.4.0
+RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash \
+    && . $NVM_DIR/nvm.sh \
+    && nvm install 6.11.2 \
+    && nvm install $NODE_VERSION \
+    && nvm alias default $NODE_VERSION \
+    && nvm use default
 
 # Install the npm bash completion script
 RUN wget --no-verbose -O /etc/bash_completion.d/npm https://raw.githubusercontent.com/npm/npm/v4.1.0/lib/utils/completion.sh
@@ -298,6 +300,8 @@ ENV PATH /usr/local/go/bin:$PATH
 ENV PATH $GOPATH/bin:$PATH
 ENV PATH /root/.local/bin:$PATH
 ENV PATH /root/.gem/ruby/2.3.0/bin:$PATH
+ENV PATH $NVM_DIR/version/node/v$NODE_VERSION/bin:$PATH
+ENV NODE_PATH $NVM_DIR/version/node/v$NODE_VERSION/lib/node_modules
 
 USER root
 
