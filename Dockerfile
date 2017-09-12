@@ -62,6 +62,12 @@ RUN apt-get -qq update \
     pinentry-curses \
     psmisc \
     apt-transport-https \
+    libxcursor1 \
+    libnss3 \
+    libgconf-2-4 \
+    libasound2 \
+    libatk1.0-0 \
+    libgtk-3-0 \
   && ln -s /usr/bin/gpg2 /usr/local/bin/gpg \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
