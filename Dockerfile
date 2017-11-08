@@ -89,6 +89,7 @@ ENV NVM_DIR /usr/local/nvm
 ENV NODE_VERSION 8.4.0
 RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash \
     && . $NVM_DIR/nvm.sh \
+    && nvm install 6.10.3 \
     && nvm install 6.11.2 \
     && nvm install $NODE_VERSION \
     && nvm alias default $NODE_VERSION \
