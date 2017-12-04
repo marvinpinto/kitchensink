@@ -34,6 +34,7 @@ RUN apt-get -qq update \
     python-dev \
     curl \
     vim \
+    vim-gtk \
     strace \
     diffstat \
     pkg-config \
