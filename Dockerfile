@@ -284,6 +284,7 @@ RUN rm -f .bashrc .profile \
   && ln -s /var/shared/.ngrok2 \
   && ln -s /var/shared/Dropbox/freshbooks \
   && ln -s /var/shared/Dropbox/projects \
+  && ln -s /var/shared/Dropbox/scratchpad.md \
   && chown -R root: /root
 
 # Set up the golang development environment
