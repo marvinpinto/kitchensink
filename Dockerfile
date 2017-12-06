@@ -1,8 +1,8 @@
 # vim: set filetype=dockerfile :
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
-# Add the trusty-proposed repo
-RUN echo "deb http://archive.ubuntu.com/ubuntu/ trusty-proposed restricted main multiverse universe" >> /etc/apt/sources.list
+# Add the xenial-proposed repo
+RUN echo "deb http://archive.ubuntu.com/ubuntu/ xenial-proposed restricted main multiverse universe" >> /etc/apt/sources.list
 
 # Install git
 RUN apt-get -qq update \
@@ -11,16 +11,6 @@ RUN apt-get -qq update \
   && apt-get -qq update \
   && apt-get install -y \
     git \
-  && apt-get clean autoclean \
-  && apt-get autoremove -y --purge \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-  && rm -rf /var/lib/{apt,dpkg,cache,log}/
-
-# Install the latest 2.7.x version of python
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5BB92C09DB82666C \
-  && apt-add-repository -y ppa:fkrull/deadsnakes-python2.7 \
-  && apt-get -qq update \
-  && apt-get install -y python2.7 \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
@@ -69,7 +59,8 @@ RUN apt-get -qq update \
     libasound2 \
     libatk1.0-0 \
     libgtk-3-0 \
-  && ln -s /usr/bin/gpg2 /usr/local/bin/gpg \
+    locales \
+    sudo \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
@@ -168,7 +159,7 @@ RUN mkdir -p /tmp/ngrok \
 
 # Install python3 + friends
 RUN apt-get -qq update \
-  && apt-get install -y python3 python3-dev python3-pip python3.4-venv \
+  && apt-get install -y python3 python3-dev python3-pip python3-virtualenv \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
@@ -209,8 +200,6 @@ RUN mkdir -p /tmp/java \
 
 # Install ruby 2.3
 RUN apt-get -qq update \
-  && apt-add-repository -y ppa:brightbox/ruby-ng \
-  && apt-get -qq update \
   && apt-get install -y ruby2.3 ruby2.3-dev zlib1g-dev \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
@@ -232,7 +221,7 @@ RUN mkdir -p /tmp/lego \
 # Install git-lfs
 RUN curl -L https://packagecloud.io/github/git-lfs/gpgkey | sudo apt-key add - \
   && apt-get -qq update \
-  && echo "deb https://packagecloud.io/github/git-lfs/ubuntu/ trusty main" >> /etc/apt/sources.list.d/github_git-lfs.list \
+  && echo "deb https://packagecloud.io/github/git-lfs/ubuntu/ xenial main" >> /etc/apt/sources.list.d/github_git-lfs.list \
   && apt-get -qq update \
   && apt-get install -y git-lfs \
   && apt-get clean autoclean \
