@@ -60,6 +60,7 @@ RUN apt-get -qq update \
     libatk1.0-0 \
     libgtk-3-0 \
     locales \
+    sudo \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
