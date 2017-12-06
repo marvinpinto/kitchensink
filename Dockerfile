@@ -200,8 +200,6 @@ RUN mkdir -p /tmp/java \
 
 # Install ruby 2.3
 RUN apt-get -qq update \
-  && apt-add-repository -y ppa:brightbox/ruby-ng \
-  && apt-get -qq update \
   && apt-get install -y ruby2.3 ruby2.3-dev zlib1g-dev \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
