@@ -61,6 +61,7 @@ RUN apt-get -qq update \
     libgtk-3-0 \
     locales \
     sudo \
+    xterm \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
