@@ -59,6 +59,7 @@ RUN apt-get -qq update \
     libasound2 \
     libatk1.0-0 \
     libgtk-3-0 \
+    locales \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
