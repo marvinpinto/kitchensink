@@ -68,10 +68,18 @@ RUN apt-get -qq update \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # Configure timezone and locale
-RUN echo "America/Toronto" > /etc/timezone \
-  && DEBIAN_FRONTEND=noninteractive dpkg-reconfigure tzdata \
-  && locale-gen en_US en_US.UTF-8 \
-  && DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
+RUN apt-get -qq update \
+  && apt-get install -y language-pack-en-base \
+  && echo "America/Toronto" > /etc/timezone \
+  && ln -fs /usr/share/zoneinfo/Canada/Eastern /etc/localtime && dpkg-reconfigure -f noninteractive tzdata \
+  && echo "LANG=en_US.UTF-8" > /etc/default/locale \
+  && echo "LC_ALL=en_US.UTF-8" >> /etc/default/locale \
+  && LANGUAGE=en_US.UTF-8 LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 locale-gen --purge en_US.UTF-8 \
+  && LANGUAGE=en_US.UTF-8 LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 dpkg-reconfigure -f noninteractive locales \
+  && apt-get clean autoclean \
+  && apt-get autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # Install go
 RUN curl https://storage.googleapis.com/golang/go1.5.3.linux-amd64.tar.gz | tar -C /usr/local -zx
