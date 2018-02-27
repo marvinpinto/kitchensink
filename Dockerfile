@@ -62,6 +62,7 @@ RUN apt-get -qq update \
     locales \
     sudo \
     xterm \
+    ffmpeg \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
