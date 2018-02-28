@@ -16,7 +16,7 @@ script:
 
 deploy:
 - provider: script
-  script: 'docker login -e="." -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" quay.io && docker push quay.io/marvin/kitchensink:latest && docker push quay.io/marvin/kitchensink:16.04'
+  script: 'docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" quay.io && docker push quay.io/marvin/kitchensink:latest && docker push quay.io/marvin/kitchensink:16.04'
   on:
     repo: marvinpinto/kitchensink
     branch: master

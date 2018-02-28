@@ -63,6 +63,8 @@ RUN apt-get -qq update \
     sudo \
     xterm \
     ffmpeg \
+    libtool \
+    libssl-dev \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
@@ -147,11 +149,6 @@ RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | b
 # Install the npm bash completion script
 RUN wget --no-verbose -O /etc/bash_completion.d/npm https://raw.githubusercontent.com/npm/npm/v4.1.0/lib/utils/completion.sh
 
-# Install the statically linked version of wkhtmltopdf
-RUN wget --no-verbose -O /tmp/wkhtmltopdf https://github.com/h4cc/wkhtmltopdf-amd64/raw/master/bin/wkhtmltopdf-amd64 \
-  && mv /tmp/wkhtmltopdf /usr/local/bin/ \
-  && chmod +x /usr/local/bin/wkhtmltopdf
-
 # Install phantomjs
 RUN mkdir -p /tmp/phantomjs \
   && cd /tmp/phantomjs \
@@ -166,7 +163,7 @@ RUN mkdir -p /tmp/watchman \
   && cd /tmp/watchman \
   && git clone https://github.com/facebook/watchman.git \
   && cd watchman \
-  && git checkout v4.3.0 \
+  && git checkout v4.9.0 \
   && ./autogen.sh \
   && ./configure \
   && make \
@@ -244,14 +241,14 @@ RUN mkdir -p /tmp/java \
      --no-check-certificate \
      --no-cookies \
      --header "Cookie: oraclelicense=accept-securebackup-cookie" \
-     http://download.oracle.com/otn-pub/java/jdk/8u152-b16/aa0333dd3019491ca4f6ddbe78cdb6d0/jdk-8u152-linux-x64.tar.gz \
+     http://download.oracle.com/otn-pub/java/jdk/8u162-b12/0da788060d494f5095bf8624735fa2f1/jdk-8u162-linux-x64.tar.gz \
  && tar xzf jdk.tar.gz \
  && mkdir -p /usr/lib/jvm \
- && mv jdk1.8.0_152 /usr/lib/jvm/ \
- && update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk1.8.0_152/bin/javac 1 \
- && update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk1.8.0_152/bin/java 1 \
- && update-alternatives --set javac /usr/lib/jvm/jdk1.8.0_152/bin/javac \
- && update-alternatives --set java /usr/lib/jvm/jdk1.8.0_152/bin/java \
+ && mv jdk1.8.0_162 /usr/lib/jvm/ \
+ && update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk1.8.0_162/bin/javac 1 \
+ && update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk1.8.0_162/bin/java 1 \
+ && update-alternatives --set javac /usr/lib/jvm/jdk1.8.0_162/bin/javac \
+ && update-alternatives --set java /usr/lib/jvm/jdk1.8.0_162/bin/java \
  && cd /tmp \
  && rm -rf java
 
