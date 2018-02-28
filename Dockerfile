@@ -244,14 +244,14 @@ RUN mkdir -p /tmp/java \
      --no-check-certificate \
      --no-cookies \
      --header "Cookie: oraclelicense=accept-securebackup-cookie" \
-     http://download.oracle.com/otn-pub/java/jdk/8u152-b16/aa0333dd3019491ca4f6ddbe78cdb6d0/jdk-8u152-linux-x64.tar.gz \
+     http://download.oracle.com/otn-pub/java/jdk/8u162-b12/0da788060d494f5095bf8624735fa2f1/jdk-8u162-linux-x64.tar.gz \
  && tar xzf jdk.tar.gz \
  && mkdir -p /usr/lib/jvm \
- && mv jdk1.8.0_152 /usr/lib/jvm/ \
- && update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk1.8.0_152/bin/javac 1 \
- && update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk1.8.0_152/bin/java 1 \
- && update-alternatives --set javac /usr/lib/jvm/jdk1.8.0_152/bin/javac \
- && update-alternatives --set java /usr/lib/jvm/jdk1.8.0_152/bin/java \
+ && mv jdk1.8.0_162 /usr/lib/jvm/ \
+ && update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk1.8.0_162/bin/javac 1 \
+ && update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk1.8.0_162/bin/java 1 \
+ && update-alternatives --set javac /usr/lib/jvm/jdk1.8.0_162/bin/javac \
+ && update-alternatives --set java /usr/lib/jvm/jdk1.8.0_162/bin/java \
  && cd /tmp \
  && rm -rf java
 
