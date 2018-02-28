@@ -63,6 +63,8 @@ RUN apt-get -qq update \
     sudo \
     xterm \
     ffmpeg \
+    libtool \
+    libssl-dev \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
@@ -161,7 +163,7 @@ RUN mkdir -p /tmp/watchman \
   && cd /tmp/watchman \
   && git clone https://github.com/facebook/watchman.git \
   && cd watchman \
-  && git checkout v4.3.0 \
+  && git checkout v4.9.0 \
   && ./autogen.sh \
   && ./configure \
   && make \
