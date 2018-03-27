@@ -300,7 +300,7 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # Install the yarn bash completion script
-RUN wget --no-verbose -O /etc/bash_completion.d/yarn https://raw.githubusercontent.com/dsifford/yarn-completion/master/yarn-completion.bash
+RUN wget --no-verbose -O /etc/bash_completion.d/yarn https://raw.githubusercontent.com/dsifford/yarn-completion/v0.6.1/yarn-completion.bash
 
 # Create a shared data volume
 # We need to create an empty file, otherwise the volume will
