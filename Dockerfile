@@ -65,6 +65,7 @@ RUN apt-get -qq update \
     ffmpeg \
     libtool \
     libssl-dev \
+    pass \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
@@ -328,6 +329,7 @@ RUN rm -f .bashrc .profile \
   && ln -s /var/shared/Dropbox/freshbooks \
   && ln -s /var/shared/Dropbox/projects \
   && ln -s /var/shared/Dropbox/scratchpad.md \
+  && ln -s /var/shared/Dropbox/projects/password-store .password-store \
   && chown -R root: /root
 
 # Set up the golang development environment
