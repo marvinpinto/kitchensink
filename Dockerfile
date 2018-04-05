@@ -136,14 +136,14 @@ RUN apt-get -qq update \
 # Install go
 RUN curl https://storage.googleapis.com/golang/go1.5.3.linux-amd64.tar.gz | tar -C /usr/local -zx
 
-# Install nvm and the LTS & current version of NodeJS
-# Note that 6.11.2 is the current LTS version, and 8.4.0 is the current stable version
+# Install nvm and a few needed NodeJS versions
 ENV NVM_DIR /usr/local/nvm
-ENV NODE_VERSION 8.4.0
-RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash \
+ENV NODE_VERSION 8.11.1
+RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash \
     && . $NVM_DIR/nvm.sh \
     && nvm install 6.10.3 \
     && nvm install 6.11.2 \
+    && nvm install 8.10 \
     && nvm install $NODE_VERSION \
     && nvm alias default $NODE_VERSION \
     && nvm use default
