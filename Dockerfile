@@ -67,6 +67,7 @@ RUN apt-get -qq update \
     libssl-dev \
     pass \
     libpng16-dev \
+    iputils-ping \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
