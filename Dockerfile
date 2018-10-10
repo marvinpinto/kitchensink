@@ -134,8 +134,8 @@ RUN apt-get -qq update \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-# Install go
-RUN curl https://storage.googleapis.com/golang/go1.10.2.linux-amd64.tar.gz | tar -C /usr/local -zx
+# Install go (https://golang.org/dl)
+RUN curl https://dl.google.com/go/go1.11.1.linux-amd64.tar.gz | tar -C /usr/local -zx
 
 # Install nvm and a few needed NodeJS versions
 ENV NVM_DIR /usr/local/nvm
