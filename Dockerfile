@@ -222,25 +222,17 @@ RUN apt-get -qq update \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-# Install Java - download URLs: http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
-RUN mkdir -p /tmp/java \
- && cd /tmp/java \
- && wget \
-     -O jdk.tar.gz \
-     --no-verbose \
-     --no-check-certificate \
-     --no-cookies \
-     --header "Cookie: oraclelicense=accept-securebackup-cookie" \
-     http://download.oracle.com/otn-pub/java/jdk/8u181-b13/96a7b8442fe848ef90c96a2fad6ed6d1/jdk-8u181-linux-x64.tar.gz \
- && tar xzf jdk.tar.gz \
- && mkdir -p /usr/lib/jvm \
- && mv jdk1.8.0_181 /usr/lib/jvm/ \
- && update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk1.8.0_181/bin/javac 1 \
- && update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk1.8.0_181/bin/java 1 \
- && update-alternatives --set javac /usr/lib/jvm/jdk1.8.0_181/bin/javac \
- && update-alternatives --set java /usr/lib/jvm/jdk1.8.0_181/bin/java \
- && cd /tmp \
- && rm -rf java
+# Install Java
+RUN apt-get -qq update \
+  && apt-add-repository -y ppa:webupd8team/java \
+  && apt-get -qq update \
+  && echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections \
+  && apt-get install -y \
+    oracle-java8-installer \
+  && apt-get clean autoclean \
+  && apt-get autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # Install ruby 2.3
 RUN apt-get -qq update \
