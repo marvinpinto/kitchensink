@@ -284,6 +284,22 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - \
 # Install the yarn bash completion script
 RUN wget --no-verbose -O /etc/bash_completion.d/yarn https://raw.githubusercontent.com/dsifford/yarn-completion/v0.6.1/yarn-completion.bash
 
+# Utilities needed for gopro video & image processing
+RUN apt-get -qq update \
+  && apt-add-repository -y ppa:mc3man/ffmpeg-test \
+  && apt-get -qq update \
+  && apt-get install -y \
+    ffmpeg-static \
+    exiftool \
+  && apt-get clean autoclean \
+  && apt-get autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && rm -rf /var/lib/{apt,dpkg,cache,log}/ \
+  && wget --no-verbose -O /usr/local/bin/fredim-autocolor "http://www.fmwconcepts.com/imagemagick/downloadcounter.php?scriptname=autocolor&dirname=autocolor" \
+  && chmod 0755 /usr/local/bin/fredim-autocolor \
+  && wget --no-verbose -O /usr/local/bin/fredim-enrich "http://www.fmwconcepts.com/imagemagick/downloadcounter.php?scriptname=enrich&dirname=enrich" \
+  && chmod 0755 /usr/local/bin/fredim-enrich
+
 # Create a shared data volume
 # We need to create an empty file, otherwise the volume will
 # belong to root.
