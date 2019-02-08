@@ -290,6 +290,8 @@ RUN apt-get -qq update \
   && apt-get install -y \
     ffmpeg-static \
     exiftool \
+    sox \
+    libsox-fmt-all \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
