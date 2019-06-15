@@ -68,6 +68,7 @@ RUN apt-get -qq update \
     pass \
     libpng16-dev \
     iputils-ping \
+    jq \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
@@ -300,6 +301,16 @@ RUN apt-get -qq update \
   && chmod 0755 /usr/local/bin/fredim-autocolor \
   && wget --no-verbose -O /usr/local/bin/fredim-enrich "http://www.fmwconcepts.com/imagemagick/downloadcounter.php?scriptname=enrich&dirname=enrich" \
   && chmod 0755 /usr/local/bin/fredim-enrich
+
+# Install 1password cli
+RUN mkdir -p /tmp/op \
+  && cd /tmp/op \
+  && wget --no-verbose https://cache.agilebits.com/dist/1P/op/pkg/v0.5.6-003/op_linux_amd64_v0.5.6-003.zip \
+  && unzip op_linux_amd64_v0.5.6-003.zip \
+  && rm op*.zip \
+  && mv op /usr/local/bin \
+  && cd /tmp \
+  && rm -rf op
 
 # Create a shared data volume
 # We need to create an empty file, otherwise the volume will
