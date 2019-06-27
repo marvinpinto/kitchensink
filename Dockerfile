@@ -69,6 +69,7 @@ RUN apt-get -qq update \
     libpng16-dev \
     iputils-ping \
     jq \
+    pv \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
