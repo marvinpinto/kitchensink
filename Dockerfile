@@ -235,6 +235,19 @@ RUN apt-get -qq update \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
+# Install Maven (see https://stackoverflow.com/a/50103533/1101070 for more context)
+RUN mkdir -p /tmp/maven \
+  && cd /tmp/maven \
+  && wget --no-verbose http://apache.mirror.rafal.ca/maven/maven-3/3.6.1/binaries/apache-maven-3.6.1-bin.tar.gz \
+  && tar xzf apache-maven-3.6.1-bin.tar.gz \
+  && mv apache-maven-3.6.1 /usr/share/maven3 \
+  && update-alternatives --install /usr/bin/mvn mvn /usr/share/maven3/bin/mvn 1 \
+  && update-alternatives --set mvn /usr/share/maven3/bin/mvn \
+  && cd /tmp \
+  && rm -rf maven \
+  && /usr/bin/printf '\xfe\xed\xfe\xed\x00\x00\x00\x02\x00\x00\x00\x00\xe2\x68\x6e\x45\xfb\x43\xdf\xa4\xd9\x92\xdd\x41\xce\xb6\xb2\x1c\x63\x30\xd7\x92' > /etc/ssl/certs/java/cacerts \
+  && /var/lib/dpkg/info/ca-certificates-java.postinst configure
+
 # Install ruby 2.3
 RUN apt-get -qq update \
   && apt-get install -y ruby2.3 ruby2.3-dev zlib1g-dev \
