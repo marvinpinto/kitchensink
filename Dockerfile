@@ -147,6 +147,7 @@ RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | b
     && nvm install 6.10.3 \
     && nvm install 6.11.2 \
     && nvm install 8.10 \
+    && nvm install 10.16.3 \
     && nvm install $NODE_VERSION \
     && nvm alias default $NODE_VERSION \
     && nvm use default
