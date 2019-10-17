@@ -343,6 +343,7 @@ RUN rm -f .bashrc .profile \
   && ln -s /var/shared/.bash_logout \
   && ln -s /var/shared/.bash_profile\
   && ln -s /var/shared/.bashrc \
+  && ln -s /var/shared/.bash.d \
   && ln -s /var/shared/.gitconfig \
   && ln -s /var/shared/.gitignore_global \
   && ln -s /var/shared/.profile \
@@ -350,10 +351,7 @@ RUN rm -f .bashrc .profile \
   && ln -s /var/shared/.vimrc \
   && ln -s /var/shared/.gnupg \
   && ln -s /var/shared/.ngrok2 \
-  && ln -s /var/shared/Dropbox/freshbooks \
   && ln -s /var/shared/Dropbox/projects \
-  && ln -s /var/shared/Dropbox/scratchpad.md \
-  && ln -s /var/shared/Dropbox/projects/password-store .password-store \
   && chown -R root: /root
 
 # Set up the golang development environment
