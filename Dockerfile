@@ -175,16 +175,6 @@ RUN apt-get install -y software-properties-common \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-# Install packer to /usr/local/bin
-RUN mkdir -p /tmp/packer \
-  && cd /tmp/packer \
-  && wget --no-verbose https://releases.hashicorp.com/packer/0.8.6/packer_0.8.6_linux_amd64.zip \
-  && unzip packer_0.8.6_linux_amd64.zip \
-  && mv packer /usr/local/bin \
-  && mv packer-* /usr/local/bin \
-  && cd /tmp \
-  && rm -rf packer
-
 # Install terraform to /usr/local/bin
 RUN mkdir -p /tmp/terraform \
   && cd /tmp/terraform \
@@ -260,15 +250,6 @@ RUN apt-get -qq update \
 
 # Install a few gems
 RUN gem install travis bundle reckon --no-rdoc --no-ri
-
-# Install the lego letsencrypt client
-RUN mkdir -p /tmp/lego \
-  && cd /tmp/lego \
-  && wget --no-verbose -O lego.tar.xz https://github.com/xenolf/lego/releases/download/v0.3.1/lego_linux_amd64.tar.xz \
-  && tar xf lego.tar.xz \
-  && mv lego/lego /usr/local/bin/ \
-  && cd /tmp \
-  && rm -rf lego
 
 # Install git-lfs
 RUN curl -L https://packagecloud.io/github/git-lfs/gpgkey | sudo apt-key add - \
