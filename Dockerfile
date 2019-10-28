@@ -70,6 +70,7 @@ RUN apt-get -qq update \
     iputils-ping \
     jq \
     pv \
+    socat \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
