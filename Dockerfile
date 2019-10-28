@@ -332,6 +332,20 @@ RUN mkdir -p /tmp/op \
 RUN curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-Linux-x86_64" -o /usr/local/bin/docker-compose \
   && chmod +x /usr/local/bin/docker-compose
 
+# Install mkcert within the container
+RUN curl -L "https://github.com/FiloSottile/mkcert/releases/download/v1.4.0/mkcert-v1.4.0-linux-amd64" -o /usr/local/bin/mkcert \
+  && chmod +x /usr/local/bin/mkcert
+
+# Install mitmproxy
+RUN mkdir -p /tmp/mitmproxy \
+  && cd /tmp/mitmproxy \
+  && wget --no-verbose -O mitmproxy.tar.gz https://snapshots.mitmproxy.org/4.0.4/mitmproxy-4.0.4-linux.tar.gz \
+  && tar xf mitmproxy.tar.gz \
+  && rm -f mitmproxy.tar.gz \
+  && mv mitm* /usr/local/bin/ \
+  && cd /tmp \
+  && rm -rf mitmproxy
+
 # Create a shared data volume
 # We need to create an empty file, otherwise the volume will
 # belong to root.
