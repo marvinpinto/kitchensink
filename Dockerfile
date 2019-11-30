@@ -303,8 +303,8 @@ RUN apt-get -qq update \
 # Install 1password cli
 RUN mkdir -p /tmp/op \
   && cd /tmp/op \
-  && wget --no-verbose https://cache.agilebits.com/dist/1P/op/pkg/v0.5.6-003/op_linux_amd64_v0.5.6-003.zip \
-  && unzip op_linux_amd64_v0.5.6-003.zip \
+  && wget --no-verbose https://cache.agilebits.com/dist/1P/op/pkg/v0.8.0/op_linux_amd64_v0.8.0.zip \
+  && unzip op_linux_amd64_v0.8.0.zip \
   && rm op*.zip \
   && mv op /usr/local/bin \
   && cd /tmp \
