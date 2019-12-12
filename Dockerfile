@@ -179,8 +179,8 @@ RUN apt-get install -y software-properties-common \
 # Install terraform to /usr/local/bin
 RUN mkdir -p /tmp/terraform \
   && cd /tmp/terraform \
-  && wget --no-verbose https://releases.hashicorp.com/terraform/0.12.13/terraform_0.12.13_linux_amd64.zip \
-  && unzip terraform_0.12.13_linux_amd64.zip \
+  && wget --no-verbose https://releases.hashicorp.com/terraform/0.12.18/terraform_0.12.18_linux_amd64.zip \
+  && unzip terraform_0.12.18_linux_amd64.zip \
   && rm terraform*.zip \
   && mv terraform* /usr/local/bin \
   && cd /tmp \
