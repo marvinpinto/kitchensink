@@ -243,17 +243,6 @@ RUN mkdir -p /tmp/maven \
   && /usr/bin/printf '\xfe\xed\xfe\xed\x00\x00\x00\x02\x00\x00\x00\x00\xe2\x68\x6e\x45\xfb\x43\xdf\xa4\xd9\x92\xdd\x41\xce\xb6\xb2\x1c\x63\x30\xd7\x92' > /etc/ssl/certs/java/cacerts \
   && /var/lib/dpkg/info/ca-certificates-java.postinst configure
 
-# Install ruby 2.3
-RUN apt-get -qq update \
-  && apt-get install -y ruby2.3 ruby2.3-dev zlib1g-dev \
-  && apt-get clean autoclean \
-  && apt-get autoremove -y --purge \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-  && rm -rf /var/lib/{apt,dpkg,cache,log}/
-
-# Install a few gems
-RUN gem install travis bundle reckon --no-rdoc --no-ri
-
 # Install git-lfs
 RUN curl -L https://packagecloud.io/github/git-lfs/gpgkey | sudo apt-key add - \
   && apt-get -qq update \
@@ -372,7 +361,6 @@ ENV PATH /root/bin:$PATH
 ENV PATH /usr/local/go/bin:$PATH
 ENV PATH $GOPATH/bin:$PATH
 ENV PATH /root/.local/bin:$PATH
-ENV PATH /root/.gem/ruby/2.3.0/bin:$PATH
 ENV PATH $NVM_DIR/version/node/v$NODE_VERSION/bin:$PATH
 ENV NODE_PATH $NVM_DIR/version/node/v$NODE_VERSION/lib/node_modules
 
