@@ -198,7 +198,9 @@ RUN mkdir -p /tmp/ngrok \
 
 # Install python3 + friends
 RUN apt-get -qq update \
-  && apt-get install -y python3 python3-dev python3-pip python3-virtualenv \
+  && apt-add-repository -y ppa:deadsnakes/ppa \
+  && apt-get -qq update \
+  && apt-get install -y python3.7 \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
