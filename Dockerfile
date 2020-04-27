@@ -231,9 +231,9 @@ RUN apt-get -qq update \
 # Install Maven (see https://stackoverflow.com/a/50103533/1101070 for more context)
 RUN mkdir -p /tmp/maven \
   && cd /tmp/maven \
-  && wget --no-verbose http://apache.mirror.rafal.ca/maven/maven-3/3.6.1/binaries/apache-maven-3.6.1-bin.tar.gz \
-  && tar xzf apache-maven-3.6.1-bin.tar.gz \
-  && mv apache-maven-3.6.1 /usr/share/maven3 \
+  && wget --no-verbose https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz \
+  && tar xzf apache-maven-3.6.3-bin.tar.gz \
+  && mv apache-maven-3.6.3 /usr/share/maven3 \
   && update-alternatives --install /usr/bin/mvn mvn /usr/share/maven3/bin/mvn 1 \
   && update-alternatives --set mvn /usr/share/maven3/bin/mvn \
   && cd /tmp \
