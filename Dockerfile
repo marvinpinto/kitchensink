@@ -71,6 +71,7 @@ RUN apt-get -qq update \
     jq \
     pv \
     socat \
+    silversearcher-ag \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
@@ -319,6 +320,19 @@ RUN mkdir -p /tmp/mitmproxy \
   && mv mitm* /usr/local/bin/ \
   && cd /tmp \
   && rm -rf mitmproxy
+
+# Install a recentish version of fzf
+RUN mkdir -p /tmp/fzf \
+  && cd /tmp/fzf \
+  && wget --no-verbose https://github.com/junegunn/fzf-bin/releases/download/0.21.1/fzf-0.21.1-linux_amd64.tgz \
+  && tar xzf fzf-0.21.1-linux_amd64.tgz \
+  && mv fzf /usr/local/bin/fzf \
+  && cd /tmp \
+  && rm -rf fzf
+
+# Bash completion for fzf
+RUN wget --no-verbose -O /etc/bash_completion.d/fzf https://raw.githubusercontent.com/junegunn/fzf/0.21.1/shell/completion.bash
+RUN wget --no-verbose -O /etc/bash_completion.d/fzf-key-bindings https://raw.githubusercontent.com/junegunn/fzf/0.21.1/shell/key-bindings.bash
 
 # Create a shared data volume
 # We need to create an empty file, otherwise the volume will
