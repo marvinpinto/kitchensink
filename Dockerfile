@@ -209,7 +209,7 @@ RUN apt-get -qq update \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # Install a bunch of utilities through pip
-RUN pip install awscli virtualenv boto dopy cookiecutter requests awslogs
+RUN pip install awscli virtualenv boto dopy cookiecutter requests awslogs ec2instanceconnectcli
 
 # Install the released version of ansible
 RUN apt-get -qq update \
