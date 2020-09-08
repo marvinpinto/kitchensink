@@ -143,17 +143,11 @@ RUN curl https://dl.google.com/go/go1.13.5.linux-amd64.tar.gz | tar -C /usr/loca
 
 # Install nvm and a few needed NodeJS versions
 ENV NVM_DIR /usr/local/nvm
-ENV NODE_VERSION 8.11.1
-RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash \
+RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.35.3/install.sh | bash \
     && . $NVM_DIR/nvm.sh \
-    && nvm install 6.10.3 \
-    && nvm install 6.11.2 \
-    && nvm install 8.10 \
-    && nvm install 10.16.3 \
-    && nvm install 10.20.1 \
-    && nvm install 12.13.0 \
-    && nvm install $NODE_VERSION \
-    && nvm alias default $NODE_VERSION \
+    && nvm install lts/dubnium \
+    && nvm install lts/erbium \
+    && nvm alias default lts/dubnium \
     && nvm use default
 
 # Install the npm bash completion script
