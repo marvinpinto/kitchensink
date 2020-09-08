@@ -143,24 +143,14 @@ RUN curl https://dl.google.com/go/go1.13.5.linux-amd64.tar.gz | tar -C /usr/loca
 
 # Install nvm and a few needed NodeJS versions
 ENV NVM_DIR /usr/local/nvm
-RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.35.3/install.sh | bash \
+RUN mkdir -p $NVM_DIR \
+    && curl https://raw.githubusercontent.com/creationix/nvm/v0.35.3/install.sh | bash \
     && . $NVM_DIR/nvm.sh \
+    && echo "yarn" > $NVM_DIR/default-packages \
     && nvm install lts/dubnium \
     && nvm install lts/erbium \
     && nvm alias default lts/dubnium \
     && nvm use default
-
-# Install the npm bash completion script
-RUN wget --no-verbose -O /etc/bash_completion.d/npm https://raw.githubusercontent.com/npm/npm/v4.1.0/lib/utils/completion.sh
-
-# Install phantomjs
-RUN mkdir -p /tmp/phantomjs \
-  && cd /tmp/phantomjs \
-  && wget --quiet https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 \
-  && tar xfj phantomjs-2.1.1-linux-x86_64.tar.bz2 \
-  && mv phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin \
-  && cd /tmp \
-  && rm -rf phantomjs
 
 # Install ledger
 RUN apt-get install -y software-properties-common \
@@ -255,19 +245,6 @@ RUN mkdir -p /root/bin \
   && wget -O /root/bin/diff-highlight https://raw.githubusercontent.com/git/git/fd99e2bda0ca6a361ef03c04d6d7fdc7a9c40b78/contrib/diff-highlight/diff-highlight \
   && chown root: /root/bin/diff-highlight \
   && chmod +x /root/bin/diff-highlight
-
-# Install the yarn package manager
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - \
-  && echo "deb https://dl.yarnpkg.com/debian/ stable main" >> /etc/apt/sources.list.d/yarn.list \
-  && apt-get -qq update \
-  && apt-get install -y yarn \
-  && apt-get clean autoclean \
-  && apt-get autoremove -y --purge \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-  && rm -rf /var/lib/{apt,dpkg,cache,log}/
-
-# Install the yarn bash completion script
-RUN wget --no-verbose -O /etc/bash_completion.d/yarn https://raw.githubusercontent.com/dsifford/yarn-completion/v0.6.1/yarn-completion.bash
 
 # Utilities needed for gopro video & image processing
 RUN apt-get -qq update \
