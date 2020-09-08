@@ -300,6 +300,7 @@ RUN mkdir -p /tmp/op \
 # Install aws-vault
 RUN wget --no-verbose -O /usr/local/bin/aws-vault https://github.com/99designs/aws-vault/releases/download/v6.0.0/aws-vault-linux-amd64 \
   && chmod +x /usr/local/bin/aws-vault
+RUN wget --no-verbose -O /etc/bash_completion.d/aws-vault https://raw.githubusercontent.com/99designs/aws-vault/v6.0.0/contrib/completions/bash/aws-vault.bash
 
 # Install docker compose within the container
 RUN curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-Linux-x86_64" -o /usr/local/bin/docker-compose \
