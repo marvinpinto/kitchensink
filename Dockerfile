@@ -21,7 +21,6 @@ RUN apt-get -qq update \
   && apt-get install -y \
     curl \
     vim \
-    vim-gtk \
     strace \
     diffstat \
     pkg-config \
@@ -331,8 +330,6 @@ RUN rm -f .bashrc .profile \
   && ln -s /var/shared/.gitconfig \
   && ln -s /var/shared/.gitignore_global \
   && ln -s /var/shared/.profile \
-  && ln -s /var/shared/.vim \
-  && ln -s /var/shared/.vimrc \
   && ln -s /var/shared/.gnupg \
   && ln -s /var/shared/.ngrok2 \
   && ln -s /var/shared/Dropbox/projects \
