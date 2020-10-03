@@ -16,6 +16,18 @@ RUN apt-get -qq update \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
+# Install the packaged diff-so-fancy
+RUN apt-get -qq update \
+  && apt-get install -y software-properties-common \
+  && apt-add-repository -y ppa:aos1/diff-so-fancy \
+  && apt-get -qq update \
+  && apt-get install -y \
+    diff-so-fancy \
+  && apt-get clean autoclean \
+  && apt-get autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && rm -rf /var/lib/{apt,dpkg,cache,log}/
+
 # Install some utilities I need
 RUN apt-get -qq update \
   && apt-get install -y \
@@ -122,7 +134,7 @@ RUN apt-get -qq update \
 
 # Configure timezone and locale
 RUN apt-get -qq update \
-  && apt-get install -y language-pack-en-base \
+  && apt-get install -y language-pack-en-base tzdata \
   && echo "America/Toronto" > /etc/timezone \
   && ln -fs /usr/share/zoneinfo/Canada/Eastern /etc/localtime && dpkg-reconfigure -f noninteractive tzdata \
   && echo "LANG=en_US.UTF-8" > /etc/default/locale \
@@ -240,12 +252,6 @@ RUN curl -L https://packagecloud.io/github/git-lfs/gpgkey | sudo apt-key add - \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-# Install the diff-highlight script
-RUN mkdir -p /root/bin \
-  && wget -O /root/bin/diff-highlight https://raw.githubusercontent.com/git/git/fd99e2bda0ca6a361ef03c04d6d7fdc7a9c40b78/contrib/diff-highlight/diff-highlight \
-  && chown root: /root/bin/diff-highlight \
-  && chmod +x /root/bin/diff-highlight
-
 # Utilities needed for gopro video & image processing
 RUN apt-get -qq update \
   && apt-add-repository -y ppa:mc3man/ffmpeg-test \
@@ -352,6 +358,7 @@ ENV PATH $GOPATH/bin:$PATH
 ENV PATH /root/.local/bin:$PATH
 ENV PATH $NVM_DIR/version/node/v$NODE_VERSION/bin:$PATH
 ENV NODE_PATH $NVM_DIR/version/node/v$NODE_VERSION/lib/node_modules
+ENV EDITOR /usr/bin/vim
 
 USER root
 
