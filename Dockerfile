@@ -80,6 +80,7 @@ RUN apt-get -qq update \
     pv \
     socat \
     silversearcher-ag \
+    gettext-base \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
@@ -302,6 +303,25 @@ RUN mkdir -p /tmp/mitmproxy \
   && mv mitm* /usr/local/bin/ \
   && cd /tmp \
   && rm -rf mitmproxy
+
+# Install kubctl
+RUN mkdir -p /tmp/kubectl \
+  && cd /tmp/kubectl \
+  && wget --no-verbose -O kubectl https://storage.googleapis.com/kubernetes-release/release/v1.19.4/bin/linux/amd64/kubectl \
+  && chmod +x ./kubectl \
+  && mv kubectl /usr/local/bin/ \
+  && cd /tmp \
+  && rm -rf kubectl
+
+# Install helm
+RUN mkdir -p /tmp/helm \
+  && cd /tmp/helm \
+  && wget --no-verbose -O helm.tar.gz https://get.helm.sh/helm-v3.4.1-linux-amd64.tar.gz \
+  && tar xf helm.tar.gz \
+  && rm -f helm.tar.gz \
+  && mv linux-amd64/helm /usr/local/bin/ \
+  && cd /tmp \
+  && rm -rf helm
 
 # Install a recentish version of fzf
 RUN mkdir -p /tmp/fzf \
