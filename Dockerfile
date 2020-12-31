@@ -313,15 +313,15 @@ RUN mkdir -p /tmp/kubectl \
   && cd /tmp \
   && rm -rf kubectl
 
-# Install helm
-RUN mkdir -p /tmp/helm \
-  && cd /tmp/helm \
-  && wget --no-verbose -O helm.tar.gz https://get.helm.sh/helm-v3.4.1-linux-amd64.tar.gz \
-  && tar xf helm.tar.gz \
-  && rm -f helm.tar.gz \
-  && mv linux-amd64/helm /usr/local/bin/ \
+# Install doctl
+RUN mkdir -p /tmp/doctl \
+  && cd /tmp/doctl \
+  && wget --no-verbose -O doctl.tar.gz https://github.com/digitalocean/doctl/releases/download/v1.54.0/doctl-1.54.0-linux-amd64.tar.gz \
+  && tar xf doctl.tar.gz \
+  && rm -f doctl.tar.gz \
+  && mv doctl* /usr/local/bin/ \
   && cd /tmp \
-  && rm -rf helm
+  && rm -rf doctl
 
 # Install a recentish version of fzf
 RUN mkdir -p /tmp/fzf \
