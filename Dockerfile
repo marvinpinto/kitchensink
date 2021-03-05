@@ -198,18 +198,17 @@ RUN mkdir -p /tmp/ngrok \
 RUN apt-get -qq update \
   && apt-add-repository -y ppa:deadsnakes/ppa \
   && apt-get -qq update \
-  && apt-get install -y python3.7 python3.7-dev python3.7-venv python3-pip \
+  && apt-get install -y python3.9 python3.9-dev python3.9-venv python3-setuptools \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/ \
-  && update-alternatives --install /usr/bin/python python /usr/bin/python3.7 1 \
-  && update-alternatives --set python /usr/bin/python3.7 \
-  && update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1 \
-  && update-alternatives --set pip /usr/bin/pip3
+  && update-alternatives --install /usr/bin/python python /usr/bin/python3.9 1 \
+  && update-alternatives --set python /usr/bin/python3.9 \
+  && python3.9 -m easy_install pip
 
 # Install a bunch of utilities through pip
-RUN pip install awscli virtualenv boto dopy cookiecutter requests awslogs ec2instanceconnectcli
+RUN python3.9 -m pip install awscli ec2instanceconnectcli
 
 # Install the released version of ansible
 RUN apt-get -qq update \
