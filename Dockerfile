@@ -1,5 +1,6 @@
 # vim: set filetype=dockerfile :
-FROM ubuntu:16.04
+ARG UBUNTU_VERSION=16.04
+FROM ubuntu:${UBUNTU_VERSION}
 LABEL org.opencontainers.image.source https://github.com/marvinpinto/kitchensink
 
 # Add the xenial-proposed repo

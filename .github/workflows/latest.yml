@@ -15,6 +15,8 @@ on:
 jobs:
   gh_latest:
     runs-on: "ubuntu-latest"
+    env:
+      UBUNTU_LTS_VERSION: "16.04"
     steps:
       - uses: "actions/checkout@v2"
         with:
@@ -43,11 +45,13 @@ jobs:
         with:
           context: .
           file: "./Dockerfile"
+          build-args: |
+            UBUNTU_VERSION=${{ env.UBUNTU_LTS_VERSION }}
           platforms: "linux/amd64"
           push: true
           tags: |
-            ghcr.io/marvinpinto/kitchensink:latest
-            ghcr.io/marvinpinto/kitchensink:${{ steps.sha.outputs.value }}
+            ghcr.io/marvinpinto/kitchensink:${{ env.UBUNTU_LTS_VERSION }}-latest
+            ghcr.io/marvinpinto/kitchensink:${{ env.UBUNTU_LTS_VERSION }}-${{ steps.sha.outputs.value }}
 
       - uses: "marvinpinto/action-keybase-notifications@latest"
         if: always()
