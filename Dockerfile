@@ -82,6 +82,7 @@ RUN apt-get -qq update \
     socat \
     silversearcher-ag \
     gettext-base \
+    parallel \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
@@ -149,7 +150,8 @@ RUN apt-get -qq update \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # Install go (https://golang.org/dl)
-RUN curl https://dl.google.com/go/go1.13.5.linux-amd64.tar.gz | tar -C /usr/local -zx
+RUN curl https://dl.google.com/go/go1.15.8.linux-amd64.tar.gz | tar -C /usr/local -zx
+
 
 # Install nvm and a few needed NodeJS versions
 ENV NVM_DIR /usr/local/nvm
@@ -360,7 +362,8 @@ RUN rm -f .bashrc .profile \
   && ln -s /var/shared/.gnupg \
   && ln -s /var/shared/.ngrok2 \
   && ln -s /var/shared/Dropbox/projects \
-  && chown -R root: /root
+  && chown -R root: /root \
+  && ln -s /usr/bin/vim /usr/bin/nvim
 
 # Set up the golang development environment
 RUN mkdir -p /goprojects/bin
