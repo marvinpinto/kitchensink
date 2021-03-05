@@ -2,9 +2,8 @@
 
 <img alt="kitchen sink logo" height="200px" src="logo.png">
 
-[![Build Status](https://img.shields.io/travis/marvinpinto/kitchensink/master.svg?style=flat-square)](https://travis-ci.org/marvinpinto/kitchensink)
+![[Build Status](https://github.com/marvinpinto/kitchensink/actions/workflows/latest.yml/badge.svg?branch=main)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.txt)
-[![Quay.io](https://quay.io/repository/marvin/kitchensink/status)](https://quay.io/repository/marvin/kitchensink)
 
 Wouldn't it be nice if you didn't have to install a kitchen-sink worth of tools
 on your host dev machine? Well, you don't have to with Docker!
@@ -32,9 +31,8 @@ OSX. Sorry :dissapointed:
 
 ## Where can I get a hold of this Docker image?
 ```
-docker pull quay.io/marvin/kitchensink
+docker pull ghcr.io/marvinpinto/kitchensink:latest
 ```
-More details available at [quay.io/repository/marvin/kitchensink][3]
 
 ## How do I use it?
 
@@ -79,7 +77,7 @@ function sink () {
       -v /var/run/docker.sock:/var/run/docker.sock \
       -e SSH_AUTH_SOCK=$SSH_AUTH_SOCK \
       -w $workdir \
-      quay.io/marvin/kitchensink)
+      ghcr.io/marvinpinto/kitchensink:latest)
   fi
   docker exec -it $dockerid /bin/bash
 }
@@ -93,5 +91,4 @@ The logo was made by [github.com/des4maisons][4].
 
 [1]: https://github.com/marvinpinto/dotfiles/blob/master/roles/bash/files/bashrc
 [2]: https://github.com/shykes/devbox
-[3]: https://quay.io/repository/marvin/kitchensink
 [4]: https://github.com/des4maisons
