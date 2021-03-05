@@ -1,5 +1,6 @@
 # vim: set filetype=dockerfile :
 FROM ubuntu:16.04
+LABEL org.opencontainers.image.source https://github.com/marvinpinto/kitchensink
 
 # Add the xenial-proposed repo
 RUN echo "deb http://archive.ubuntu.com/ubuntu/ xenial-proposed restricted main multiverse universe" >> /etc/apt/sources.list
