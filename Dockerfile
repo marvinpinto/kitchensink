@@ -162,6 +162,7 @@ RUN mkdir -p $NVM_DIR \
     && echo "yarn" > $NVM_DIR/default-packages \
     && nvm install lts/dubnium \
     && nvm install lts/erbium \
+    && nvm install lts/fermium \
     && nvm alias default lts/dubnium \
     && nvm use default
 
