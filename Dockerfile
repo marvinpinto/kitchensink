@@ -1,10 +1,10 @@
 # vim: set filetype=dockerfile :
-ARG UBUNTU_VERSION=16.04
+ARG UBUNTU_VERSION=20.04
 FROM ubuntu:${UBUNTU_VERSION}
 LABEL org.opencontainers.image.source https://github.com/marvinpinto/kitchensink
 
-# Add the xenial-proposed repo
-RUN echo "deb http://archive.ubuntu.com/ubuntu/ xenial-proposed restricted main multiverse universe" >> /etc/apt/sources.list
+# Add the focal-proposed repo
+RUN echo "deb http://archive.ubuntu.com/ubuntu/ focal-proposed restricted main multiverse universe" >> /etc/apt/sources.list
 
 # Install git
 RUN apt-get -qq update \
@@ -76,7 +76,7 @@ RUN apt-get -qq update \
     libtool \
     libssl-dev \
     pass \
-    libpng16-dev \
+    libpng-dev \
     iputils-ping \
     jq \
     pv \
@@ -84,6 +84,7 @@ RUN apt-get -qq update \
     silversearcher-ag \
     gettext-base \
     parallel \
+    ledger \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
@@ -157,7 +158,7 @@ RUN curl https://dl.google.com/go/go1.15.10.linux-amd64.tar.gz | tar -C /usr/loc
 # Install nvm and a few needed NodeJS versions
 ENV NVM_DIR /usr/local/nvm
 RUN mkdir -p $NVM_DIR \
-    && curl https://raw.githubusercontent.com/creationix/nvm/v0.35.3/install.sh | bash \
+    && curl https://raw.githubusercontent.com/creationix/nvm/v0.38.0/install.sh | bash \
     && . $NVM_DIR/nvm.sh \
     && echo "yarn" > $NVM_DIR/default-packages \
     && nvm install lts/dubnium \
@@ -165,16 +166,6 @@ RUN mkdir -p $NVM_DIR \
     && nvm install lts/fermium \
     && nvm alias default lts/dubnium \
     && nvm use default
-
-# Install ledger
-RUN apt-get install -y software-properties-common \
-  && apt-add-repository -y ppa:mbudde/ledger \
-  && apt-get -qq update \
-  && apt-get install -y ledger \
-  && apt-get clean autoclean \
-  && apt-get autoremove -y --purge \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-  && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # Install terraform to /usr/local/bin
 RUN mkdir -p /tmp/terraform \
@@ -249,7 +240,7 @@ RUN mkdir -p /tmp/maven \
 # Install git-lfs
 RUN curl -L https://packagecloud.io/github/git-lfs/gpgkey | sudo apt-key add - \
   && apt-get -qq update \
-  && echo "deb https://packagecloud.io/github/git-lfs/ubuntu/ xenial main" >> /etc/apt/sources.list.d/github_git-lfs.list \
+  && echo "deb https://packagecloud.io/github/git-lfs/ubuntu/ focal main" >> /etc/apt/sources.list.d/github_git-lfs.list \
   && apt-get -qq update \
   && apt-get install -y git-lfs \
   && apt-get clean autoclean \
@@ -257,56 +248,28 @@ RUN curl -L https://packagecloud.io/github/git-lfs/gpgkey | sudo apt-key add - \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-# Utilities needed for gopro video & image processing
-RUN apt-get -qq update \
-  && apt-add-repository -y ppa:mc3man/ffmpeg-test \
-  && apt-get -qq update \
-  && apt-get install -y \
-    ffmpeg-static \
-    exiftool \
-    sox \
-    libsox-fmt-all \
-  && apt-get clean autoclean \
-  && apt-get autoremove -y --purge \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-  && rm -rf /var/lib/{apt,dpkg,cache,log}/ \
-  && wget --no-verbose -O /usr/local/bin/fredim-autocolor "http://www.fmwconcepts.com/imagemagick/downloadcounter.php?scriptname=autocolor&dirname=autocolor" \
-  && chmod 0755 /usr/local/bin/fredim-autocolor \
-  && wget --no-verbose -O /usr/local/bin/fredim-enrich "http://www.fmwconcepts.com/imagemagick/downloadcounter.php?scriptname=enrich&dirname=enrich" \
-  && chmod 0755 /usr/local/bin/fredim-enrich
-
 # Install 1password cli
 RUN mkdir -p /tmp/op \
   && cd /tmp/op \
-  && wget --no-verbose https://cache.agilebits.com/dist/1P/op/pkg/v0.8.0/op_linux_amd64_v0.8.0.zip \
-  && unzip op_linux_amd64_v0.8.0.zip \
+  && wget --no-verbose https://cache.agilebits.com/dist/1P/op/pkg/v1.8.0/op_linux_amd64_v1.8.0.zip \
+  && unzip op_linux_amd64_v1.8.0.zip \
   && rm op*.zip \
   && mv op /usr/local/bin \
   && cd /tmp \
   && rm -rf op
 
 # Install aws-vault
-RUN wget --no-verbose -O /usr/local/bin/aws-vault https://github.com/99designs/aws-vault/releases/download/v6.0.0/aws-vault-linux-amd64 \
+RUN wget --no-verbose -O /usr/local/bin/aws-vault https://github.com/99designs/aws-vault/releases/download/v6.3.1/aws-vault-linux-amd64 \
   && chmod +x /usr/local/bin/aws-vault
-RUN wget --no-verbose -O /etc/bash_completion.d/aws-vault https://raw.githubusercontent.com/99designs/aws-vault/v6.0.0/contrib/completions/bash/aws-vault.bash
+RUN wget --no-verbose -O /etc/bash_completion.d/aws-vault https://raw.githubusercontent.com/99designs/aws-vault/v6.3.1/contrib/completions/bash/aws-vault.bash
 
 # Install docker compose within the container
-RUN curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-Linux-x86_64" -o /usr/local/bin/docker-compose \
+RUN curl -L "https://github.com/docker/compose/releases/download/1.29.0/docker-compose-Linux-x86_64" -o /usr/local/bin/docker-compose \
   && chmod +x /usr/local/bin/docker-compose
 
 # Install mkcert within the container
-RUN curl -L "https://github.com/FiloSottile/mkcert/releases/download/v1.4.0/mkcert-v1.4.0-linux-amd64" -o /usr/local/bin/mkcert \
+RUN curl -L "https://github.com/FiloSottile/mkcert/releases/download/v1.4.3/mkcert-v1.4.3-linux-amd64" -o /usr/local/bin/mkcert \
   && chmod +x /usr/local/bin/mkcert
-
-# Install mitmproxy
-RUN mkdir -p /tmp/mitmproxy \
-  && cd /tmp/mitmproxy \
-  && wget --no-verbose -O mitmproxy.tar.gz https://snapshots.mitmproxy.org/4.0.4/mitmproxy-4.0.4-linux.tar.gz \
-  && tar xf mitmproxy.tar.gz \
-  && rm -f mitmproxy.tar.gz \
-  && mv mitm* /usr/local/bin/ \
-  && cd /tmp \
-  && rm -rf mitmproxy
 
 # Install kubctl
 RUN mkdir -p /tmp/kubectl \
@@ -320,7 +283,7 @@ RUN mkdir -p /tmp/kubectl \
 # Install doctl
 RUN mkdir -p /tmp/doctl \
   && cd /tmp/doctl \
-  && wget --no-verbose -O doctl.tar.gz https://github.com/digitalocean/doctl/releases/download/v1.54.0/doctl-1.54.0-linux-amd64.tar.gz \
+  && wget --no-verbose -O doctl.tar.gz https://github.com/digitalocean/doctl/releases/download/v1.58.0/doctl-1.58.0-linux-amd64.tar.gz \
   && tar xf doctl.tar.gz \
   && rm -f doctl.tar.gz \
   && mv doctl* /usr/local/bin/ \
@@ -339,6 +302,10 @@ RUN mkdir -p /tmp/fzf \
 # Bash completion for fzf
 RUN wget --no-verbose -O /etc/bash_completion.d/fzf https://raw.githubusercontent.com/junegunn/fzf/0.21.1/shell/completion.bash
 RUN wget --no-verbose -O /etc/bash_completion.d/fzf-key-bindings https://raw.githubusercontent.com/junegunn/fzf/0.21.1/shell/key-bindings.bash
+
+# Install the latest version of slc
+RUN curl -L "https://github.com/marvinpinto/slc/releases/download/latest/slc_linux_amd64" -o /usr/local/bin/slc \
+  && chmod +x /usr/local/bin/slc
 
 # Create a shared data volume
 # We need to create an empty file, otherwise the volume will

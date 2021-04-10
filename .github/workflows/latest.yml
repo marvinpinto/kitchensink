@@ -16,7 +16,7 @@ jobs:
   gh_latest:
     runs-on: "ubuntu-latest"
     env:
-      UBUNTU_LTS_VERSION: "16.04"
+      UBUNTU_LTS_VERSION: "20.04"
     steps:
       - uses: "actions/checkout@v2"
         with:
