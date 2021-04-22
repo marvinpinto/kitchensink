@@ -85,6 +85,9 @@ RUN apt-get -qq update \
     gettext-base \
     parallel \
     ledger \
+    net-tools \
+    libnss3-tools \
+    cpulimit \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
@@ -93,7 +96,7 @@ RUN apt-get -qq update \
 # Utilities needed to run headless Chrome inside the docker container (see
 # https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md)
 RUN apt-get -qq update \
-  && apt-get install -y \
+  && apt-get install --no-install-recommends -y \
     gconf-service \
     libasound2 \
     libatk1.0-0 \
@@ -132,6 +135,97 @@ RUN apt-get -qq update \
     lsb-release \
     xdg-utils \
     wget \
+  && apt-get clean autoclean \
+  && apt-get autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && rm -rf /var/lib/{apt,dpkg,cache,log}/
+
+# Utilities needed to run playwright inside the docker container (see
+# https://github.com/microsoft/playwright/blob/fe4fba4a1651137ee4ce2ee728f7a476a947bc9d/src/nativeDeps.ts)
+RUN apt-get -qq update \
+  && apt-get install --no-install-recommends -y \
+    libasound2 \
+    libatk1.0-0 \
+    libatk-bridge2.0-0 \
+    libatspi2.0-0 \
+    libcairo-gobject2 \
+    libcairo2 \
+    libcups2 \
+    libdbus-1-3 \
+    libdbus-glib-1-2 \
+    libdrm2 \
+    libegl1 \
+    libenchant1c2a \
+    libepoxy0 \
+    libfontconfig1 \
+    libfreetype6 \
+    libgbm1 \
+    libgdk-pixbuf2.0-0 \
+    libgtk-3-0 \
+    libgtk2.0-0 \
+    libglib2.0-0 \
+    libgl1 \
+    libgles2 \
+    libglib2.0-0 \
+    libglib2.0-0 \
+    libglib2.0-0 \
+    gstreamer1.0-plugins-base \
+    gstreamer1.0-plugins-base \
+    libgstreamer1.0-0 \
+    gstreamer1.0-plugins-bad \
+    gstreamer1.0-plugins-base \
+    libgstreamer-gl1.0-0 \
+    gstreamer1.0-plugins-base \
+    libgstreamer1.0-0 \
+    gstreamer1.0-plugins-base \
+    gstreamer1.0-plugins-base \
+    libglib2.0-0 \
+    libgtk-3-0 \
+    libgtk2.0-0 \
+    libharfbuzz-icu0 \
+    libharfbuzz0b \
+    libhyphen0 \
+    libicu66 \
+    libicu66 \
+    libjpeg-turbo8 \
+    libnotify4 \
+    libnspr4 \
+    libnss3 \
+    libnss3 \
+    libopenjp2-7 \
+    libopus0 \
+    libpango-1.0-0 \
+    libpangocairo-1.0-0 \
+    libpangoft2-1.0-0 \
+    libpng16-16 \
+    libsecret-1-0 \
+    libnss3 \
+    libsoup2.4-1 \
+    libvpx6 \
+    libwayland-client0 \
+    libwayland-egl1 \
+    libwayland-server0 \
+    libwebp6 \
+    libwebpdemux2 \
+    libwoff1 \
+    libx11-xcb1 \
+    libx11-6 \
+    libxcb-dri3-0 \
+    libxcb-shm0 \
+    libxcb1 \
+    libxcomposite1 \
+    libxcursor1 \
+    libxdamage1 \
+    libxext6 \
+    libxfixes3 \
+    libxi6 \
+    libxkbcommon0 \
+    libxml2 \
+    libxrandr2 \
+    libxrender1 \
+    libxslt1.1 \
+    libxt6 \
+    libxtst6 \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
