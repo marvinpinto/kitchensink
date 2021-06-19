@@ -169,17 +169,7 @@ RUN apt-get -qq update \
   && python3.9 -m easy_install pip
 
 # Install a bunch of utilities through pip
-RUN python3.9 -m pip install awscli ec2instanceconnectcli
-
-# Install the released version of ansible
-RUN apt-get -qq update \
-  && apt-add-repository -y ppa:ansible/ansible \
-  && apt-get -qq update \
-  && apt-get install -y ansible \
-  && apt-get clean autoclean \
-  && apt-get autoremove -y --purge \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-  && rm -rf /var/lib/{apt,dpkg,cache,log}/
+RUN python3.9 -m pip install awscli ec2instanceconnectcli ansible boto3
 
 # Install Java
 RUN apt-get -qq update \
