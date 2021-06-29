@@ -89,6 +89,7 @@ RUN apt-get -qq update \
     libnss3-tools \
     cpulimit \
     ca-certificates \
+    rsync \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
@@ -256,6 +257,16 @@ RUN mkdir -p /tmp/fzf \
   && mv fzf /usr/local/bin/fzf \
   && cd /tmp \
   && rm -rf fzf
+
+# Install restic
+RUN mkdir -p /tmp/restic \
+  && cd /tmp/restic \
+  && wget --no-verbose -O restic.bz2 https://github.com/restic/restic/releases/download/v0.12.0/restic_0.12.0_linux_amd64.bz2 \
+  && bzip2 -d restic.bz2 \
+  && chmod +x ./restic \
+  && mv restic /usr/local/bin/ \
+  && cd /tmp \
+  && rm -rf restic
 
 # Bash completion for fzf
 RUN wget --no-verbose -O /etc/bash_completion.d/fzf https://raw.githubusercontent.com/junegunn/fzf/0.21.1/shell/completion.bash
