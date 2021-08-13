@@ -170,7 +170,7 @@ RUN apt-get -qq update \
   && python3.9 -m easy_install pip
 
 # Install a bunch of utilities through pip
-RUN python3.9 -m pip install awscli ec2instanceconnectcli ansible boto3
+RUN python3.9 -m pip install awscli ec2instanceconnectcli ansible boto3 netaddr
 
 # Install Java
 RUN apt-get -qq update \
