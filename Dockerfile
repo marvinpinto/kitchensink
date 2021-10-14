@@ -136,15 +136,16 @@ RUN apt-get -qq update \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-# Install terraform to /usr/local/bin
-RUN mkdir -p /tmp/terraform \
-  && cd /tmp/terraform \
-  && wget --no-verbose https://releases.hashicorp.com/terraform/0.12.18/terraform_0.12.18_linux_amd64.zip \
-  && unzip terraform_0.12.18_linux_amd64.zip \
-  && rm terraform*.zip \
-  && mv terraform* /usr/local/bin \
-  && cd /tmp \
-  && rm -rf terraform
+# Install terraform & packer
+RUN curl -L https://apt.releases.hashicorp.com/gpg | sudo apt-key add - \
+  && apt-get -qq update \
+  && echo "deb [arch=amd64] https://apt.releases.hashicorp.com focal main" >> /etc/apt/sources.list.d/hashicorp.list \
+  && apt-get -qq update \
+  && apt-get install -y terraform packer \
+  && apt-get clean autoclean \
+  && apt-get autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # Install ngrok to /usr/local/bin
 RUN mkdir -p /tmp/ngrok \
