@@ -31,7 +31,7 @@ OSX. Sorry :dissapointed:
 
 ## Where can I get a hold of this Docker image?
 ```
-docker pull ghcr.io/marvinpinto/kitchensink:latest
+docker pull ghcr.io/marvinpinto/kitchensink:20.04-latest
 ```
 
 ## How do I use it?
@@ -77,7 +77,7 @@ function sink () {
       -v /var/run/docker.sock:/var/run/docker.sock \
       -e SSH_AUTH_SOCK=$SSH_AUTH_SOCK \
       -w $workdir \
-      ghcr.io/marvinpinto/kitchensink:latest)
+      ghcr.io/marvinpinto/kitchensink:20.04-latest)
   fi
   docker exec -it $dockerid /bin/bash
 }
