@@ -289,7 +289,6 @@ VOLUME /var/shared
 # Link in shared parts of the home directory
 WORKDIR /root
 RUN rm -f .bashrc .profile \
-  && ln -s /var/shared/.ssh \
   && ln -s /var/shared/.bash_logout \
   && ln -s /var/shared/.bash_profile\
   && ln -s /var/shared/.bashrc \
@@ -297,7 +296,6 @@ RUN rm -f .bashrc .profile \
   && ln -s /var/shared/.gitconfig \
   && ln -s /var/shared/.gitignore_global \
   && ln -s /var/shared/.profile \
-  && ln -s /var/shared/.gnupg \
   && ln -s /var/shared/.ngrok2 \
   && ln -s /var/shared/Dropbox/projects \
   && chown -R root: /root \
