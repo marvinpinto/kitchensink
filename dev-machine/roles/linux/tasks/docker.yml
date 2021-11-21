@@ -1,0 +1,74 @@
+---
+- name: "Add the docker apt signing key"
+  become: true
+  apt_key:
+    url: "https://download.docker.com/linux/ubuntu/gpg"
+    state: "present"
+
+- name: "Add the official docker repo"
+  become: true
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ansible_distribution_release|lower}} stable"
+    state: "present"
+    update_cache: "yes"
+    filename: "docker"
+
+- name: "Install docker"
+  become: true
+  apt:
+    name:
+      - "docker-ce"
+      - "docker-ce-cli"
+      - "containerd.io"
+    state: "present"
+
+- name: "Tools needed for multiarch builds"
+  become: true
+  apt:
+    name:
+      - "qemu-user-static"
+      - "binfmt-support"
+    state: "present"
+
+- name: "Create the /etc/docker directory"
+  become: true
+  file:
+    path: "/etc/docker"
+    state: "directory"
+    mode: "0700"
+
+- name: "Add any additional docker startup options via the daemon.json config file"
+  become: true
+  copy:
+    content: |
+      {
+        "userns-remap": "marvin",
+        "experimental": true
+      }
+    dest: "/etc/docker/daemon.json"
+    owner: "root"
+    group: "root"
+    mode: "0600"
+  notify: "linux_restart-docker"
+
+- name: "Start the docker service"
+  become: true
+  service:
+    name: "docker"
+    state: "started"
+    enabled: "yes"
+
+- name: "Allow the 'marvin' user to comfortably mount volumes while using docker user namespacing"
+  become: true
+  copy:
+    content: "marvin:1000:2\nmarvin:100000:65535"
+    dest: "{{ item }}"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  with_items:
+    - "/etc/subuid"
+    - "/etc/subgid"
+  notify: "linux_restart-docker"
+
+- meta: flush_handlers

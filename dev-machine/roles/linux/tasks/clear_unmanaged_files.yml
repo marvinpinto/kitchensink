@@ -1,0 +1,67 @@
+---
+- name: "Searching for apt list files not managed by us"
+  become: true
+  changed_when: false
+  find:
+    paths: "/etc/apt/sources.list.d"
+    file_type: "file"
+    excludes: 
+      - "ubuntu-base.list"
+      - "google-chrome.list"
+      - "docker.list"
+      - "i3wm.list"
+      - "keybase.list"
+      - "nvidia.list"
+      - "rofi.list"
+      - "slack.list"
+      - "virtualbox.list"
+      - "yubikey.list"
+      - "microsoft.list"
+  register: "apt_found_files"
+
+- name: "Delete apt list files not managed by us"
+  become: true
+  file:
+    path: "{{ item.path }}"
+    state: "absent"
+  with_items: "{{ apt_found_files['files'] }}"
+  notify: 'linux_apt-get-update'
+
+- name: "Searching for xorg conf files not managed by us"
+  become: true
+  changed_when: false
+  find:
+    paths: "/etc/X11/xorg.conf.d"
+    file_type: "file"
+    excludes:
+      - "60-magictrackpad.conf"
+      - "70-optical-mice.conf"
+      - "99-M570Logitech.conf"
+  register: "xorg_found_files"
+
+- name: "Delete xorg conf files not managed by us"
+  become: true
+  file:
+    path: "{{ item.path }}"
+    state: "absent"
+  with_items: "{{ xorg_found_files['files'] }}"
+
+- name: "Searching for sudoers files not managed by us"
+  become: true
+  changed_when: false
+  find:
+    paths: "/etc/sudoers.d"
+    file_type: "file"
+    excludes:
+      - "README"
+      - "00-marvin"
+  register: "sudoers_found_files"
+
+- name: "Delete sudoers files not managed by us"
+  become: true
+  file:
+    path: "{{ item.path }}"
+    state: "absent"
+  with_items: "{{ sudoers_found_files['files'] }}"
+
+- meta: flush_handlers

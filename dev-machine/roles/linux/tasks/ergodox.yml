@@ -1,0 +1,37 @@
+---
+- name: 'Add marvin to the plugdev group'
+  become: true
+  user:
+    name: 'marvin'
+    groups: 'plugdev'
+    append: "yes"
+
+- name: 'Add the rules file needed for connect the Ergodox EZ to chrome via web usb'
+  become: true
+  copy:
+    src: '50-oryx.rules'
+    dest: '/etc/udev/rules.d/50-oryx.rules'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  notify: 'linux_restart-udev'
+
+- name: 'Add the rules file needed flash the Ergodox EZ'
+  become: true
+  copy:
+    src: '50-wally.rules'
+    dest: '/etc/udev/rules.d/50-wally.rules'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  notify: 'linux_restart-udev'
+
+- name: "Install the wally flashing utility"
+  become: true
+  become_user: "marvin"
+  community.general.homebrew:
+    name: "marvinpinto/kitchensink/ergodox-wally"
+    state: "present"
+    path: "/home/linuxbrew/.linuxbrew/bin"
+
+- meta: flush_handlers

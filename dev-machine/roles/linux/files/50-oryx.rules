@@ -1,0 +1,5 @@
+# Rule for all ZSA keyboards
+SUBSYSTEM=="usb", ATTR{idVendor}=="3297", GROUP="plugdev"
+
+# Rule for the Ergodox EZ Original / Shine / Glow
+SUBSYSTEM=="usb", ATTR{idVendor}=="feed", ATTR{idProduct}=="1307", GROUP="plugdev"

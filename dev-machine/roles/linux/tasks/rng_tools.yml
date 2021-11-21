@@ -1,0 +1,14 @@
+---
+- name: "Install the rng-tools Ubuntu package"
+  become: true
+  apt:
+    name: "rng-tools"
+    state: "present"
+
+- name: "Ensure that the rngd service is not running (from rng-tools)"
+  become: true
+  service:
+    name: "rng-tools"
+    pattern: "/usr/sbin/rngd"
+    enabled: "no"
+    state: "stopped"

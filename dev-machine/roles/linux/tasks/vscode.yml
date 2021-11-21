@@ -1,0 +1,30 @@
+---
+- name: "Add the Microsoft apt signing key"
+  become: true
+  apt_key:
+    url: "https://packages.microsoft.com/keys/microsoft.asc"
+    state: "present"
+
+- name: "Add the Microsoft ubuntu packages repo"
+  become: true
+  apt_repository:
+    repo: "deb [arch=amd64] https://packages.microsoft.com/repos/code stable main"
+    state: "present"
+    update_cache: "yes"
+    filename: "microsoft"
+
+- name: "Install vscode"
+  become: true
+  apt:
+    name: "code"
+    state: "present"
+
+- name: "Install all the vscode extensions"
+  become: true
+  become_user: "marvin"
+  changed_when: false
+  command: "code --install-extension {{ item }}"
+  with_items:
+    - "ms-vscode-remote.vscode-remote-extensionpack"
+    - "vscodevim.vim"
+    - "ms-azuretools.vscode-docker"

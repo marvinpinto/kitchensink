@@ -1,0 +1,20 @@
+---
+- name: "Add the keybase apt signing key"
+  become: true
+  apt_key:
+    url: "https://keybase.io/docs/server_security/code_signing_key.asc"
+    state: "present"
+
+- name: "Add the keybase ubuntu repo"
+  become: true
+  apt_repository:
+    repo: "deb http://prerelease.keybase.io/deb stable main"
+    state: "present"
+    update_cache: "yes"
+    filename: "keybase"
+
+- name: "Install Keybase"
+  become: true
+  apt:
+    name: "keybase"
+    state: "present"

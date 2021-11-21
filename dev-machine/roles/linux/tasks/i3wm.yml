@@ -1,0 +1,29 @@
+---
+- name: 'Install the needed sur5r-keyring package'
+  become: true
+  apt:
+    deb: 'https://debian.sur5r.net/i3/pool/main/s/sur5r-keyring/sur5r-keyring_2021.02.02_all.deb'
+  notify: 'linux_apt-get-update'
+
+# - name: 'Add the i3wm ubuntu repo'
+#   become: true
+#   apt_repository:
+#     repo: 'deb http://debian.sur5r.net/i3/ {{ ansible_distribution_release }} universe'
+#     state: 'present'
+#     update_cache: 'yes'
+#     filename: "i3wm"
+
+- meta: flush_handlers
+
+- name: 'Install i3wm + friends'
+  become: true
+  apt:
+    name:
+      - 'i3'
+      - 'i3lock'
+      - 'i3status'
+      - 'compton'
+      - 'hsetroot'
+    state: 'present'
+
+- meta: flush_handlers

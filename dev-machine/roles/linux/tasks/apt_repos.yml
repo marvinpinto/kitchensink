@@ -1,0 +1,41 @@
+---
+- name: 'Ensure the /etc/apt/sources.list file contains ~nothing'
+  become: true
+  copy:
+    dest: '/etc/apt/sources.list'
+    content: |
+      # This is a stub
+
+    owner: 'root'
+    group: 'root'
+    mode: '0444'
+  notify: 'linux_apt-get-update'
+
+- name: 'Add the base ubuntu repositories'
+  become: true
+  copy:
+    content: |
+      deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} main
+      deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }}-updates main
+      deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} universe
+      deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }}-updates universe
+      deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} multiverse
+      deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }}-updates multiverse
+      deb http://archive.canonical.com/ubuntu {{ ansible_distribution_release }} partner
+      deb http://security.ubuntu.com/ubuntu {{ ansible_distribution_release }}-security main
+      deb http://security.ubuntu.com/ubuntu {{ ansible_distribution_release }}-security universe
+      deb http://security.ubuntu.com/ubuntu {{ ansible_distribution_release }}-security multiverse
+    dest: "/etc/apt/sources.list.d/ubuntu-base.list"
+  notify: 'linux_apt-get-update'
+
+- meta: flush_handlers
+
+- name: "Allow package updates using https"
+  become: true
+  apt:
+    name:
+      - "apt-transport-https"
+    state: "present"
+  notify: 'linux_apt-get-update'
+
+- meta: flush_handlers

@@ -1,0 +1,37 @@
+---
+- name: "Update the user account"
+  become: true
+  user:
+    name: "marvin"
+    comment: "Marvin Pinto"
+    home: "/home/marvin"
+    shell: "/bin/bash"
+
+- name: "Base groups"
+  become: true
+  user:
+    name: "marvin"
+    append: true
+    groups: "docker"
+
+- name: "Put the ssh key in place"
+  become: true
+  authorized_key:
+    user: "marvin"
+    key: "https://github.com/marvinpinto.keys"
+    path: "/etc/ssh/authorized_keys/marvin"
+    state: "present"
+    exclusive: "yes"
+    manage_dir: "no"
+
+- name: "/etc/sudoers.d entry"
+  become: true
+  copy:
+    content: |
+      marvin ALL=(ALL) ALL
+      
+    dest: "/etc/sudoers.d/00-marvin"
+    owner: "root"
+    group: "root"
+    mode: "0440"
+    validate: "/usr/sbin/visudo -cf %s"

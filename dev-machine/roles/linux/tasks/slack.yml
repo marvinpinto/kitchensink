@@ -1,0 +1,14 @@
+---
+- name: "Add the slack ubuntu repo"
+  become: true
+  apt_repository:
+    repo: "deb https://packagecloud.io/slacktechnologies/slack/debian/ jessie main"
+    state: "present"
+    update_cache: "yes"
+    filename: "slack"
+
+- name: "Install Slack"
+  become: true
+  apt:
+    name: "slack-desktop"
+    state: "present"

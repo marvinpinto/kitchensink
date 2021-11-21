@@ -1,0 +1,57 @@
+---
+- name: "linux_apt-get-update"
+  become: true
+  apt:
+    update_cache: "yes"
+
+- name: "linux_restart-docker"
+  become: true
+  service:
+    name: "docker"
+    state: "restarted"
+
+- name: "linux_regenerate-font-cache"
+  become: true
+  command: "fc-cache -f -r -v"
+
+- name: "linux_restart-udev"
+  become: true
+  service:
+    name: "udev"
+    state: "restarted"
+
+- name: "linux_initramfs-bootfile-update"
+  become: true
+  command: "/usr/sbin/update-initramfs -u -k all"
+
+- name: "linux_restart-pcscd"
+  become: true
+  service:
+    name: "pcscd"
+    state: "restarted"
+
+- name: "linux_restart-sshd"
+  become: true
+  service:
+    name: 'ssh'
+    state: 'restarted'
+
+- name: "linux_update-grub"
+  become: true
+  command: '/usr/sbin/update-grub'
+
+- name: "linux_reconfigure-locales"
+  environment:
+    LANGUAGE: "en_US.UTF-8"
+    LANG: "en_US.UTF-8"
+    LC_ALL: "en_US.UTF-8"
+  become: true
+  command: '/usr/sbin/dpkg-reconfigure locales'
+
+- name: "linux_purge-extra-locales"
+  environment:
+    LANGUAGE: "en_US.UTF-8"
+    LANG: "en_US.UTF-8"
+    LC_ALL: "en_US.UTF-8"
+  become: true
+  command: "/usr/sbin/locale-gen --purge en_US.UTF-8"

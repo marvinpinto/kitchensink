@@ -1,0 +1,20 @@
+---
+- name: "Add the nvidia drivers repository"
+  become: true
+  apt_repository:
+    repo: "ppa:graphics-drivers/ppa"
+    state: "present"
+    update_cache: "yes"
+    filename: "nvidia"
+  when:
+    - ansible_system_vendor == "Dell Inc."
+    - ansible_product_name == "Precision T1700"
+
+- name: "Install the supported nvidia graphics drivers [NVIDIA Corporation GF108GL [Quadro 600] (rev a1)]"
+  become: true
+  apt:
+    name: "nvidia-340"
+    state: "present"
+  when:
+    - ansible_system_vendor == "Dell Inc."
+    - ansible_product_name == "Precision T1700"

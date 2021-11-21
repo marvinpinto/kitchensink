@@ -1,0 +1,19 @@
+---
+- name: 'Install a few Bluetooth utilities'
+  become: true
+  apt:
+    name:
+      - 'bluetooth'
+      - 'bluez'
+      - 'bluez-tools'
+      - 'rfkill'
+      - 'blueman'
+      - 'pavucontrol'
+    state: 'present'
+
+- name: 'Start the bluetooth service'
+  become: true
+  service:
+    name: 'bluetooth'
+    state: 'started'
+    enabled: 'yes'

@@ -1,0 +1,39 @@
+---
+- name: "Add linuxbrew/fonts as a tap"
+  become: true
+  become_user: "marvin"
+  community.general.homebrew_tap:
+    name: "linuxbrew/fonts"
+
+- name: "Homebrew fonts (from HEAD)"
+  become: true
+  become_user: "marvin"
+  community.general.homebrew:
+    name:
+      - "linuxbrew/fonts/font-inconsolata"
+      - "linuxbrew/fonts/font-noto-color-emoji"
+    state: "head"
+    path: "/home/linuxbrew/.linuxbrew/bin"
+  notify: 'linux_regenerate-font-cache'
+
+- name: "Homebrew fonts (present)"
+  become: true
+  become_user: "marvin"
+  community.general.homebrew:
+    name:
+      - "linuxbrew/fonts/font-twitter-color-emoji"
+      - "linuxbrew/fonts/font-hack-nerd-font"
+    state: "present"
+    path: "/home/linuxbrew/.linuxbrew/bin"
+  notify: 'linux_regenerate-font-cache'
+
+- name: "Link the system fonts to homebrew"
+  become: true
+  ansible.builtin.file:
+    src: "/home/linuxbrew/.linuxbrew/share/fonts"
+    dest: "/usr/local/share/fonts"
+    state: "link"
+    force: "yes"
+  notify: 'linux_regenerate-font-cache'
+
+- meta: flush_handlers

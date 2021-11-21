@@ -1,0 +1,6 @@
+---
+- hosts: "all"
+  connection: "local"
+  roles:
+    - role: "linux"
+      when: "ansible_os_family == 'Debian'"
