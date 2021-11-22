@@ -1,0 +1,128 @@
+# vim: set filetype=conf :
+
+[init]
+  defaultBranch = main
+
+[alias]
+  br = branch
+  co = checkout
+  dc = diff --cached
+  ci = commit -v
+  cis = commit -v -S -s
+  l = log --color --graph --pretty=format:\"%C(yellow)%h %Creset%C(cyan)%G?%Creset %C(green)%ae%Creset %<(80,trunc)%s\"
+  st = status -sb
+  sho = show --show-signature
+  d = diff
+  # starting from the most recent, gpg-sign all commits upto and including $1
+  signall = "!f() { git rebase --exec 'git commit --amend --no-edit -S -s' $1; }; f"
+  # Clone a repository including all submodules
+  cl = clone --recursive
+  # Show verbose output about tags, branches or remotes
+  tags = tag -l
+  bra = branch -a
+  remotes = remote -v
+  # Use fzf to choose the SHA to interactively rebase onto
+  reb = !git rebase -i --autostash --autosquash $(git log --color --oneline | fzf --ansi | cut -d ' ' -f1)^
+  # Delete all local branches that have been merged into master
+  cleanup = "!git branch --merged | grep  -v '\\*\\|master' | xargs -n 1 git branch -d"
+  # Special grep -- include untracked files, case insensitive
+  gr = grep --untracked --ignore-case
+  # Slightly more interesting log line (SHA, date, email, abbrev subject)
+  lol = log --graph --pretty=format:\"%C(yellow)%h%Creset%C(cyan)%C(bold)%d%Creset %C(cyan)(%ai)%Creset %C(green)%ce%Creset %<(70,trunc)%s\"
+  # Alias to modify the last commit date (e.g. `git cd now`)
+  cd = "!d=\"$(date -d \"$1\")\" && shift && \
+    git diff-index --cached --quiet HEAD --ignore-submodules -- && \
+    GIT_COMMITTER_DATE=\"$d\" git commit --amend -C HEAD --date \"$d\"" \
+    || echo >&2 "error: date change failed: index not clean!"
+  # shortcut to unstage a staged file
+  unstage = reset HEAD --
+  # more useful stash shortcut
+  stasha = stash --include-untracked
+  # use fzf to make fixup commits easier to generate and squash
+  fixup = !"git log --color --oneline | fzf --ansi | cut -d' ' -f1 | xargs git commit --no-verify --fixup"
+
+[rebase]
+  autosquash = true
+
+[core]
+  # Use custom `.gitignore` and `.gitattributes`
+  excludesfile = ~/.gitignore_global
+  attributesfile = ~/.gitattributes
+  # Treat spaces before tabs, lines that are indented with 8 or more spaces, and
+  # all kinds of trailing whitespace as an error.
+  # [default] trailing-space: looks for spaces at the end of a line
+  # [default] space-before-tab: looks for spaces before tabs at the beginning of
+  # a line
+  whitespace = space-before-tab,indent-with-non-tab,trailing-space
+  # Make `git rebase` safer on OS X
+  # More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
+  trustctime = false
+  # This cache is meant to speed up commands that involve determining untracked
+  # files such as git status.
+  untrackedCache = true
+  pager = "diff-so-fancy | less --tabs=4 -RFX"
+  autocrlf = false
+
+[diff]
+  # Enable the experimental compaction heuristic option
+  # https://github.com/git/git/commit/5580b271af518bae30148edfd42cc8459d8da384
+  compactionHeuristic = true
+
+[color]
+  ui = true
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+
+[color "diff-highlight"]
+  oldNormal = "red bold"
+  oldHighlight = "red bold 52"
+  newNormal = "green bold"
+  newHighlight = "green bold 22"
+
+[color "diff"]
+  meta = "11"
+  frag = "magenta bold"
+  commit = "yellow bold"
+  old = "red bold"
+  new = "green bold"
+  whitespace = "red reverse"
+
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+[merge]
+  # Include summaries of merged commits in newly created merge commit messages
+  log = true
+
+# URL shorthands
+[url "https://github.com"]
+  insteadOf = "git://github.com"
+[url "git@github.com:"]
+  insteadOf = "gh:"
+  pushInsteadOf = "github:"
+  pushInsteadOf = "git://github.com/"
+[url "git://github.com/"]
+  insteadOf = "github:"
+[url "git@gist.github.com:"]
+  insteadOf = "gst:"
+  pushInsteadOf = "gist:"
+  pushInsteadOf = "git://gist.github.com/"
+[url "git://gist.github.com/"]
+  insteadOf = "gist:"
+
+[push]
+  default = upstream
+  followTags = true
+[user]
+  email = git@pinto.im
+  name = Marvin Pinto
+  signingkey = 52654E6EB0BB564B
+[fetch]
+  prune = true
+[gpg]
+  program = gpg2
+[status]
+  showUntrackedFiles = all

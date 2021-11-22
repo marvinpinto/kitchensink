@@ -1,0 +1,4 @@
+{{- if (not .is_devcontainer) -}}
+{{ (onepassword "dotfiles-secrets-aws-config" "Private").details.notesPlain }}
+{{- end -}}
+

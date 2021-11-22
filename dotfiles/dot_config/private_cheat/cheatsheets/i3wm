@@ -1,0 +1,35 @@
+---
+syntax: bash
+---
+
+# Application shorcuts
+mod + enter      # new terminal
+mod + backspace  # new browser
+mod + -          # cycle through all scratchpad windows
+alt + t          # bring up the floating terminal
+alt + k          # bring up the keybase window
+alt + s          # bring up the slack window
+
+# Windows & focus
+mod + <h,j,k,l>         # focus left,down,up,right
+mod + shift + <h,j,k,l> # move focused window left,down,up,right
+mod + space             # toggle focus between tiling/floating windows
+mod + r                 # resize window (use h,j,k,l)
+mod + shift + q         # kill window
+mod + shift + f         # toggle the tiling/floating mode on a window
+mod + o                 # focus on other monitor
+mod + shift + o         # move the focued window to the other monitor
+
+# Splits
+mod + ;  # horizontal split
+mod + v  # vertical split
+mod + f  # toggle fullscreen (for the container)
+
+# Layouts
+mod + s  # stacked layout
+mod + w  # tabbed layout
+mod + e  # toggle split layout
+
+# Reload configuration
+mod + shift + c  # reload i3wm configuration
+mod + shift + r  # restart i3wm

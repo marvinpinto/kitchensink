@@ -1,0 +1,94 @@
+#!/usr/bin/env bash
+
+{{ if ne .chezmoi.os "linux" }}
+echo "Cleanup script only applies to Linux"
+exit 0
+{{ end }}
+
+# Ensure that the following files do not exist
+rm -rf ~/.bash_login
+rm -rf ~/Desktop
+rm -rf ~/Downloads
+rm -rf ~/Templates
+rm -rf ~/Public
+rm -rf ~/Documents
+rm -rf ~/Music
+rm -rf ~/Pictures
+rm -rf ~/Videos
+
+##########################
+# Gnome-terminal settings
+##########################
+GNOME_TERMINAL_PROFILE_UUID=$(gsettings get org.gnome.Terminal.ProfilesList default | tr -d \')
+GNOME_TERMINAL_PROFILE="org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${GNOME_TERMINAL_PROFILE_UUID}/"
+
+# Do not show the menu bar
+/usr/bin/gsettings set org.gnome.Terminal.Legacy.Settings default-show-menubar false
+
+# Do not display the "confirm close" dialog
+/usr/bin/gsettings set org.gnome.Terminal.Legacy.Settings confirm-close false
+
+# Use UTF-8
+/usr/bin/gsettings set "$GNOME_TERMINAL_PROFILE" encoding 'UTF-8'
+
+# Re-wrap the terminal on window resize
+/usr/bin/gsettings set "$GNOME_TERMINAL_PROFILE" rewrap-on-resize true
+
+# Allow a set number of lines in scrollback
+/usr/bin/gsettings set "$GNOME_TERMINAL_PROFILE" scrollback-lines '8292'
+
+# Disable unlimited scrollback
+/usr/bin/gsettings set "$GNOME_TERMINAL_PROFILE" scrollback-unlimited false
+
+# Do not scroll on output
+/usr/bin/gsettings set "$GNOME_TERMINAL_PROFILE" scroll-on-output false
+
+# Scroll to the bottom on a keystroke
+/usr/bin/gsettings set "$GNOME_TERMINAL_PROFILE" scroll-on-keystroke true
+
+# Do not display the scrollbar
+/usr/bin/gsettings set "$GNOME_TERMINAL_PROFILE" scrollbar-policy 'never'
+
+# Exit the terminal when a command exits
+/usr/bin/gsettings set "$GNOME_TERMINAL_PROFILE" exit-action 'close'
+
+# Disable cursor blinking
+/usr/bin/gsettings set "$GNOME_TERMINAL_PROFILE" cursor-blink-mode 'off'
+
+# Disable the audible bell
+/usr/bin/gsettings set "$GNOME_TERMINAL_PROFILE" audible-bell false
+
+# The color scheme here roughly corresponds to afterglow: https://github.com/Mayccoll/Gogh/blob/451173a451bf369a732af52e969df55c3270faa4/themes/afterglow.sh
+/usr/bin/gsettings set "$GNOME_TERMINAL_PROFILE" palette "['#151515', '#a53c23', '#7b9246', '#d3a04d', '#6c99bb', '#9f4e85', '#7dd6cf', '#d0d0d0', '#505050', '#a53c23', '#7b9246', '#d3a04d', '#547c99', '#9f4e85', '#7dd6cf', '#f5f5f5']"
+
+# Set the foreground text color
+/usr/bin/gsettings set "$GNOME_TERMINAL_PROFILE" foreground-color "#d0d0d0"
+
+# Set the terminal background color
+/usr/bin/gsettings set "$GNOME_TERMINAL_PROFILE" background-color "#222222"
+
+# Set the bold text color
+/usr/bin/gsettings set "$GNOME_TERMINAL_PROFILE" bold-color "#d0d0d0"
+
+# Bold text should not be the same color as regular text
+/usr/bin/gsettings set "$GNOME_TERMINAL_PROFILE" bold-color-same-as-fg false
+
+# Do not use the default system font
+/usr/bin/gsettings set "$GNOME_TERMINAL_PROFILE" use-system-font false
+
+# Use a custom terminal font
+/usr/bin/gsettings set "$GNOME_TERMINAL_PROFILE" font "Hack Nerd Font Regular 11"
+
+# Disable the keyboard plugin
+/usr/bin/gsettings set org.gnome.settings-daemon.plugins.keyboard active false
+
+# Disable the gnome lock screen
+/usr/bin/gsettings set org.gnome.desktop.lockdown disable-lock-screen true
+
+# Do not show desktop icons
+/usr/bin/gsettings set org.gnome.desktop.background show-desktop-icons false
+
+# Set the keyboard repeat rate & delay
+/usr/bin/gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 50
+/usr/bin/gsettings set org.gnome.desktop.peripherals.keyboard delay 250
+/usr/bin/xset r rate 250 50

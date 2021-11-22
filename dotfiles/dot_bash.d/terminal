@@ -1,0 +1,14 @@
+# vim: set filetype=sh :
+
+# grep with ag
+gr() {
+  local file
+  local line
+
+  read -r file line <<<"$(ag --nobreak --noheading --color $@ | fzf --ansi | awk -F: '{print $1, $2}')"
+
+  if [[ -n $file ]]
+  then
+     nvim $file +$line
+  fi
+}

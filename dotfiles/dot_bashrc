@@ -1,0 +1,548 @@
+# vim: set filetype=sh :
+
+#****************
+# Shell options
+#****************
+# vi mode in bash
+set -o vi
+
+# Case-insensitive globbing (used in pathname expansion)
+shopt -s nocaseglob
+
+# Append to the Bash history file, rather than overwriting it
+shopt -s histappend
+
+shopt -s checkwinsize
+
+# Set the correct terminal size
+eval $(/usr/bin/resize)
+
+# Supercharge directory switching
+alias ..="cd .."
+complete -d cd
+shopt -s cdspell
+
+# Disable accidental Ctrl+s presses
+if [[ -t 0 && $- = *i* ]]; then
+  stty -ixon
+fi
+
+#***************
+# Bash Exports
+#***************
+
+# Make nvim the default editor
+export EDITOR="nvim"
+
+# Larger bash history
+export HISTSIZE=2000
+export HISTFILESIZE=$HISTSIZE
+export HISTCONTROL=ignoredups
+# Make some commands not show up in history
+export HISTIGNORE="ls:cd:cd -:pwd:exit:date"
+
+# Prefer US English and use UTF-8
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+
+# Highlight section titles in manual pages
+export LESS_TERMCAP_md="$ORANGE"
+
+# Don’t clear the screen after quitting a manual page
+export MANPAGER="less -X"
+
+# Fancy ls colors
+export CLICOLOR='Yes'
+export LSCOLORS='ExGxCxDxBxegedabagacad'
+
+# Prevent 'less' from
+export LESS="-i -R"
+export LESSHISTFILE='/dev/null'
+export LESSHISTSIZE=0
+
+# git prompt related environment variables
+export GIT_PS1_SHOWDIRTYSTATE='yes'
+export GIT_PS1_SHOWSTASHSTATE='yes'
+export GIT_PS1_SHOWUNTRACKEDFILES='yes'
+
+# Use fzf for searching through cheatsheets
+export CHEAT_USE_FZF=true
+
+# fzf related tweaks
+export FZF_DEFAULT_COMMAND='ag --nocolor -g ""'
+export FZF_COMPLETION_TRIGGER=',,'
+export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
+export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
+
+#***************
+# Bash Aliases
+#***************
+
+# Colored grep
+alias grep="grep --color=auto"
+
+# Use gpg2 by default
+alias gpg="/usr/bin/gpg2"
+
+# List all files colorized in long format
+alias l="ls -lF --color"
+
+# List all files colorized in long format, including dot files
+alias la="ls -laF --color"
+
+# List only directories
+alias lsd="ls -lF --color | grep --color=never '^d'"
+
+# Always use color output for `ls`
+alias ls="ls --color"
+
+# List and kill off tmux sessions
+alias tls='/usr/bin/tmux ls'
+alias tks='/usr/bin/tmux kill-session -t '
+
+# Docker related aliases
+alias drm="docker rm -f"
+alias dps="docker ps"
+
+# Command line weather
+alias weather="curl http://wttr.in/M6P?1n"
+
+# System Update
+alias yoloupdate="sudo apt-get clean && sudo apt-get autoremove -y --purge && sudo apt-get update && sudo apt-get -y dist-upgrade"
+
+# Alias docker-compose to dc
+alias dc="docker-compose"
+
+# Copying/moving a large number of files (with progress)
+alias rscp='rsync -aP'
+alias rsmv='rsync -aP --remove-source-files'
+
+# Alias vi and vim to nvim
+alias vi="nvim"
+alias vim="nvim"
+
+#************
+# SSH agent
+#************
+if [ -f "${HOME}/.ssh/ssh-agent-info" ]; then
+  . "${HOME}/.ssh/ssh-agent-info"
+  if [ -f '/.dockerenv' ]; then
+    # We're inside a docker environment
+    SSH_AUTH_SOCK=/ssh-agent
+  fi
+  export SSH_AUTH_SOCK
+  export SSH_AGENT_PID
+fi
+
+
+#*****************
+# Bash Completion
+#*****************
+[ -e "/etc/bash_completion" ] && source "/etc/bash_completion"
+
+
+#************
+# NVM setup
+#************
+export NVM_DIR="/usr/local/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"
+if [ -f '/.dockerenv' ] && [ -f '.nvmrc' ]; then
+  # If we're inside a docker container and there is a .nvmrc file present,
+  # issue an `nvm use` and automatically use that nodejs version.
+  nvm use
+fi
+
+
+#**************
+# Bash Prompt
+#**************
+function __prompt_command() {
+  local EXIT="$?"
+  PS1=""
+
+  local RED="\[$(tput setaf 1)\]"
+  local GREEN="\[$(tput setaf 2)\]"
+  local YELLOW="\[$(tput setaf 3)\]"
+  local BLUE="\[$(tput setaf 4)\]"
+  local MAGENTA="\[$(tput setaf 5)\]"
+  local CYAN="\[$(tput setaf 6)\]"
+  local WHITE="\[$(tput setaf 7)\]"
+  local BOLD="\[$(tput bold)\]"
+  local UNDERLINE="\[$(tput sgr 0 1)\]"
+  local RESET="\[$(tput sgr0)\]"
+  local PROMPTCOL="${YELLOW}"
+
+  if [[ -n "${IS_ELEVATED}" ]]; then
+    # Bright red prompt if in an elevated docker container
+    PS1+="\n${RED}"
+  elif [ -f '/.dockerenv' ]; then
+    # We're inside a docker environment
+    PS1+="\n${GREEN}"
+  elif [ `id -u` == 0 ]; then
+    # Bright red prompt if root
+    PS1+="\n${RED}"
+  else
+    PS1+="\n${PROMPTCOL}"
+  fi
+
+  # Second line of bash prompt
+  if [ -f '/.dockerinit' ]; then
+    # We're inside a docker environment
+    PS1+="[docker-\H: \t]${RESET}${BLUE}$(__git_ps1 ' [%s]')${RESET}${PROMPTCOL} \w${RESET}\n"
+  else
+    PS1+="[\H: \t]${RESET}${BLUE}$(__git_ps1 ' [%s]')${RESET}${PROMPTCOL} \w${RESET}\n"
+  fi
+
+  # Print out the last exit code, if it wasn't zero
+  if [ $EXIT != 0 ]; then
+    PS1+="${RED}[${EXIT}]${RESET} "
+  fi
+
+  # Finally print out a $ or #, depending on uid
+  PS1+="${PROMPTCOL}\\$ ${RESET}"
+}
+
+export PROMPT_COMMAND=__prompt_command  # Func to gen PS1 after CMDs
+
+#*******************
+# Helper Functions
+#*******************
+
+# Load the helper bash function files
+for bfile in ~/.bash.d/* ; do
+  [ -f "$bfile" ] && . "$bfile"
+done
+
+# Set the terminal title
+function title() {
+  echo -ne "\033]0;$1\007"
+}
+
+# Simple calculator
+function calc() {
+  local result=""
+  result="$(printf "scale=10;$*\n" | bc --mathlib | tr -d '\\\n')"
+  #                       └─ default (when `--mathlib` is used) is 20
+  #
+  if [[ "$result" == *.* ]]; then
+    # improve the output for decimal numbers
+    printf "$result" |
+    sed -e 's/^\./0./'        `# add "0" for cases like ".5"` \
+        -e 's/^-\./-0./'      `# add "0" for cases like "-.5"`\
+        -e 's/0*$//;s/\.$//'   # remove trailing zeros
+  else
+    printf "$result"
+  fi
+  printf "\n"
+}
+
+# Determine size of a file or total size of a directory
+function fs() {
+  if du -b /dev/null > /dev/null 2>&1; then
+    local arg=-sbh
+  else
+    local arg=-sh
+  fi
+  if [[ -n "$@" ]]; then
+    du $arg -- "$@"
+  else
+    du $arg .[^.]* *
+  fi
+}
+
+# `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
+# the `.git` directory, listing directories first. The output gets piped into
+# `less` with options to preserve color and line numbers, unless the output is
+# small enough for one screen.
+function tre() {
+  tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX
+}
+
+# Function to clean up docker containers
+function drma() {
+  local dps=$(docker ps -aq)
+  if [ -n "$dps" ]; then
+    docker rm -f $dps
+  fi
+
+  # Delete all untagged docker images
+  local untagged=$(docker images | grep "^<none>" | awk "{print $3}")
+  if [ -n "$untagged" ]; then
+    docker rmi -f $untagged
+  fi
+}
+
+# Delete an EC2 AMI & corresponding snapshot
+function delete-ec2-ami() {
+  local ami_id=$1
+
+  if [ -z "$ami_id" ]; then
+    echo "usage: delete-ec2-ami <ami_id>"
+    return 1
+  fi
+
+  local snap_id=$(aws ec2 describe-snapshots --filters Name=description,Values="*${ami_id}*" | python -c 'import sys, json; print json.load(sys.stdin)["Snapshots"][0]["SnapshotId"]')
+
+  aws ec2 deregister-image --image-id ${ami_id}
+  aws ec2 delete-snapshot --snapshot-id ${snap_id}
+}
+
+# Mirror my laptop display to the connected monitor (i.e. presentation mode!)
+function presentation-mode() {
+  local display=$(xrandr | grep -v LVDS1 | grep " connected" | cut -d" " -f1)
+  xrandr --output ${display} --same-as LVDS1
+}
+
+# Turn off the laptop display when connected to an external monitor
+function docked-mode() {
+  xrandr --output eDP1 --off
+}
+
+# Start my irssi im container
+function im() {
+  local container_name=irssi
+  if [ "$(docker ps -aq -f name=${container_name})" ]; then
+    docker rm -f ${container_name}
+  fi
+
+  docker run -it \
+    --log-driver=none \
+    --name ${container_name} \
+    -e TERM \
+    -u root:root \
+    -v $HOME/.irssi:/home/user/.irssi \
+    -v /etc/localtime:/etc/localtime \
+    irssi:alpine \
+    irssi --config=/home/user/.irssi/config-im --home=/home/user/.irssi
+}
+export -f im
+
+# Launch a containerized gimp
+function docker-gimp() {
+  xhost local:root
+  docker run -it \
+    --log-driver=none \
+    --rm \
+    -v /etc/localtime:/etc/localtime:ro \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -e DISPLAY=$DISPLAY \
+    -v ${HOME}/crap:/root/Pictures \
+    --name gimp \
+    jess/gimp
+}
+
+# Launch a containerized chrome
+function docker-chrome() {
+  xhost local:root
+  docker run -it \
+    --log-driver=none \
+    --rm \
+    --net host \
+    --cpuset-cpus 0 \
+    --memory 512mb \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -e DISPLAY=$DISPLAY \
+    -v $HOME/crap:/root/Downloads \
+    --device /dev/snd \
+    --name chrome \
+    jess/chrome
+}
+
+# Launch a containerized inkscape
+function docker-inkscape() {
+  xhost local:root
+  docker run -it \
+    --log-driver=none \
+    --rm \
+    -u root \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v $HOME/.Xauthority:/home/inkscaper/.Xauthority \
+    -e DISPLAY=$DISPLAY \
+    -v $HOME/crap:/home/inkscaper/Downloads \
+    --name inkscape \
+    andressrg/inkscape-fonts
+}
+
+# Launch a containerized bittorrent client
+function docker-bittorrent() {
+  echo "http://docktorrent:p@ssw0rd@`docker inspect --format '{{ .NetworkSettings.IPAddress }}' bittorrent`"
+  echo "May need to futz with the $HOME/bittorrent permissions a bit"
+  mkdir -p ${HOME}/bittorrent
+  rm -f ${HOME}/bittorrent/.session/rtorrent.lock
+  docker rm -f bittorrent || true
+  docker run -it \
+    --log-driver=none \
+    --rm \
+    -p 45566:45566 \
+    -p 9527:9527/udp \
+    --dns 8.8.8.8 \
+    -v $HOME/bittorrent:/rtorrent \
+    -e UPLOAD_RATE=1024 \
+    --name bittorrent \
+    kfei/docktorrent
+}
+
+# Launch a containerized letsencrypt client
+function docker-letsencrypt() {
+  docker run -it \
+    --log-driver=none \
+    --rm \
+    --name letsencrypt \
+    -v "${HOME}/Dropbox/lets-encrypt/etc:/etc/letsencrypt" \
+    -v "${HOME}/Dropbox/lets-encrypt/lib:/var/lib/letsencrypt" \
+    quay.io/letsencrypt/letsencrypt:latest \
+    -a manual \
+    --verbose \
+    auth
+  sudo chown -R marvin: ${HOME}/Dropbox/lets-encrypt
+}
+
+function adiff() {
+  local commit="$1"
+  local file="$2"
+  local vault_password_file="$3"
+
+  if [ -z "$commit" -o -z "$file" ]; then
+    echo "usage: adiff <commit> <file> [vault_password_file]"
+    return 1
+  fi
+
+  if [ -z "$vault_password_file" ]; then
+    vault_password_file=vault_pass.py
+  fi
+
+  diff -u \
+    <( ansible-vault --vault-password-file="${vault_password_file}" view <( git show "${commit}^":"${file}" )) \
+    <( ansible-vault --vault-password-file="${vault_password_file}" view <( git show "${commit}":"${file}" ))
+}
+
+# Determine size of a remote file via a HEAD request
+function rfs() {
+  local url="$1"
+
+  if [ -z "$url" ]; then
+    echo "usage: rfs <url>"
+    return 1
+  fi
+
+  curl -sIL "$url" | grep Content-Length | sed 's/[^0-9]//g' | numfmt --to=si
+}
+
+# APG alias for friendly passwords
+function apgf() {
+  local num="$1"
+
+  if [ -z "$num" ]; then
+    echo "usage: apgf <length>"
+    return 1
+  fi
+
+  apg -a 0 -n "$num" -m "$num" -t -E lI10O -M NCSL
+}
+
+# Bash function to export the environment variables in the specified .env file
+function dotenv () {
+  local dotenvfile=$1
+
+  if [ -z "$dotenvfile" ]; then
+    dotenvfile=".env"
+  fi
+
+  set -a
+  source $dotenvfile
+  set +a
+}
+
+# Bash function to unset the environment variables in the specified .env file
+function undotenv () {
+  local dotenvfile=$1
+
+  if [ -z "$dotenvfile" ]; then
+    dotenvfile=".env"
+  fi
+
+  unset $(cat ${dotenvfile} | grep -v ^# | sed -E 's/(.*)=.*/\1/' | xargs)
+}
+
+function clical () {
+  local force_create=$1
+  local image_label=clical
+
+  if [ -n "$force_create" ] && [ "$force_create" == "-f" ]; then
+    echo "**** Deleting image ${image_label} ****"
+    docker rmi -f $(docker images -aq --filter reference=${image_label}:latest)
+  fi
+
+  if [ ! "$(docker images -aq --filter reference=${image_label}:latest)" ]; then
+    echo "**** Building image ${image_label} ****"
+    docker build --tag ${image_label}:latest -<<EOF
+    FROM ubuntu:16.04
+
+    # 'remind' + other needed utils
+    RUN apt-get -qq update \
+      && apt-get install -y \
+        wget \
+        libical-parser-html-perl \
+        remind \
+      && apt-get clean autoclean \
+      && apt-get autoremove -y --purge \
+      && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+      && rm -rf /var/lib/{apt,dpkg,cache,log}/
+
+    # Install the perl version of the ical2rem format converter
+    RUN wget -O /usr/local/bin/ical2rem https://raw.githubusercontent.com/marvinpinto/config/tdelta-lead-time/scripts/ical2rem.pl \
+      && chmod 0755 /usr/local/bin/ical2rem
+EOF
+  fi
+
+  docker run \
+    --rm \
+    --log-driver=none \
+    -v $HOME/.clical:/root/.clical \
+    --name ${image_label} \
+    -it \
+    clical:latest \
+    /usr/bin/remind /root/.clical/main.ini
+}
+
+function colorscheme () {
+    # echo ""
+    #black
+    echo -e "\e[0;30m ███ *** AaBbCs ---  ███ \\e[0m   ---> Color 01 0;30m"
+    #red
+    echo -e "\e[0;31m ███ *** AaBbCs ---  ███ \\e[0m   ---> Color 02 0;31m"
+    #green
+    echo -e "\e[0;32m ███ *** AaBbCs ---  ███ \\e[0m   ---> Color 03 0;32m"
+    #yellow
+    echo -e "\e[0;33m ███ *** AaBbCs ---  ███ \\e[0m   ---> Color 04 0;33m"
+    #blue
+    echo -e "\e[0;34m ███ *** AaBbCs ---  ███ \\e[0m   ---> Color 05 0;34m"
+    #purple
+    echo -e "\e[0;35m ███ *** AaBbCs ---  ███ \\e[0m   ---> Color 06 0;35m"
+    #cyan
+    echo -e "\e[0;36m ███ *** AaBbCs ---  ███ \\e[0m   ---> Color 07 0;36m"
+    #white
+    echo -e "\e[0;37m ███ *** AaBbCs ---  ███ \\e[0m   ---> Color 08 0;37m"
+    echo ""
+    #black
+    echo -e "\e[1;30m ███ *** AaBbCs ---  ███ \\e[0m   ---> Color 09 1;30m"
+    #red
+    echo -e "\e[1;31m ███ *** AaBbCs ---  ███ \\e[0m   ---> Color 10 1;31m"
+    #green
+    echo -e "\e[1;32m ███ *** AaBbCs ---  ███ \\e[0m   ---> Color 11 1;32m"
+    #yellow
+    echo -e "\e[1;33m ███ *** AaBbCs ---  ███ \\e[0m   ---> Color 12 1;33m"
+    #blue
+    echo -e "\e[1;34m ███ *** AaBbCs ---  ███ \\e[0m   ---> Color 13 1;34m"
+    #purple
+    echo -e "\e[1;35m ███ *** AaBbCs ---  ███ \\e[0m   ---> Color 14 1;35m"
+    #cyan
+    echo -e "\e[1;36m ███ *** AaBbCs ---  ███ \\e[0m   ---> Color 15 1;36m"
+    #white
+    echo -e "\e[1;37m ███ *** AaBbCs ---  ███ \\e[0m   ---> Color 16 1;37m"
+    echo ""
+    echo -e "\e[0;30m█████\\e[0m\e[0;31m█████\\e[0m\e[0;32m█████\\e[0m\e[0;33m█████\\e[0m\e[0;34m█████\\e[0m\e[0;35m█████\\e[0m\e[0;36m█████\\e[0m\e[0;37m█████\\e[0m"
+    echo -e "\e[0m\e[1;30m█████\\e[0m\e[1;31m█████\\e[0m\e[1;32m█████\\e[0m\e[1;33m█████\\e[0m\e[1;34m█████\\e[0m\e[1;35m█████\\e[0m\e[1;36m█████\\e[0m\e[1;37m█████\\e[0m"
+}

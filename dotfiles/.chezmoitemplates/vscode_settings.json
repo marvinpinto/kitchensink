@@ -1,0 +1,13 @@
+{
+    "telemetry.enableCrashReporter": false,
+    "telemetry.enableTelemetry": false,
+    "workbench.iconTheme": "vs-minimal",
+    "workbench.colorTheme": "Monokai Dimmed",
+
+	"terminal.integrated.commandsToSkipShell": [
+        // do not allow ctrl+j & ctrl+b to be captured by terminal
+        "workbench.action.toggleSidebarVisibility",
+        "workbench.action.togglePanel"
+    ],
+    "telemetry.telemetryLevel": "off",
+}

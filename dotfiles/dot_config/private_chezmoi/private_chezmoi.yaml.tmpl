@@ -1,0 +1,10 @@
+# vim: set filetype=yaml :
+
+{{- $isDevcontainer := or (env "REMOTE_CONTAINERS") (env "CODESPACES") (env "VSCODE_REMOTE_CONTAINERS_SESSION") | not | not -}}
+
+# This retains the value passed with --source on chezmoi init, which is used in
+# the ./install script
+sourceDir: "{{ .chezmoi.sourceDir }}"
+
+data:
+  is_devcontainer: {{ $isDevcontainer }}

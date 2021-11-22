@@ -1,0 +1,31 @@
+---
+syntax: bash
+---
+
+# Re-source vim config, without restarting (this isn't perfect)
+,sv
+
+# Reset the syntax highlighting in the whole file
+F12
+
+# File management
+space  # Bring up file explorer (from normal mode)
+,g  # Recursively search for contents starting from the current directory
+,f  # Highlight the current file (in the file explorer)
+
+# Vim tabs
+tn  # create a new tab
+th  # go to the left tab
+tl  # go to the right tab
+:TabooRename <name>  # Rename the current vim tab
+:tabmove <-N | 0 | +N>  # Move this tab N places to the left/right, or make it the first tab
+5gt # go to the 5th tab
+
+# Terminal handling
+tb  # create a split terminal below
+tr  # create a split terminal to the right
+i   # enter terminal mode (in a newly created terminal)
+C-\ C-N  # leave terminal mode
+
+# Writing
+:Goyo  # toggle goyo to utilize distraction-free writing for markdown files

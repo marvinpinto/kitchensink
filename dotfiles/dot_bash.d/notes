@@ -1,0 +1,47 @@
+# vim: set filetype=sh :
+
+# Bash function to make taking random notes slightly easier
+function note() {
+  local notes_dir="${HOME}/projects/notes"
+
+  if [ -z "$1" ]; then
+    echo "usage: note <push | list | filename>"
+    echo "e.g. note list"
+    echo "e.g. note push"
+    echo "e.g. note scratchpad.md"
+    return 1
+  fi
+
+  case "$1" in
+    list)
+      tree -aC -I '.git' --dirsfirst "$notes_dir"
+      ;;
+    push)
+      pushd "$notes_dir"
+      msg="Regenerated at $(date -u '+%Y-%m-%d %H:%M:%S') UTC"
+      git add .
+      git commit -m "$msg"
+      git push origin master
+      popd
+      ;;
+    *)
+      vim "$notes_dir/$1"
+      pushd "$notes_dir"
+      msg="Regenerated at $(date -u '+%Y-%m-%d %H:%M:%S') UTC"
+      git add .
+      git commit -m "$msg"
+      git push origin master
+      popd
+      ;;
+  esac
+  return 0
+}
+
+_fzf_complete_note() {
+  local notes_dir="${HOME}/projects/notes"
+  _fzf_complete --no-multi -- "$@" < <(
+    find "$notes_dir" -iname "*.md" -not -path "*.git*" | sed -n "s|^${notes_dir}/||p"
+  )
+}
+
+complete -F _fzf_complete_note -o default -o bashdefault note

@@ -1,0 +1,9 @@
+---
+syntax: bash
+---
+
+# Trigger fzf completion on arbitrary CLI commands
+vim ,,<tab>
+
+# Search recursively using gr (hit enter to open the file in read-only mode)
+gr <searchterm>

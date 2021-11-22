@@ -1,0 +1,46 @@
+# vim: set filetype=sh :
+
+# Set the AWS vault backend
+export AWS_VAULT_BACKEND=file
+
+# Alias aws-vault to av
+alias av="aws-vault"
+
+# Use system aws-vault completions for the 'av' alias
+_av_bash_autocomplete() {
+    local i cur prev opts base
+
+    for (( i=1; i < COMP_CWORD; i++ )); do
+        if [[ ${COMP_WORDS[i]} == -- ]]; then
+            _command_offset $i+1
+            return
+        fi
+    done
+
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    opts=$(aws-vault --completion-bash "${COMP_WORDS[@]:1:$COMP_CWORD}")
+    COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+    return 0
+}
+complete -F _av_bash_autocomplete av
+
+ave() {
+  if [ -z "$OP_AWS_MFA_NAME" ]; then
+    echo "This utility needs the OP_AWS_MFA_NAME environment variable"
+    return 1
+  fi
+
+  OP_ACCT=$(op get account > /dev/null 2>&1)
+  if [[ $? != 0 ]]; then
+    eval $(op signin)
+  fi
+
+  OP_ACCT=$(op get account > /dev/null 2>&1)
+  if [[ $? != 0 ]]; then
+    echo "Sign-in failed, maybe try again"
+    return 1
+  fi
+
+  aws-vault exec --mfa-token=$(op get totp "$OP_AWS_MFA_NAME") $@
+}

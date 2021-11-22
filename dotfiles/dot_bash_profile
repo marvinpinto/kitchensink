@@ -1,0 +1,7 @@
+# vim: set filetype=sh :
+
+# Source the .profile file, if it exists
+[ -r ~/.profile ] && [ -f ~/.profile ] && source ~/.profile
+
+# Source the .bashrc file, if it exists
+[ -r ~/.bashrc ] && [ -f ~/.bashrc ] && source ~/.bashrc

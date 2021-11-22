@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+{{ if (eq .chezmoi.os "darwin") }}
+# darwin
+{{ else if (eq .chezmoi.os "linux" ) }}
+VIMPLUG="${HOME}/.local/share/nvim/site/autoload/plug.vim"
+{{ else }}
+echo "Unsupported OS: {{ .chezmoi.os }}"
+exit 0
+{{ end }}
+
+if [[ ! -f "$VIMPLUG" ]]; then
+  curl -o "$VIMPLUG" "https://raw.githubusercontent.com/junegunn/vim-plug/d16273e07231260e02412625f98651bc6ceebb56/plug.vim"
+  chmod 0755 "$VIMPLUG" 
+fi
+
+# Install the vim-plug plugins
+nvim -es -u ~/.config/nvim/init.vim -i NONE -c "PlugInstall" -c "qa"

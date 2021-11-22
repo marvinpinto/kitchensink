@@ -1,0 +1,12 @@
+{{- if (not .is_devcontainer) -}}
+{{ (onepassword "dotfiles-secrets-ssh-config" "Private").details.notesPlain }}
+{{- end }}
+
+Host github.com
+  PreferredAuthentications publickey
+
+Host *
+  LogLevel ERROR
+  TCPKeepAlive yes
+  ServerAliveInterval 30
+  KeepAlive yes

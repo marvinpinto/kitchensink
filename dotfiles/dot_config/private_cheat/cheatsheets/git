@@ -1,0 +1,23 @@
+---
+syntax: bash
+---
+
+# Terminal git commit browser with previews
+gshow
+
+
+# Conventional Commit specification
+feat      # new feature
+fix       # bug fix
+docs      # documentation
+style     # changes that do not affect meaning - formatting, whitespace, etc
+refactor  # code refactoring
+perf      # performance improvements
+test      # missing tests, correct existing testgs
+build     # build system or external dependencies (gulp, npm, etc)
+ci        # ci config changes & scripts
+chore     # other changes that don't modify src or test files
+revert    # reverting previous changes
+
+# Git add only deleted files
+git ls-files --deleted | xargs git add

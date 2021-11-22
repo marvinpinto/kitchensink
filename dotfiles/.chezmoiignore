@@ -1,0 +1,12 @@
+{{ if ne .chezmoi.os "darwin" }}
+Library/
+{{ end }}
+
+{{ if ne .chezmoi.os "linux" }}
+.config/Code/
+.config/gtk-3.0/
+.i3/
+.local/share/applications/
+.xmodmap
+.xresources
+{{ end }}

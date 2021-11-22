@@ -1,0 +1,61 @@
+# vim: set filetype=sh :
+
+# Bash function to attach to, or spin up a new (named) docker container
+function sink() {
+  local boxname=$1
+  local dockerargs=$2
+  local workdir="/root"
+
+  if [ -z "$boxname" ]; then
+    echo "usage: sink <box name> [extra docker args]"
+    echo "e.g. sink tidycat-ui \"-p 4200:4200\""
+    return 1
+  fi
+
+  if [ -e "${HOME}/projects/${boxname}" ]; then
+    workdir="/root/projects/${boxname}"
+  fi
+
+  local dockerid=$(docker ps -aq --filter=name=$boxname)
+  if [ "$dockerid" != "" ]; then
+    echo "Attaching to existing docker container ${dockerid}"
+  else
+    echo "Creating new docker container"
+    dockerid=$(docker run -dit \
+      -e "HOSTNAME=${boxname}" \
+      --log-driver=none \
+      --name $boxname \
+      --hostname ${boxname} \
+      --add-host=localgw:172.17.0.1 \
+      -v /home/marvin:/var/shared \
+      -v $SSH_AUTH_SOCK:/ssh-agent \
+      -e SSH_AUTH_SOCK=/ssh-agent \
+      -e DISPLAY \
+      -e TERM \
+      -v /tmp/.X11-unix:/tmp/.X11-unix \
+      -v /media/usb:/media/usb \
+      -v /usr/local/bin:/usr/local/sbin \
+      -v /home/marvin/.awsvault:/root/.awsvault \
+      -v /home/marvin/.aws:/root/.aws \
+      -v /etc/bash_completion.d:/etc/bash_completion.d \
+      --security-opt=seccomp:unconfined \
+      $dockerargs \
+      -w $workdir \
+      "ghcr.io/marvinpinto/kitchensink:20.04-latest")
+  fi
+  docker exec -it $dockerid /bin/bash
+}
+
+function _sink_completion() {
+  COMPREPLY=()
+  local cur="${COMP_WORDS[COMP_CWORD]}"
+  local prev="${COMP_WORDS[COMP_CWORD-1]}"
+  local words=$(docker ps --filter "ancestor=ghcr.io/marvinpinto/kitchensink:20.04-latest" --format "{{.Names}}" | tr '\n' ' ' | xargs)
+  case $COMP_CWORD in
+    1)
+      COMPREPLY=( $(compgen -W "${words}" -- "${cur}") )
+      ;;
+  esac
+  return 0
+}
+complete -F _sink_completion sink
