@@ -39,7 +39,7 @@ function sink() {
       $dockerargs \
       --workdir $workdir \
       "ghcr.io/marvinpinto/kitchensink:20.04-latest")
-    docker exec -it $dockerid /home/linuxbrew/.linuxbrew/bin/chezmoi init "marvinpinto/kitchensink" --source=/home/worker/dotfiles --apply
+    docker exec -it $dockerid /bin/sh -c "/home/linuxbrew/.linuxbrew/bin/chezmoi init marvinpinto/kitchensink --source=/home/worker/dotfiles --apply"
   fi
   docker exec -it $dockerid /bin/bash
 }

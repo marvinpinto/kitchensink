@@ -15,7 +15,7 @@ shopt -s histappend
 shopt -s checkwinsize
 
 # Set the correct terminal size
-eval $(/usr/bin/resize)
+[[ -f "/usr/bin/resize" ]] && eval $(/usr/bin/resize)
 
 # Supercharge directory switching
 alias ..="cd .."

@@ -17,9 +17,9 @@ exit 0
 
 if [[ ! -f "$VIMPLUG" ]]; then
   mkdir -p "$NVIM_AUTOLOAD_DIR"
-  curl -o "$VIMPLUG" "https://raw.githubusercontent.com/junegunn/vim-plug/d16273e07231260e02412625f98651bc6ceebb56/plug.vim"
+  curl --silent -o "$VIMPLUG" "https://raw.githubusercontent.com/junegunn/vim-plug/c9971346bb486ccff354aaee8606cc0d2d5a0c97/plug.vim"
   chmod 0755 "$VIMPLUG" 
 fi
 
 # Install the vim-plug plugins
-$NVIMCMD -es -u ~/.config/nvim/init.vim -i NONE -c "PlugInstall" -c "qa"
+$NVIMCMD -es -u ${HOME}/.config/nvim/init.vim -i NONE -c "PlugInstall" -c "qa" || true
