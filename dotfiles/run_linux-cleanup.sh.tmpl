@@ -1,20 +1,5 @@
+{{ if eq .chezmoi.os "linux" -}}
 #!/usr/bin/env bash
-
-{{ if ne .chezmoi.os "linux" }}
-echo "Cleanup script only applies to Linux"
-exit 0
-{{ end }}
-
-# Ensure that the following files do not exist
-rm -rf ~/.bash_login
-rm -rf ~/Desktop
-rm -rf ~/Downloads
-rm -rf ~/Templates
-rm -rf ~/Public
-rm -rf ~/Documents
-rm -rf ~/Music
-rm -rf ~/Pictures
-rm -rf ~/Videos
 
 ##########################
 # Gnome-terminal settings
@@ -92,3 +77,4 @@ GNOME_TERMINAL_PROFILE="org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/le
 /usr/bin/gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 50
 /usr/bin/gsettings set org.gnome.desktop.peripherals.keyboard delay 250
 /usr/bin/xset r rate 250 50
+{{ end -}}

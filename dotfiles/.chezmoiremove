@@ -1,0 +1,11 @@
+{{ if eq .chezmoi.os "linux" }}
+.bash_login
+Desktop
+Downloads
+Templates
+Public
+Documents
+Music
+Pictures
+Videos
+{{ end }}
