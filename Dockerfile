@@ -75,8 +75,11 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-# Install a few needed NodeJS versions
-RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" \
+# Setup nvm + install a few needed NodeJS versions
+ENV NVM_DIR /usr/local/nvm
+RUN mkdir -p $NVM_DIR \
+  && . /home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh \
+  && echo "yarn" > $NVM_DIR/default-packages \
   && nvm install lts/dubnium \
   && nvm install lts/erbium \
   && nvm install lts/fermium \
@@ -85,7 +88,7 @@ RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" \
 
 # Utilities needed to run playwright inside the docker container
 RUN apt-get -qq update \
-  && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" \
+  && . /home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh \
   && nvm use lts/fermium \
   && npm install -g playwright \
   && npx playwright install-deps \
@@ -109,7 +112,7 @@ WORKDIR /home/worker/app
 ENV HOME /home/worker
 ENV PATH /home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:/home/worker/bin:/usr/local/go/bin:/home/worker/.local/bin:$NVM_DIR/version/node/v$NODE_VERSION/bin:$PATH
 ENV NODE_PATH $NVM_DIR/version/node/v$NODE_VERSION/lib/node_modules
-ENV EDITOR /usr/bin/nvim
+ENV EDITOR nvim
 
 USER root
 
