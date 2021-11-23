@@ -60,7 +60,6 @@
   # This cache is meant to speed up commands that involve determining untracked
   # files such as git status.
   untrackedCache = true
-  pager = "diff-so-fancy | less --tabs=4 -RFX"
   autocrlf = false
 
 [diff]
@@ -75,19 +74,20 @@
   local = yellow
   remote = green
 
-[color "diff-highlight"]
-  oldNormal = "red bold"
-  oldHighlight = "red bold 52"
-  newNormal = "green bold"
-  newHighlight = "green bold 22"
+[pager]
+  diff = delta
+  show = delta
+  log = delta
+  blame = delta
+  grep = delta
+  reflog = delta
 
-[color "diff"]
-  meta = "11"
-  frag = "magenta bold"
-  commit = "yellow bold"
-  old = "red bold"
-  new = "green bold"
-  whitespace = "red reverse"
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  line-numbers = true
+  colorMoved = default
 
 [color "status"]
   added = yellow

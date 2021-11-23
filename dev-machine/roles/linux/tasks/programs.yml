@@ -19,7 +19,6 @@
       - "git"
       - "ansible"
       - "git-lfs"
-      - "diff-so-fancy"
       - "marvinpinto/kitchensink/inkscape"
       - "marvinpinto/kitchensink/kdenlive"
       - "mkcert"
@@ -29,6 +28,7 @@
       - "marvinpinto/kitchensink/plexamp"
       - "rclone"
       - "jq"
+      - "git-delta"
     state: "present"
     path: "/home/linuxbrew/.linuxbrew/bin"
 

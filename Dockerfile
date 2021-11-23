@@ -39,7 +39,6 @@ RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" \
     git \
     ansible \
     git-lfs \
-    diff-so-fancy \
     mkcert \
     neovim \
     rclone \
@@ -57,7 +56,8 @@ RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" \
     fzf \
     restic \
     aws-vault \
-    awscli
+    awscli \
+    git-delta
 
 # Configure timezone and locale
 ENV TZ="America/Toronto"
