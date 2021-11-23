@@ -35,6 +35,7 @@ RUN apt-get -qq update \
   && apt-get install -y \
     curl \
     vim \
+    neovim \
     strace \
     diffstat \
     pkg-config \
@@ -277,48 +278,17 @@ RUN wget --no-verbose -O /etc/bash_completion.d/fzf-key-bindings https://raw.git
 RUN curl -L "https://github.com/marvinpinto/slc/releases/download/latest/slc_linux_amd64" -o /usr/local/bin/slc \
   && chmod +x /usr/local/bin/slc
 
-# Create a shared data volume
-# We need to create an empty file, otherwise the volume will
-# belong to root.
-# This is probably a Docker bug.
-RUN mkdir /var/shared/ \
-  && touch /var/shared/placeholder \
-  && chown -R root: /var/shared
-VOLUME /var/shared
+# Environment setup
+RUN mkdir -p /home/worker/app \
+  && touch /home/worker/app/.placeholder \
+  && chown -R root: /home/worker
+VOLUME /home/worker/app
+WORKDIR /home/worker/app
 
-# Link in shared parts of the home directory
-WORKDIR /root
-RUN rm -f .bashrc .profile \
-  && ln -s /var/shared/.bash_logout \
-  && ln -s /var/shared/.bash_profile\
-  && ln -s /var/shared/.bashrc \
-  && ln -s /var/shared/.bash.d \
-  && ln -s /var/shared/.gitconfig \
-  && ln -s /var/shared/.gitignore_global \
-  && ln -s /var/shared/.profile \
-  && ln -s /var/shared/.ngrok2 \
-  && ln -s /var/shared/Dropbox/projects \
-  && chown -R root: /root \
-  && ln -s /usr/bin/vim /usr/bin/nvim
-
-# Set up the golang development environment
-RUN mkdir -p /goprojects/bin
-RUN mkdir -p /goprojects/pkg
-RUN mkdir -p /goprojects/src
-RUN mkdir -p /goprojects/src/github.com/marvinpinto
-RUN mkdir -p /goprojects/src/github.com/opensentinel
-RUN chown -R root: /goprojects
-ENV GOPATH /goprojects
-
-# Set the environment variables
-ENV HOME /root
-ENV PATH /root/bin:$PATH
-ENV PATH /usr/local/go/bin:$PATH
-ENV PATH $GOPATH/bin:$PATH
-ENV PATH /root/.local/bin:$PATH
-ENV PATH $NVM_DIR/version/node/v$NODE_VERSION/bin:$PATH
+ENV HOME /home/worker
+ENV PATH /home/worker/bin:/usr/local/go/bin:/home/worker/.local/bin:$NVM_DIR/version/node/v$NODE_VERSION/bin:$PATH
 ENV NODE_PATH $NVM_DIR/version/node/v$NODE_VERSION/lib/node_modules
-ENV EDITOR /usr/bin/vim
+ENV EDITOR /usr/bin/nvim
 
 USER root
 

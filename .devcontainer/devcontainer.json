@@ -1,0 +1,7 @@
+{
+	"name": "kitchensink-dev",
+	"image": "ghcr.io/marvinpinto/kitchensink:20.04-2a4ddfe1",
+	"workspaceFolder": "/home/worker/app",
+	"workspaceMount": "source=/home/marvin/projects/kitchensink,target=/home/worker/app,type=bind,consistency=cached",
+	"runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined" ]
+}

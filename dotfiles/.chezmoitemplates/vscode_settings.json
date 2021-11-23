@@ -14,5 +14,9 @@
   "window.restoreWindows": "none",
   "files.restoreUndoStack": false,
   "terminal.integrated.persistentSessionReviveProcess": "never",
-  "remote.restoreForwardedPorts": false
+  "remote.restoreForwardedPorts": false,
+  "dotfiles.repository": "marvinpinto/kitchensink",
+  "dotfiles.targetPath": "~/dotfiles",
+  "dotfiles.installCommand": "~/dotfiles/devcontainer-install.sh",
+  "remote.containers.copyGitConfig": false
 }
