@@ -17,6 +17,7 @@
       - "virtualbox.list"
       - "yubikey.list"
       - "microsoft.list"
+      # - "alacritty.list"
   register: "apt_found_files"
 
 - name: "Delete apt list files not managed by us"

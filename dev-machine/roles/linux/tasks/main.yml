@@ -24,4 +24,5 @@
 - include: "vscode.yml"
 - include: "virtualbox.yml"
 - include: "yubikey.yml"
+# - include: "alacritty.yml"
 - include: "clear_unmanaged_files.yml"

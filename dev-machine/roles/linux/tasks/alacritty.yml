@@ -1,0 +1,14 @@
+---
+- name: "Add a PPA containing a newish version of alacritty"
+  become: true
+  apt_repository:
+    repo: "ppa:mmstick76/alacritty"
+    state: "present"
+    update_cache: "yes"
+    filename: "alacritty"
+
+- name: "Install alacritty"
+  become: true
+  apt:
+    name: "alacritty"
+    state: "present"
