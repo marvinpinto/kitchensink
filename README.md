@@ -3,14 +3,6 @@
 <img alt="kitchen sink logo" height="200px" src="logo.png">
 
 
-## Contents
-
-1. [New Machine Setup](#new-machinexsetup)
-1. [Using the Kitchensink Tap](#using-the-kitchensink-tap)
-1. [License](#license)
-1. [Credits](#credits)
-
-
 ## New Machine Setup
 
 Bootstrap the installation process with homebrew and a few other basics:
@@ -57,6 +49,13 @@ Then install a formula as follows - using the 1password cli as an example:
 ```bash
 brew install marvinpinto/kitchensink/op
 ```
+
+
+## Development within VSCode Remote Containers
+
+Combining [remote containers](https://code.visualstudio.com/docs/remote/containers#_create-a-devcontainerjson-file) with [automatically setup dotfiles](https://code.visualstudio.com/docs/remote/containers#_personalizing-with-dotfile-repositories) enables very powerful throwaway dev environments.
+
+See the example [devcontainer.json](/.devcontainer/devcontainer.json) and my vscode [settings.json](https://github.com/marvinpinto/kitchensink/blob/26c23c94de21e00b9adfee9a3f900f0abdb889f3/dotfiles/.chezmoitemplates/vscode_settings.json#L18-L20) file for inspiration.
 
 
 ## License
