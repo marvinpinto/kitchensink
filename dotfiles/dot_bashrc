@@ -75,6 +75,14 @@ export FZF_COMPLETION_TRIGGER=',,'
 export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 
+# homebrew related
+export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew";
+export HOMEBREW_CELLAR="${HOMEBREW_PREFIX}/Cellar";
+export HOMEBREW_REPOSITORY="${HOMEBREW_PREFIX}/Homebrew";
+export HOMEBREW_SHELLENV_PREFIX="${HOMEBREW_PREFIX}";
+export MANPATH="${HOMEBREW_PREFIX}/share/man${MANPATH+:$MANPATH}:";
+export INFOPATH="${HOMEBREW_PREFIX}/share/info:${INFOPATH:-}";
+
 #***************
 # Bash Aliases
 #***************
@@ -135,25 +143,23 @@ if [ -f "${HOME}/.ssh/ssh-agent-info" ]; then
   export SSH_AGENT_PID
 fi
 
-
 #*****************
 # Bash Completion
 #*****************
-[ -e "/etc/bash_completion" ] && source "/etc/bash_completion"
-
+if [[ -d "/home/linuxbrew/.linuxbrew/etc/bash_completion.d" ]]; then
+  for bcfile in /home/linuxbrew/.linuxbrew/etc/bash_completion.d/* ; do
+    [[ -f "$bcfile" ]] && . $bcfile
+  done
+fi
 
 #************
 # NVM setup
 #************
-export NVM_DIR="/usr/local/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"
-if [ -f '/.dockerenv' ] && [ -f '.nvmrc' ]; then
-  # If we're inside a docker container and there is a .nvmrc file present,
-  # issue an `nvm use` and automatically use that nodejs version.
+if [[ -x "$(command -v nvm)" ]] && [[ -f '.nvmrc' ]]; then
+  # If there's a .nvmrc file present issue a `nvm use` and automatically
+  # use that nodejs version.
   nvm use
 fi
-
 
 #**************
 # Bash Prompt
@@ -212,30 +218,12 @@ export PROMPT_COMMAND=__prompt_command  # Func to gen PS1 after CMDs
 
 # Load the helper bash function files
 for bfile in ~/.bash.d/* ; do
-  [ -f "$bfile" ] && . "$bfile"
+  [[ -f "$bfile" ]] && . "$bfile"
 done
 
 # Set the terminal title
 function title() {
   echo -ne "\033]0;$1\007"
-}
-
-# Simple calculator
-function calc() {
-  local result=""
-  result="$(printf "scale=10;$*\n" | bc --mathlib | tr -d '\\\n')"
-  #                       └─ default (when `--mathlib` is used) is 20
-  #
-  if [[ "$result" == *.* ]]; then
-    # improve the output for decimal numbers
-    printf "$result" |
-    sed -e 's/^\./0./'        `# add "0" for cases like ".5"` \
-        -e 's/^-\./-0./'      `# add "0" for cases like "-.5"`\
-        -e 's/0*$//;s/\.$//'   # remove trailing zeros
-  else
-    printf "$result"
-  fi
-  printf "\n"
 }
 
 # Determine size of a file or total size of a directory
@@ -274,239 +262,7 @@ function drma() {
   fi
 }
 
-# Delete an EC2 AMI & corresponding snapshot
-function delete-ec2-ami() {
-  local ami_id=$1
-
-  if [ -z "$ami_id" ]; then
-    echo "usage: delete-ec2-ami <ami_id>"
-    return 1
-  fi
-
-  local snap_id=$(aws ec2 describe-snapshots --filters Name=description,Values="*${ami_id}*" | python -c 'import sys, json; print json.load(sys.stdin)["Snapshots"][0]["SnapshotId"]')
-
-  aws ec2 deregister-image --image-id ${ami_id}
-  aws ec2 delete-snapshot --snapshot-id ${snap_id}
-}
-
-# Mirror my laptop display to the connected monitor (i.e. presentation mode!)
-function presentation-mode() {
-  local display=$(xrandr | grep -v LVDS1 | grep " connected" | cut -d" " -f1)
-  xrandr --output ${display} --same-as LVDS1
-}
-
-# Turn off the laptop display when connected to an external monitor
-function docked-mode() {
-  xrandr --output eDP1 --off
-}
-
-# Start my irssi im container
-function im() {
-  local container_name=irssi
-  if [ "$(docker ps -aq -f name=${container_name})" ]; then
-    docker rm -f ${container_name}
-  fi
-
-  docker run -it \
-    --log-driver=none \
-    --name ${container_name} \
-    -e TERM \
-    -u root:root \
-    -v $HOME/.irssi:/home/user/.irssi \
-    -v /etc/localtime:/etc/localtime \
-    irssi:alpine \
-    irssi --config=/home/user/.irssi/config-im --home=/home/user/.irssi
-}
-export -f im
-
-# Launch a containerized gimp
-function docker-gimp() {
-  xhost local:root
-  docker run -it \
-    --log-driver=none \
-    --rm \
-    -v /etc/localtime:/etc/localtime:ro \
-    -v /tmp/.X11-unix:/tmp/.X11-unix \
-    -e DISPLAY=$DISPLAY \
-    -v ${HOME}/crap:/root/Pictures \
-    --name gimp \
-    jess/gimp
-}
-
-# Launch a containerized chrome
-function docker-chrome() {
-  xhost local:root
-  docker run -it \
-    --log-driver=none \
-    --rm \
-    --net host \
-    --cpuset-cpus 0 \
-    --memory 512mb \
-    -v /tmp/.X11-unix:/tmp/.X11-unix \
-    -e DISPLAY=$DISPLAY \
-    -v $HOME/crap:/root/Downloads \
-    --device /dev/snd \
-    --name chrome \
-    jess/chrome
-}
-
-# Launch a containerized inkscape
-function docker-inkscape() {
-  xhost local:root
-  docker run -it \
-    --log-driver=none \
-    --rm \
-    -u root \
-    -v /tmp/.X11-unix:/tmp/.X11-unix \
-    -v $HOME/.Xauthority:/home/inkscaper/.Xauthority \
-    -e DISPLAY=$DISPLAY \
-    -v $HOME/crap:/home/inkscaper/Downloads \
-    --name inkscape \
-    andressrg/inkscape-fonts
-}
-
-# Launch a containerized bittorrent client
-function docker-bittorrent() {
-  echo "http://docktorrent:p@ssw0rd@`docker inspect --format '{{ .NetworkSettings.IPAddress }}' bittorrent`"
-  echo "May need to futz with the $HOME/bittorrent permissions a bit"
-  mkdir -p ${HOME}/bittorrent
-  rm -f ${HOME}/bittorrent/.session/rtorrent.lock
-  docker rm -f bittorrent || true
-  docker run -it \
-    --log-driver=none \
-    --rm \
-    -p 45566:45566 \
-    -p 9527:9527/udp \
-    --dns 8.8.8.8 \
-    -v $HOME/bittorrent:/rtorrent \
-    -e UPLOAD_RATE=1024 \
-    --name bittorrent \
-    kfei/docktorrent
-}
-
-# Launch a containerized letsencrypt client
-function docker-letsencrypt() {
-  docker run -it \
-    --log-driver=none \
-    --rm \
-    --name letsencrypt \
-    -v "${HOME}/Dropbox/lets-encrypt/etc:/etc/letsencrypt" \
-    -v "${HOME}/Dropbox/lets-encrypt/lib:/var/lib/letsencrypt" \
-    quay.io/letsencrypt/letsencrypt:latest \
-    -a manual \
-    --verbose \
-    auth
-  sudo chown -R marvin: ${HOME}/Dropbox/lets-encrypt
-}
-
-function adiff() {
-  local commit="$1"
-  local file="$2"
-  local vault_password_file="$3"
-
-  if [ -z "$commit" -o -z "$file" ]; then
-    echo "usage: adiff <commit> <file> [vault_password_file]"
-    return 1
-  fi
-
-  if [ -z "$vault_password_file" ]; then
-    vault_password_file=vault_pass.py
-  fi
-
-  diff -u \
-    <( ansible-vault --vault-password-file="${vault_password_file}" view <( git show "${commit}^":"${file}" )) \
-    <( ansible-vault --vault-password-file="${vault_password_file}" view <( git show "${commit}":"${file}" ))
-}
-
-# Determine size of a remote file via a HEAD request
-function rfs() {
-  local url="$1"
-
-  if [ -z "$url" ]; then
-    echo "usage: rfs <url>"
-    return 1
-  fi
-
-  curl -sIL "$url" | grep Content-Length | sed 's/[^0-9]//g' | numfmt --to=si
-}
-
-# APG alias for friendly passwords
-function apgf() {
-  local num="$1"
-
-  if [ -z "$num" ]; then
-    echo "usage: apgf <length>"
-    return 1
-  fi
-
-  apg -a 0 -n "$num" -m "$num" -t -E lI10O -M NCSL
-}
-
-# Bash function to export the environment variables in the specified .env file
-function dotenv () {
-  local dotenvfile=$1
-
-  if [ -z "$dotenvfile" ]; then
-    dotenvfile=".env"
-  fi
-
-  set -a
-  source $dotenvfile
-  set +a
-}
-
-# Bash function to unset the environment variables in the specified .env file
-function undotenv () {
-  local dotenvfile=$1
-
-  if [ -z "$dotenvfile" ]; then
-    dotenvfile=".env"
-  fi
-
-  unset $(cat ${dotenvfile} | grep -v ^# | sed -E 's/(.*)=.*/\1/' | xargs)
-}
-
-function clical () {
-  local force_create=$1
-  local image_label=clical
-
-  if [ -n "$force_create" ] && [ "$force_create" == "-f" ]; then
-    echo "**** Deleting image ${image_label} ****"
-    docker rmi -f $(docker images -aq --filter reference=${image_label}:latest)
-  fi
-
-  if [ ! "$(docker images -aq --filter reference=${image_label}:latest)" ]; then
-    echo "**** Building image ${image_label} ****"
-    docker build --tag ${image_label}:latest -<<EOF
-    FROM ubuntu:16.04
-
-    # 'remind' + other needed utils
-    RUN apt-get -qq update \
-      && apt-get install -y \
-        wget \
-        libical-parser-html-perl \
-        remind \
-      && apt-get clean autoclean \
-      && apt-get autoremove -y --purge \
-      && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-      && rm -rf /var/lib/{apt,dpkg,cache,log}/
-
-    # Install the perl version of the ical2rem format converter
-    RUN wget -O /usr/local/bin/ical2rem https://raw.githubusercontent.com/marvinpinto/config/tdelta-lead-time/scripts/ical2rem.pl \
-      && chmod 0755 /usr/local/bin/ical2rem
-EOF
-  fi
-
-  docker run \
-    --rm \
-    --log-driver=none \
-    -v $HOME/.clical:/root/.clical \
-    --name ${image_label} \
-    -it \
-    clical:latest \
-    /usr/bin/remind /root/.clical/main.ini
-}
-
+# helper function to test terminal color output
 function colorscheme () {
     # echo ""
     #black

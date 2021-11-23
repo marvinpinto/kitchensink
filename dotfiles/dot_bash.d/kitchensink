@@ -4,7 +4,7 @@
 function sink() {
   local boxname=$1
   local dockerargs=$2
-  local workdir="/root"
+  local workdir="/home/worker"
 
   if [ -z "$boxname" ]; then
     echo "usage: sink <box name> [extra docker args]"
@@ -12,8 +12,10 @@ function sink() {
     return 1
   fi
 
+  local projectmnt=""
   if [ -e "${HOME}/projects/${boxname}" ]; then
-    workdir="/root/projects/${boxname}"
+    workdir="/home/worker/app"
+    projectmnt="-v ${HOME}/projects/${boxname}:/home/worker/app"
   fi
 
   local dockerid=$(docker ps -aq --filter=name=$boxname)
@@ -27,21 +29,17 @@ function sink() {
       --name $boxname \
       --hostname ${boxname} \
       --add-host=localgw:172.17.0.1 \
-      -v /home/marvin:/var/shared \
       -v $SSH_AUTH_SOCK:/ssh-agent \
       -e SSH_AUTH_SOCK=/ssh-agent \
       -e DISPLAY \
       -e TERM \
-      -v /tmp/.X11-unix:/tmp/.X11-unix \
-      -v /media/usb:/media/usb \
-      -v /usr/local/bin:/usr/local/sbin \
-      -v /home/marvin/.awsvault:/root/.awsvault \
-      -v /home/marvin/.aws:/root/.aws \
-      -v /etc/bash_completion.d:/etc/bash_completion.d \
+      -e KITCHENSINK_CONTAINER=true \
       --security-opt=seccomp:unconfined \
+      $projectmnt \
       $dockerargs \
-      -w $workdir \
+      --workdir $workdir \
       "ghcr.io/marvinpinto/kitchensink:20.04-latest")
+    docker exec -it $dockerid /home/linuxbrew/.linuxbrew/bin/chezmoi init "marvinpinto/kitchensink" --source=/home/worker/dotfiles --apply
   fi
   docker exec -it $dockerid /bin/bash
 }

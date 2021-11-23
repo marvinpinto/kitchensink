@@ -1,6 +1,5 @@
 # vim: set filetype=sh :
 
-# Add `~/bin` to the `$PATH`
 export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$HOME/bin:/usr/local/bin:$PATH"
 
 # Set a restrictive umask
