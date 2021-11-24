@@ -53,7 +53,7 @@ export LESS_TERMCAP_md="$ORANGE"
 export MANPAGER="less -X"
 
 # Fancy ls colors
-export CLICOLOR='Yes'
+export CLICOLOR=1
 export LSCOLORS='ExGxCxDxBxegedabagacad'
 
 # Prevent 'less' from
@@ -97,17 +97,17 @@ alias grep="grep --color=auto"
 # Use gpg2 by default
 alias gpg="/usr/bin/gpg2"
 
-# List all files colorized in long format
+# Colored ls helpers
+{{ if (eq .chezmoi.os "darwin") }}
+alias l="ls -lF"
+alias la="ls -laF"
+alias lsd="ls -lF | grep --color=never '^d'"
+{{ else if (eq .chezmoi.os "linux") }}
 alias l="ls -lF --color"
-
-# List all files colorized in long format, including dot files
 alias la="ls -laF --color"
-
-# List only directories
 alias lsd="ls -lF --color | grep --color=never '^d'"
-
-# Always use color output for `ls`
 alias ls="ls --color"
+{{ end }}
 
 # List and kill off tmux sessions
 alias tls='/usr/bin/tmux ls'
