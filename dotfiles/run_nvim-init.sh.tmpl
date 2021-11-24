@@ -2,9 +2,9 @@
 
 NVIMCMD="nvim"
 if [[ ! -x "$(command -v "nvim")" ]]; then
-  {{ if and (eq .chezmoi.os "darwin") (eq .chezmoi.arch "amd64") }}
+  {{ if (and (eq .chezmoi.os "darwin") (eq .chezmoi.arch "amd64")) }}
   NVIMCMD="/usr/local/bin/nvim"
-  {{ else if (eq .chezmoi.os "linux" ) }}
+  {{ else if (eq .chezmoi.os "linux") }}
   NVIMCMD="/home/linuxbrew/.linuxbrew/bin/nvim"
   {{ end }}
 fi

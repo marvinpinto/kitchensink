@@ -33,6 +33,8 @@ rm -f /tmp/install-homebrew
 # Post-install steps
 if [[ "$(uname)" == "Linux" ]]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+elif [[ "$(uname)" == "Darwin" ]] && [[ "$(uname -m)" == "x86_64" ]]; then 
+  eval "$(/usr/local/bin/brew shellenv)"
 fi
 
 # Bootstrap apps

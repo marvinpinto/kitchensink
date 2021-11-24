@@ -3,21 +3,33 @@
 <img alt="kitchen sink logo" height="200px" src="logo.png">
 
 
-## New Machine Setup
+## OSX Manual Preparation
 
-Bootstrap the installation process with homebrew and a few other basics:
+Install Xcode:
+```bash
+xcode-select --install
+```
 
+
+## Software Setup
+
+Initialize the software installation process with homebrew and a few other basics:
 ```bash
 bash -xec "$(curl -L https://raw.githubusercontent.com/marvinpinto/kitchensink/main/bootstrap.sh)"
 ```
-Run ansible to install & manage all the sytem components:
 
+When bootstrapping the machine, clone the kitchensink repo locally and run the manifest from within there:
+```bash
+git clone https://github.com/marvinpinto/kitchensink.git /tmp/kitchensink
+cd /tmp/kitchensink
+```
+
+Run ansible to install & manage all the sytem components:
 ```bash
 make machine
 ```
 
 Bootstrap the 1password CLI (for secrets), export the specified env vars after it completes:
-
 ```bash
 make op-init
 ```
@@ -28,10 +40,14 @@ export OP_SESSION_my=XXXXXXXXXXX
 ```
 
 Initialize the dotfiles using [chezmoi](https://github.com/twpayne/chezmoi):
-
 ```bash
 make chezmoi-init
 ```
+
+
+## Post software setup
+
+- If a homebrew cask/cli app throws a "cannot be verified" error (on OSX), ctrl+click the app icon in Finder/Applications, and then choose "Open". This effectively saves the exception in security settings and it should not throw this error again.
 
 
 ## Using the Kitchensink Tap

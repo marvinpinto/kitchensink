@@ -1,0 +1,7 @@
+---
+- name: 'Set the hostname for the MacBook Air 11in (2013)'
+  become: true
+  hostname:
+    name: 'mp-macbook-2013'
+  when:
+    - ansible_product_name == "MacBookAir6,1"

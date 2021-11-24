@@ -1,0 +1,42 @@
+---
+- name: "Add homebrew/cask-drivers as a tap"
+  become: true
+  become_user: "marvin"
+  community.general.homebrew_tap:
+    name: "homebrew/cask-drivers"
+
+- name: "Install all the homebrew managed cli apps"
+  become: true
+  become_user: "marvin"
+  community.general.homebrew:
+    name:
+      - "aws-vault"
+      - "cheat"
+      - "fzf"
+      - "git"
+      - "ansible"
+      - "git-lfs"
+      - "mkcert"
+      - "neovim"
+      - "rclone"
+      - "jq"
+      - "git-delta"
+      - "docker" # only really need the cli on osx
+      - "bash"
+    state: "present"
+
+- name: "Install all the homebrew managed cask apps"
+  become: true
+  become_user: "marvin"
+  community.general.homebrew_cask:
+    name:
+      - "firefox"
+      - "google-chrome"
+      - "1password"
+      - "1password-cli"
+      - "keybase"
+      - "slack"
+      - "visual-studio-code"
+      - "alacritty"
+      - "homebrew/cask-drivers/yubico-authenticator"
+    state: "present"

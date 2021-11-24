@@ -1,0 +1,8 @@
+---
+- name: "Update the user account"
+  become: true
+  user:
+    name: "marvin"
+    comment: "Marvin Pinto"
+    home: "/Users/marvin"
+    shell: "/usr/local/bin/bash" # homebrew bash
