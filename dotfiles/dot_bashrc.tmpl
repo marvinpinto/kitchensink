@@ -76,7 +76,11 @@ export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat 
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 
 # homebrew related
+{{ if and (eq .chezmoi.os "darwin") (eq .chezmoi.arch "amd64") }}
+export HOMEBREW_PREFIX="/usr/local";
+{{ else if (eq .chezmoi.os "linux" ) }}
 export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew";
+{{ end }}
 export HOMEBREW_CELLAR="${HOMEBREW_PREFIX}/Cellar";
 export HOMEBREW_REPOSITORY="${HOMEBREW_PREFIX}/Homebrew";
 export HOMEBREW_SHELLENV_PREFIX="${HOMEBREW_PREFIX}";
@@ -147,8 +151,8 @@ fi
 # Bash Completion
 #*****************
 [[ -e "/etc/bash_completion" ]] && source "/etc/bash_completion"
-if [[ -d "/home/linuxbrew/.linuxbrew/etc/bash_completion.d" ]]; then
-  for bcfile in /home/linuxbrew/.linuxbrew/etc/bash_completion.d/* ; do
+if [[ -d "${HOMEBREW_PREFIX}/etc/bash_completion.d" ]]; then
+  for bcfile in ${HOMEBREW_PREFIX}/etc/bash_completion.d/* ; do
     [[ -f "$bcfile" ]] && . $bcfile
   done
 fi
@@ -157,8 +161,8 @@ fi
 # NVM setup
 #************
 export NVM_DIR=/usr/local/nvm
-[[ -s "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh" ]] && source "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh"
-[ -s "/home/linuxbrew/.linuxbrew/opt/nvm/etc/bash_completion.d/nvm" ] && source "/home/linuxbrew/.linuxbrew/opt/nvm/etc/bash_completion.d/nvm"
+[[ -s "${HOMEBREW_PREFIX}/opt/nvm/nvm.sh" ]] && source "${HOMEBREW_PREFIX}/opt/nvm/nvm.sh"
+[ -s "${HOMEBREW_PREFIX}/opt/nvm/etc/bash_completion.d/nvm" ] && source "${HOMEBREW_PREFIX}/opt/nvm/etc/bash_completion.d/nvm"
 if [[ "$(command -v nvm)" ]] && [[ -f '.nvmrc' ]]; then
   # If there's a .nvmrc file present issue a `nvm use` and automatically
   # use that nodejs version.

@@ -1,5 +1,4 @@
-# vim: set filetype=sh :
-
+{{- if (eq .chezmoi.os "linux") -}}
 # Bash function to attach to, or spin up a new (named) docker container
 function sink() {
   local boxname=$1
@@ -48,7 +47,9 @@ function _sink_completion() {
   COMPREPLY=()
   local cur="${COMP_WORDS[COMP_CWORD]}"
   local prev="${COMP_WORDS[COMP_CWORD-1]}"
-  local words=$(docker ps --filter "ancestor=ghcr.io/marvinpinto/kitchensink:20.04-latest" --format "{{.Names}}" | tr '\n' ' ' | xargs)
+  # NOTE: the "format" argument looks weird because it needs to be
+  # escaped, as this file is interpreted as a chezmoi template
+  local words=$(docker ps --filter "ancestor=ghcr.io/marvinpinto/kitchensink:20.04-latest" --format "{{ "{{" }}.Names{{ "}}" }}" | tr '\n' ' ' | xargs)
   case $COMP_CWORD in
     1)
       COMPREPLY=( $(compgen -W "${words}" -- "${cur}") )
@@ -57,3 +58,4 @@ function _sink_completion() {
   return 0
 }
 complete -F _sink_completion sink
+{{ end -}}

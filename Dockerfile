@@ -58,7 +58,8 @@ RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" \
     restic \
     aws-vault \
     awscli \
-    git-delta
+    git-delta \
+    yarn-completion
 
 # Configure timezone and locale
 ENV TZ="America/Toronto"

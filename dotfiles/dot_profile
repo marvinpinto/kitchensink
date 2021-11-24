@@ -1,9 +1,0 @@
-# vim: set filetype=sh :
-
-export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$HOME/bin:/usr/local/bin:$PATH"
-
-# Set a restrictive umask
-umask 0077
-
-# Optimize the directories available to switch into
-export CDPATH=".:$HOME:$HOME/projects"
