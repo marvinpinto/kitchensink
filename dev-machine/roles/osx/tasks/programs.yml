@@ -23,6 +23,7 @@
       - "git-delta"
       - "docker" # only really need the cli on osx
       - "bash"
+      - "tree"
     state: "present"
 
 - name: "Install all the homebrew managed cask apps"

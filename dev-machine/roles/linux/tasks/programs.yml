@@ -29,6 +29,7 @@
       - "rclone"
       - "jq"
       - "git-delta"
+      - "tree"
     state: "present"
     path: "/home/linuxbrew/.linuxbrew/bin"
 
@@ -42,7 +43,6 @@
       - "scrot"
       - "imagemagick"
       - "xautolock"
-      - "tree"
       - "whois"
       - "touchegg"
       - "pass"
