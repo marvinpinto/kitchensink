@@ -158,7 +158,7 @@ fi
 export NVM_DIR=/usr/local/nvm
 [[ -s "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh" ]] && source "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh"
 [ -s "/home/linuxbrew/.linuxbrew/opt/nvm/etc/bash_completion.d/nvm" ] && source "/home/linuxbrew/.linuxbrew/opt/nvm/etc/bash_completion.d/nvm"
-if [[ -x "$(command -v nvm)" ]] && [[ -f '.nvmrc' ]]; then
+if [[ "$(command -v nvm)" ]] && [[ -f '.nvmrc' ]]; then
   # If there's a .nvmrc file present issue a `nvm use` and automatically
   # use that nodejs version.
   nvm use
