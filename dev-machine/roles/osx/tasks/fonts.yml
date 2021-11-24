@@ -1,0 +1,14 @@
+---
+- name: "Add homebrew/cask-fonts as a tap"
+  become: true
+  become_user: "marvin"
+  community.general.homebrew_tap:
+    name: "homebrew/cask-fonts"
+
+- name: "Homebrew fonts"
+  become: true
+  become_user: "marvin"
+  community.general.homebrew_cask:
+    name:
+      - "homebrew/cask-fonts/font-hack"
+    state: "present"

@@ -1,0 +1,22 @@
+{{ if (eq .chezmoi.os "darwin") -}}
+#!/bin/sh
+
+# Enable subpixel font rendering on non-Apple LCDs
+defaults write NSGlobalDomain "AppleFontSmoothing" -int "2" 
+
+# Disable shadow in screenshots
+defaults write com.apple.screencapture "disable-shadow" -int "1" 
+
+# Save screenshots in PNG format
+# Other options: BMP, GIF, JPG, PDF, TIFF
+defaults write com.apple.screencapture "type" -string "png" 
+
+# Save screenshots to the ~/tmp directory
+defaults write com.apple.screencapture "location" -string "/Users/marvin/tmp" 
+
+# Ask for the password immediately after sleep or screen saver begins
+defaults write com.apple.screensaver "askForPassword" -int "1" 
+
+# Set the ask delay to immediate
+defaults write com.apple.screensaver "askForPasswordDelay" -int "0" 
+{{ end -}}

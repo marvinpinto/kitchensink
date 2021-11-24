@@ -2,3 +2,4 @@
 - include: "programs.yml"
 - include: "hostname.yml"
 - include: "user.yml"
+- include: "fonts.yml"

@@ -11,6 +11,10 @@ xcode-select --install
 ```
 
 
+## Linux Manual Preparation
+TBD...
+
+
 ## Software Setup
 
 Initialize the software installation process with homebrew and a few other basics:
@@ -49,6 +53,13 @@ make chezmoi-init
 
 - If a homebrew cask/cli app throws a "cannot be verified" error (on OSX), ctrl+click the app icon in Finder/Applications, and then choose "Open". This effectively saves the exception in security settings and it should not throw this error again.
 
+- Manual keyboard preference changes (OSX System Preferences -> Keyboard):
+  - Keyboard: Adjust keyboard brightness in low light (enable)
+  - Keyboard: Turn keyboard backlight off after 5 secs of inactivity (enable)
+  - Modifier Keys: Change Caps lock to Ctrl
+  - Shortcuts -> Accessibility: Map Cmd+Q to "Invert Colors"
+
+- Install divvy from the App Store (on OSX), and ensure it runs on startup.
 
 ## Using the Kitchensink Tap
 

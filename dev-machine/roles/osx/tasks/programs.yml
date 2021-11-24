@@ -24,6 +24,7 @@
       - "docker" # only really need the cli on osx
       - "bash"
       - "tree"
+      - "coreutils"
     state: "present"
 
 - name: "Install all the homebrew managed cask apps"
@@ -40,4 +41,5 @@
       - "visual-studio-code"
       - "alacritty"
       - "homebrew/cask-drivers/yubico-authenticator"
+      - "balenaetcher"
     state: "present"

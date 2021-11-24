@@ -1,0 +1,60 @@
+{{ if (eq .chezmoi.os "darwin") -}}
+#!/bin/sh
+
+# Disable system UI sound effects
+defaults write com.apple.systemsound "com.apple.sound.uiaudio.enabled" -int "0" 
+
+# Enable highlight hover effect for the grid view of a stack
+defaults write com.apple.dock "mouse-over-hilite-stack" -int "1" 
+
+# Set the icon size of Dock items to 36 pixels
+defaults write com.apple.dock "tilesize" -int "36" 
+
+# Minimize windows into their application’s icon
+defaults write com.apple.dock "minimize-to-application" -int "1" 
+
+# Enable spring loading for all Dock items
+defaults write com.apple.dock "enable-spring-load-actions-on-all-items" -int "1" 
+
+# Don’t animate opening applications from the Dock
+defaults write com.apple.dock "launchanim" -int "0" 
+
+# Speed up Mission Control animations
+defaults write com.apple.dock "expose-animation-duration" -float "0.1" 
+
+# Don’t group windows by application in Mission Control
+defaults write com.apple.dock "expose-group-by-app" -int "0" 
+
+# Disable Dashboard
+defaults write com.apple.dashboard "mcx-disabled" -int "1" 
+
+# Don’t show Dashboard as a Space
+defaults write com.apple.dock "dashboard-in-overlay" -int "1" 
+
+# Don’t automatically rearrange Spaces based on most recent use
+defaults write com.apple.dock "mru-spaces" -int "0" 
+
+# Remove the auto-hiding Dock delay
+defaults write com.apple.dock "autohide-delay" -float "0" 
+
+# Remove the animation when hiding/showing the Dock
+defaults write com.apple.dock "autohide-time-modifier" -float "0" 
+
+# Automatically hide and show the Dock
+defaults write com.apple.dock "autohide" -int "1" 
+
+# Make Dock icons of hidden applications translucent
+defaults write com.apple.dock "showhidden" -int "1" 
+
+# Stop icons from bouncing in OS X Dock
+defaults write com.apple.dock "no-bouncing" -int "1" 
+
+# Show indicator lights for open applications in the Dock
+defaults write com.apple.dock "show-process-indicators" -int "1" 
+
+# Move the dock to the right side of the screen
+defaults write com.apple.dock "orientation" -string "right" 
+
+# Restart the dock
+/usr/bin/killall -HUP Dock
+{{ end -}}

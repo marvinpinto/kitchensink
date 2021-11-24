@@ -1,0 +1,55 @@
+{{ if (eq .chezmoi.os "darwin") -}}
+#!/bin/sh
+
+# Empty Trash securely by default
+defaults write com.apple.finder "EmptyTrashSecurely" -int "1" 
+
+# Disable the warning before emptying the Trash
+defaults write com.apple.finder "WarnOnEmptyTrash" -int "0" 
+
+# Use list view in all Finder windows by default
+# Four-letter codes for the other view modes: `icnv`, `clmv`, `Flwv`
+defaults write com.apple.finder "FXPreferredViewStyle" -string "Nlsv" 
+
+# Avoid creating .DS_Store files on network volumes
+defaults write com.apple.desktopservices "DSDontWriteNetworkStores" -int "1" 
+
+# Remove the spring loading delay for directories
+defaults write NSGlobalDomain "com.apple.springing.delay" -float "0" 
+
+# Enable spring loading for directories
+defaults write NSGlobalDomain "com.apple.springing.enabled" -float "1" 
+
+# Disable the warning when changing a file extension
+defaults write com.apple.finder "FXEnableExtensionChangeWarning" -int "0" 
+
+# Display full POSIX path as Finder window title
+defaults write com.apple.finder "_FXShowPosixPathInTitle" -int "1" 
+
+# Show the finder path bar
+defaults write com.apple.finder "ShowPathbar" -int "1" 
+
+# Show the finder status bar
+defaults write com.apple.finder "ShowStatusBar" -int "1" 
+
+# Show the filename extensions
+defaults write NSGlobalDomain "AppleShowAllExtensions" -int "1" 
+
+# Disable window animations and Get Info animations
+defaults write com.apple.finder "DisableAllAnimations" -int "1" 
+
+# Allow quitting via cmd+Q - doing so will also hide desktop icons
+defaults write com.apple.finder "QuitMenuItem" -int "1" 
+
+# Show icons for external hard drives on the desktop
+defaults write com.apple.finder "ShowExternalHardDrivesOnDesktop" -int "1" 
+
+# Show icons for hard drives on the desktop
+defaults write com.apple.finder "ShowHardDrivesOnDesktop" -int "1" 
+
+# Show icons for mounted servers on the desktop
+defaults write com.apple.finder "ShowMountedServersOnDesktop" -int "1" 
+
+# Show icons for removable media on the desktop
+defaults write com.apple.finder "ShowRemovableMediaOnDesktop" -int "1" 
+{{ end -}}

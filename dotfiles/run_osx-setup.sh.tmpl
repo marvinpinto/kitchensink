@@ -1,0 +1,36 @@
+{{ if (eq .chezmoi.os "darwin") -}}
+#!/bin/sh
+
+# Ask for the administrator password upfront
+sudo -v
+
+# Keep-alive: update existing `sudo` time stamp until this script has finished
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+# background picture
+osascript -e 'tell application "System Events" to tell every desktop to set picture to "/System/Library/Desktop Pictures/Solid Colors/Stone.png"'
+
+# Use all Fn keys as standard functions keys
+defaults write NSGlobalDomain "com.apple.keyboard.fnState" -int "1" 
+
+# Prevent time machine from prompting to use new hard drives as backup volumes
+defaults write com.apple.TimeMachine "DoNotOfferNewDisksForBackup" -int "1" 
+
+# Set the timezone to America/Toronto
+set_timezone=$(sudo /usr/sbin/systemsetup -gettimezone)
+if [[ "$set_timezone" != "Time Zone: America/Toronto" ]]; then
+  sudo /usr/sbin/systemsetup -settimezone "America/Toronto"
+fi
+
+# Use network time
+set_networktime=$(sudo /usr/sbin/systemsetup -getusingnetworktime)
+if [[ "$set_networktime" != "Network Time: On" ]]; then
+  sudo /usr/sbin/systemsetup -setusingnetworktime on
+fi
+
+# Set the network time server to time.apple.com
+set_timeserver=$(sudo /usr/sbin/systemsetup -getnetworktimeserver)
+if [[ "$set_timeserver" != "Network Time Server: time.apple.com" ]]; then
+  sudo /usr/sbin/systemsetup -setnetworktimeserver time.apple.com
+fi
+{{ end -}}

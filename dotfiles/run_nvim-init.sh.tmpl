@@ -9,16 +9,8 @@ if [[ ! -x "$(command -v "nvim")" ]]; then
   {{ end }}
 fi
 
-{{ if (eq .chezmoi.os "darwin") }}
-# darwin
-{{ else if (eq .chezmoi.os "linux" ) }}
 NVIM_AUTOLOAD_DIR="${HOME}/.local/share/nvim/site/autoload"
 VIMPLUG="${NVIM_AUTOLOAD_DIR}/plug.vim"
-{{ else }}
-echo "Unsupported OS: {{ .chezmoi.os }}"
-exit 0
-{{ end }}
-
 if [[ ! -f "$VIMPLUG" ]]; then
   mkdir -p "$NVIM_AUTOLOAD_DIR"
   curl --silent -o "$VIMPLUG" "https://raw.githubusercontent.com/junegunn/vim-plug/c9971346bb486ccff354aaee8606cc0d2d5a0c97/plug.vim"

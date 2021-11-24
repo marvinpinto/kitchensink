@@ -1,0 +1,68 @@
+{{ if (eq .chezmoi.os "darwin") -}}
+#!/bin/sh
+
+# Enable tap to click
+defaults write com.apple.AppleMultitouchTrackpad "Clicking" -int "1" 
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad "Clicking" -int "1" 
+
+# Enable secondary click
+defaults write com.apple.AppleMultitouchTrackpad "TrackpadRightClick" -int "1" 
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad "TrackpadRightClick" -int "1" 
+
+# Secondary click - click or tap with two fingers
+defaults write com.apple.AppleMultitouchTrackpad "TrackpadCornerSecondaryClick" -int "0" 
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad "TrackpadCornerSecondaryClick" -int "0" 
+
+# Disable lookup
+defaults write com.apple.AppleMultitouchTrackpad "TrackpadThreeFingerTapGesture" -int "0" 
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad "TrackpadThreeFingerTapGesture" -int "0" 
+
+# Enable three finger drag
+defaults write com.apple.AppleMultitouchTrackpad "TrackpadThreeFingerDrag" -int "1" 
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad "TrackpadThreeFingerDrag" -int "1" 
+
+# Set the trackpad tracking speed to approx 5th notch
+defaults write NSGlobalDomain "com.apple.trackpad.scaling" -float "0.875" 
+
+# Disable natural scrolling
+defaults write NSGlobalDomain "com.apple.swipescrolldirection" -int "0" 
+
+# Pinch with two fingers to zoom in or out
+defaults write com.apple.AppleMultitouchTrackpad "TrackpadPinch" -int "1" 
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad "TrackpadPinch" -int "1" 
+
+# Disable double tap with two fingers smart zoom
+defaults write com.apple.AppleMultitouchTrackpad "TrackpadTwoFingerDoubleTapGesture" -int "0" 
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad "TrackpadTwoFingerDoubleTapGesture" -int "0" 
+
+# Disable rotate with two fingers
+defaults write com.apple.AppleMultitouchTrackpad "TrackpadRotate" -int "0" 
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad "TrackpadRotate" -int "0" 
+
+# Swipe left or right between pages with two fingers
+defaults write NSGlobalDomain "AppleEnableSwipeNavigateWithScrolls" -int "1" 
+
+# Swipe left or right with four fingers
+defaults write com.apple.AppleMultitouchTrackpad "TrackpadFourFingerHorizSwipeGesture" -int "2" 
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad "TrackpadFourFingerHorizSwipeGesture" -int "2" 
+
+# Do not swipe left from the right edge with two fingers
+defaults write com.apple.AppleMultitouchTrackpad "TrackpadTwoFingerFromRightEdgeSwipeGesture" -int "0" 
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad "TrackpadTwoFingerFromRightEdgeSwipeGesture" -int "0" 
+
+# Allow swiping up with four fingers
+defaults write com.apple.AppleMultitouchTrackpad "TrackpadFourFingerVertSwipeGesture" -int "2" 
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad "TrackpadFourFingerVertSwipeGesture" -int "2" 
+
+# Enable the mission control gesture
+defaults write com.apple.dock "showMissionControlGestureEnabled" -int "1" 
+
+# Disable the app expose gesture
+defaults write com.apple.dock "showAppExposeGestureEnabled" -int "0" 
+
+# Disable the launchpad gesture
+defaults write com.apple.dock "showLaunchpadGestureEnabled" -int "0" 
+
+# Disable the show desktop gesture
+defaults write com.apple.dock "showDesktopGestureEnabled" -int "0" 
+{{ end -}}
