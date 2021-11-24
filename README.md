@@ -58,6 +58,36 @@ Combining [remote containers](https://code.visualstudio.com/docs/remote/containe
 See the example [devcontainer.json](/.devcontainer/devcontainer.json) and my vscode [settings.json](https://github.com/marvinpinto/kitchensink/blob/26c23c94de21e00b9adfee9a3f900f0abdb889f3/dotfiles/.chezmoitemplates/vscode_settings.json#L18-L20) file for inspiration.
 
 
+## Throwaway Environments from the Command Line
+
+Aside from automatically creating environments in VSCode, this can also be used to to generate _throwaway_ environments/containers from the command line. This has only been used on Linux and probably won't work with OSX.
+
+Using the [sink](https://github.com/marvinpinto/kitchensink/blob/775f75aec6cbd77727af87b6ceb119fb5b5d1922/dotfiles/dot_bash.d/kitchensink#L3-L45) bash function, this would create a temporary environment to experiment in, without affecting the host. Would look something like this:
+
+```text
+[mp-desktop: 19:56:07] ~
+$ sink test-env
+Creating new docker container
+Cloning into '/home/worker/dotfiles'...
+remote: Enumerating objects: 1039, done.
+remote: Counting objects: 100% (364/364), done.
+remote: Compressing objects: 100% (242/242), done.
+remote: Total 1039 (delta 159), reused 294 (delta 97), pack-reused 675
+Receiving objects: 100% (1039/1039), 321.92 KiB | 4.13 MiB/s, done.
+Resolving deltas: 100% (495/495), done.
+
+[test-env: 19:56:32] ~
+# echo "hello from within test-env"
+hello from within test-env
+
+[test-env: 19:56:55] ~
+# exit
+exit
+```
+
+The above function creates the container (from the [Dockerfile](/Dockerfile) image), optionally mounts a source directory, then initializes the dotfiles within the container using [chezmoi](https://github.com/twpayne/chezmoi).
+
+
 ## License
 
 The source code for this project is released under the [MIT License]((LICENSE.txt)).
