@@ -146,6 +146,7 @@ fi
 #*****************
 # Bash Completion
 #*****************
+[[ -e "/etc/bash_completion" ]] && source "/etc/bash_completion"
 if [[ -d "/home/linuxbrew/.linuxbrew/etc/bash_completion.d" ]]; then
   for bcfile in /home/linuxbrew/.linuxbrew/etc/bash_completion.d/* ; do
     [[ -f "$bcfile" ]] && . $bcfile

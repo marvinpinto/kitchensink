@@ -14,6 +14,7 @@ RUN apt-get -qq update \
     git \
     apt-transport-https \
     ca-certificates \
+    bash-completion \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
