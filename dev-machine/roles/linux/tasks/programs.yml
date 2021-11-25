@@ -63,6 +63,8 @@
       - "default-jre"
       - "fonts-powerline"
       - "cpulimit"
+      - "language-pack-en-base"
+      - "tzdata"
     state: "present"
 
 - name: "Remove a few things I do not care for"

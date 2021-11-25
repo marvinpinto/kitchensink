@@ -10,6 +10,7 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 # Linux pre-reqs
 if [[ "$(uname)" == "Linux" ]]; then
+  sudo apt-get update
   sudo apt-get install -y build-essential procps curl file git
 fi
 
@@ -21,6 +22,22 @@ if [[ "$(uname)" == "Linux" ]]; then
   sudo chown root:linuxbrew /home/linuxbrew
   sudo chmod 0775 /home/linuxbrew
   sudo adduser marvin linuxbrew
+fi
+
+# On linux systems, install and configure the locale/timezone data. This sometimes needs user intervention.
+if [[ "$(uname)" == "Linux" ]]; then
+  export TZ="America/Toronto"
+  sudo ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
+  echo "$TZ" | sudo tee /etc/timezone > /dev/null
+  sudo -E apt-get install -y --no-install-recommends language-pack-en-base tzdata
+  sudo -E dpkg-reconfigure -f noninteractive tzdata
+  echo "LANG=en_US.UTF-8" | sudo tee /etc/default/locale > /dev/null
+  echo "LC_ALL=en_US.UTF-8" | sudo tee -a /etc/default/locale > /dev/null
+  export LANGUAGE=en_US.UTF-8
+  export LANG=en_US.UTF-8
+  export LC_ALL=en_US.UTF-8
+  sudo -E locale-gen --purge en_US.UTF-8
+  sudo -E dpkg-reconfigure -f noninteractive locales
 fi
 
 # Download & install homebrew

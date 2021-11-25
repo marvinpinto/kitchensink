@@ -2,7 +2,6 @@
 - include: "apt_repos.yml"
 - include: "sshd.yml"
 - include: "grub.yml"
-- include: "locales.yml"
 - include: "sudoers.yml"
 - include: "bluetooth.yml"
 - include: "programs.yml"

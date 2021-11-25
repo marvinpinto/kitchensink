@@ -39,19 +39,3 @@
 - name: "linux_update-grub"
   become: true
   command: '/usr/sbin/update-grub'
-
-- name: "linux_reconfigure-locales"
-  environment:
-    LANGUAGE: "en_US.UTF-8"
-    LANG: "en_US.UTF-8"
-    LC_ALL: "en_US.UTF-8"
-  become: true
-  command: '/usr/sbin/dpkg-reconfigure -f noninteractivve locales'
-
-- name: "linux_purge-extra-locales"
-  environment:
-    LANGUAGE: "en_US.UTF-8"
-    LANG: "en_US.UTF-8"
-    LC_ALL: "en_US.UTF-8"
-  become: true
-  command: "/usr/sbin/locale-gen --purge en_US.UTF-8"
