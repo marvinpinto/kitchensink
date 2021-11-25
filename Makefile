@@ -20,12 +20,12 @@ machine: /tmp/ansible-galaxy-roles ## setup or update the base dev machine
 
 op-init: ## initialize the 1password CLI
 	@echo "Initializing 1password CLI..."
-	@rm -rf /tmp/openv-*
-	@OP_CONFIG_DIR=$$(mktemp -d -t openv-XXXXXXXXXX) && \
+	@rm -rf "${HOME}/.openv-cfg-dir"
+	@mkdir -p "${HOME}/.openv-cfg-dir"
+	@OP_CONFIG_DIR=${HOME}/.openv-cfg-dir && \
 		read -p "1password email address: " op_email && \
 		token=$$(op signin my.1password.ca "$$op_email" --raw) && \
 		echo "$$token" > "${HOME}/.openv-session" && \
-		echo "$$OP_CONFIG_DIR" >> "${HOME}/.openv-session" && \
 		echo "************************************" && \
 		echo "export OP_CONFIG_DIR=$$OP_CONFIG_DIR" && \
 		echo "export OP_SESSION_my=$$token" && \
