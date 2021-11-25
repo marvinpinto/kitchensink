@@ -12,7 +12,17 @@ xcode-select --install
 
 
 ## Linux Manual Preparation
-TBD...
+
+1. Boot up the machine with the USB key in place and manually install a recent [Ubuntu Desktop](https://ubuntu.com/download/desktop) LTS release.
+
+1. For the Dell T1700, hit F12 on startup and select USB Storage Device.
+
+1. After the installation process completes, disable power saving & screen lock (so that the bootstrap process proceeds without complications). Power Button (top right) -> Settings -> Power > Blank Screen -> Never.
+
+1. After the installation process completes, install a few bootstrap utilities to get going:
+```bash
+sudo apt-get install -y curl
+```
 
 
 ## Software Setup
@@ -26,6 +36,17 @@ When bootstrapping the machine, clone the kitchensink repo locally and run the m
 ```bash
 git clone https://github.com/marvinpinto/kitchensink.git /tmp/kitchensink
 cd /tmp/kitchensink
+```
+
+Setup the homebrew path initially:
+```bash
+# linux
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+```
+
+```bash
+# osx
+eval "$(/usr/local/bin/brew shellenv)"
 ```
 
 Run ansible to install & manage all the sytem components:

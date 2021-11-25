@@ -10,17 +10,23 @@
 
 - name: "Add the Virtualbox ubuntu repo"
   become: true
-  apt_repository:
-    repo: "deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian {{ ansible_distribution_release }} contrib"
-    state: "present"
-    update_cache: "yes"
-    filename: "virtualbox"
+  copy:
+    dest: '/etc/apt/sources.list.d/virtualbox.list'
+    content: |
+      deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian {{ ansible_distribution_release }} contrib
+
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  notify: 'linux_apt-get-update'
+
+- meta: flush_handlers
 
 - name: "Install Virtualbox"
   vars:
     virtualbox_major_version: "6"
     virtualbox_minor_version: "1"
-    virtualbox_patch_version: "20"
+    virtualbox_patch_version: "30"
   become: true
   apt:
     name:
@@ -39,7 +45,7 @@
   vars:
     virtualbox_major_version: "6"
     virtualbox_minor_version: "1"
-    virtualbox_patch_version: "20"
+    virtualbox_patch_version: "30"
   become: true
   stat:
     path: "/usr/local/etc/virtualbox/Oracle_VM_VirtualBox_Extension_Pack-{{virtualbox_major_version}}.{{virtualbox_minor_version}}.{{virtualbox_patch_version}}.vbox-extpack"
@@ -49,7 +55,7 @@
   vars:
     virtualbox_major_version: "6"
     virtualbox_minor_version: "1"
-    virtualbox_patch_version: "20"
+    virtualbox_patch_version: "30"
   become: true
   get_url:
     url: "http://download.virtualbox.org/virtualbox/{{virtualbox_major_version}}.{{virtualbox_minor_version}}.{{virtualbox_patch_version}}/Oracle_VM_VirtualBox_Extension_Pack-{{virtualbox_major_version}}.{{virtualbox_minor_version}}.{{virtualbox_patch_version}}.vbox-extpack"
@@ -61,7 +67,7 @@
   vars:
     virtualbox_major_version: "6"
     virtualbox_minor_version: "1"
-    virtualbox_patch_version: "20"
+    virtualbox_patch_version: "30"
   become: true
   shell: "echo y | /usr/bin/VBoxManage extpack install --replace /usr/local/etc/virtualbox/Oracle_VM_VirtualBox_Extension_Pack-{{virtualbox_major_version}}.{{virtualbox_minor_version}}.{{virtualbox_patch_version}}.vbox-extpack"
   when: "extension_pack_binary.stat.exists == False"

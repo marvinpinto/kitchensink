@@ -31,7 +31,7 @@
   become: true
   ansible.builtin.file:
     src: "/home/linuxbrew/.linuxbrew/share/fonts"
-    dest: "/usr/local/share/fonts"
+    dest: "/usr/local/share/fonts/homebrew"
     state: "link"
     force: "yes"
   notify: 'linux_regenerate-font-cache'

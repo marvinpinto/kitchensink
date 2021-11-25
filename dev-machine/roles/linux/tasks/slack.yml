@@ -1,11 +1,23 @@
 ---
+- name: "Add the slack apt signing key"
+  become: true
+  apt_key:
+    url: "https://packagecloud.io/slacktechnologies/slack/gpgkey"
+    state: "present"
+
 - name: "Add the slack ubuntu repo"
   become: true
-  apt_repository:
-    repo: "deb https://packagecloud.io/slacktechnologies/slack/debian/ jessie main"
-    state: "present"
-    update_cache: "yes"
-    filename: "slack"
+  copy:
+    dest: '/etc/apt/sources.list.d/slack.list'
+    content: |
+      deb https://packagecloud.io/slacktechnologies/slack/debian/ jessie main
+
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  notify: 'linux_apt-get-update'
+
+- meta: flush_handlers
 
 - name: "Install Slack"
   become: true

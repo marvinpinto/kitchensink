@@ -30,6 +30,7 @@
       - "jq"
       - "git-delta"
       - "tree"
+      - "the_silver_searcher"
     state: "present"
     path: "/home/linuxbrew/.linuxbrew/bin"
 
@@ -52,7 +53,7 @@
       - "simplestreams"
       - "xclip"
       - "fonts-noto"
-      - "linux-generic-lts-{{ ansible_distribution_release }}"
+      - "linux-generic"
       - "xournal"
       - "fonts-font-awesome"
       - "sshfs"
@@ -60,9 +61,7 @@
       - "ttf-mscorefonts-installer"
       - "audacity"
       - "default-jre"
-      - "silversearcher-ag"
       - "fonts-powerline"
-      - "xpdf"
       - "cpulimit"
     state: "present"
 

@@ -1,12 +1,4 @@
 ---
-- name: "Add a PPA containing a newish version of rofi"
-  become: true
-  apt_repository:
-    repo: "ppa:jasonpleau/rofi"
-    state: "present"
-    update_cache: "yes"
-    filename: "rofi"
-
 - name: "Install rofi"
   become: true
   apt:

@@ -15,11 +15,17 @@
 
 - name: 'Add the Google Chrome ubuntu repo'
   become: true
-  apt_repository:
-    repo: 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main'
-    state: "present"
-    update_cache: "yes"
-    filename: "google-chrome"
+  copy:
+    dest: '/etc/apt/sources.list.d/google-chrome.list'
+    content: |
+      deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  notify: 'linux_apt-get-update'
+
+- meta: flush_handlers
 
 - name: 'Install Google Chrome'
   become: true

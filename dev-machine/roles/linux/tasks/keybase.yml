@@ -7,11 +7,17 @@
 
 - name: "Add the keybase ubuntu repo"
   become: true
-  apt_repository:
-    repo: "deb http://prerelease.keybase.io/deb stable main"
-    state: "present"
-    update_cache: "yes"
-    filename: "keybase"
+  copy:
+    dest: '/etc/apt/sources.list.d/keybase.list'
+    content: |
+      deb http://prerelease.keybase.io/deb stable main
+
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  notify: 'linux_apt-get-update'
+
+- meta: flush_handlers
 
 - name: "Install Keybase"
   become: true

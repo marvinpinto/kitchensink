@@ -25,6 +25,7 @@
       - "bash"
       - "tree"
       - "coreutils"
+      - "the_silver_searcher"
     state: "present"
 
 - name: "Install all the homebrew managed cask apps"

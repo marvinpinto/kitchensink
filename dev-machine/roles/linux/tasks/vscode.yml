@@ -7,11 +7,17 @@
 
 - name: "Add the Microsoft ubuntu packages repo"
   become: true
-  apt_repository:
-    repo: "deb [arch=amd64] https://packages.microsoft.com/repos/code stable main"
-    state: "present"
-    update_cache: "yes"
-    filename: "microsoft"
+  copy:
+    dest: '/etc/apt/sources.list.d/microsoft.list'
+    content: |
+      deb [arch=amd64] https://packages.microsoft.com/repos/code stable main
+
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  notify: 'linux_apt-get-update'
+
+- meta: flush_handlers
 
 - name: "Install vscode"
   become: true

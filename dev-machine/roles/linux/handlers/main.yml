@@ -46,7 +46,7 @@
     LANG: "en_US.UTF-8"
     LC_ALL: "en_US.UTF-8"
   become: true
-  command: '/usr/sbin/dpkg-reconfigure locales'
+  command: '/usr/sbin/dpkg-reconfigure -f noninteractivve locales'
 
 - name: "linux_purge-extra-locales"
   environment:
