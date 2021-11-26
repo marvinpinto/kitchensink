@@ -77,15 +77,17 @@ make chezmoi-init
 
 ## Post software setup
 
-- If a homebrew cask/cli app throws a "cannot be verified" error (on OSX), ctrl+click the app icon in Finder/Applications, and then choose "Open". This effectively saves the exception in security settings and it should not throw this error again.
+- **osx/linux**: reboot the machine and log back in
 
-- Manual keyboard preference changes (OSX System Preferences -> Keyboard):
+- **osx**: If a homebrew cask/cli app throws a "cannot be verified" error, ctrl+click the app icon in Finder/Applications, and then choose "Open". This effectively saves the exception in security settings and it should not throw this error again.
+
+- **osx**: Manual keyboard preference changes (System Preferences -> Keyboard):
   - Keyboard: Adjust keyboard brightness in low light (enable)
   - Keyboard: Turn keyboard backlight off after 5 secs of inactivity (enable)
   - Modifier Keys: Change Caps lock to Ctrl
   - Shortcuts -> Accessibility: Map Cmd+Q to "Invert Colors"
 
-- Install divvy from the App Store (on OSX), and ensure it runs on startup.
+- **osx**: Install divvy from the App Store, and ensure it runs on startup.
 
 ## Using the Kitchensink Tap
 

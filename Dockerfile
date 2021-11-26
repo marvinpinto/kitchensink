@@ -48,7 +48,7 @@ RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" \
     nvm \
     terraform \
     packer \
-    python@3.10 \
+    python \
     openjdk@11 \
     maven \
     docker-compose \

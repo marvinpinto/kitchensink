@@ -26,6 +26,7 @@
       - "tree"
       - "coreutils"
       - "the_silver_searcher"
+      - "python"
     state: "present"
 
 - name: "Install all the homebrew managed cask apps"
