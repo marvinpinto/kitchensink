@@ -1,3 +1,4 @@
+" vim: set filetype=vim :
 " Be explicit about utf-8
 set encoding=utf-8
 
@@ -18,7 +19,11 @@ set tabstop=2
 set shiftwidth=2
 
 " Load all the vim-plug plugins
-set rtp+=/usr/local/bin/fzf
+{{ if (and (eq .chezmoi.os "darwin") (eq .chezmoi.arch "amd64")) }}
+set rtp+=/usr/local/opt/fzf
+{{ else if (eq .chezmoi.os "linux") }}
+set rtp+=/home/linuxbrew/.linuxbrew/opt/fzf
+{{ end }}
 call plug#begin('~/.local/share/nvim/site/autoload')
 Plug 'jacoborus/tender.vim'
 Plug 'tpope/vim-sensible'
