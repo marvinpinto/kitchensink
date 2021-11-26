@@ -12,3 +12,9 @@
   apt:
     name: "alacritty"
     state: "present"
+
+- name: "Set the default terminal"
+  become: true
+  alternatives:
+    name: "x-terminal-emulator"
+    path: "/usr/bin/alacritty"
