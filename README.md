@@ -59,6 +59,11 @@ Bootstrap the 1password CLI (for secrets), export the specified env vars after i
 make op-init
 ```
 
+Validate that the 1password cli create the config file correctly, sometimes this does not work on the first try for whatever reason:
+```bash
+[[ -e "${HOME}/.openv-cfg-dir/config" ]] && true || echo "1password CLI did NOT initialize successfully, re-run: make op-init"
+```
+
 ```bash
 export OP_CONFIG_DIR=/tmp/openv-XXXXXXXXXX
 export OP_SESSION_my=XXXXXXXXXXX
