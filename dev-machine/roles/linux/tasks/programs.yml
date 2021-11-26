@@ -59,7 +59,6 @@
       - "xournal"
       - "fonts-font-awesome"
       - "sshfs"
-      - "snapd"
       - "ttf-mscorefonts-installer"
       - "audacity"
       - "default-jre"
