@@ -1,0 +1,17 @@
+{{ if (and (eq .chezmoi.os "linux") (not .is_devcontainer)) -}}
+#!/usr/bin/env bash
+if [ -z $@ ]; then
+  function gen_workspaces()
+  {
+    i3-msg -t get_workspaces | jq --raw-output ".[] | (.name)" | sort -n
+  }
+  echo temporary; gen_workspaces
+else
+    WORKSPACE=$@
+    if [ x"temporary" = x"${WORKSPACE}" ]; then
+      i3-msg workspace scratch >/dev/null
+    elif [ -n "${WORKSPACE}" ]; then
+      i3-msg workspace "${WORKSPACE}" >/dev/null
+    fi
+fi
+{{ end -}}

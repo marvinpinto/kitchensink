@@ -1,3 +1,4 @@
+{{ if (and (eq .chezmoi.os "linux") (not .is_devcontainer)) -}}
 #!/usr/bin/env bash
 
 LOCKFILE="/tmp/i3lock-lockfile.txt"
@@ -24,3 +25,4 @@ echo $$ > ${LOCKFILE}
 xset +dpms dpms 5 5 5
 /usr/bin/i3lock --color=00001A --nofork
 revert
+{{ end -}}

@@ -17,7 +17,6 @@
 - include: "nvidia.yml"
 - include: "rng_tools.yml"
 - include: "rofi.yml"
-- include: "scripts.yml"
 - include: "slack.yml"
 - include: "vscode.yml"
 - include: "virtualbox.yml"

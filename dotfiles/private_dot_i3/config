@@ -29,7 +29,7 @@ bindsym $mod+BackSpace exec firefox
 bindsym $mod+Shift+q kill
 
 # rofi launcher
-bindsym $mod+d exec "rofi -switchers 'workspaces:rofi-switch-workspaces,launcher:rofi-launcher,run,calc:rofi-calc' -show launcher"
+bindsym $mod+d exec "rofi -switchers 'workspaces:rofi-switch-workspaces,launcher:rofi-launcher,run' -show launcher"
 
 # link handler
 bindsym $mod+p exec "rofi-url-handler"
@@ -114,12 +114,12 @@ bindsym $mod+r mode "resize"
 focus_follows_mouse yes
 
 # Shortcut to lock the screen
-bindsym $alt+Control+Shift+l exec --no-startup-id /usr/local/bin/rofi-i3-locker
+bindsym $alt+Control+Shift+l exec --no-startup-id rofi-i3-locker
 
 # Startup programs
 exec --no-startup-id compton -CGb
 exec_always --no-startup-id hsetroot -solid "#00001A"
-exec_always --no-startup-id /usr/bin/xautolock -resetsaver -detectsleep -time 3 -locker '/usr/local/bin/rofi-i3-locker' -notify 30 -notifier "notify-send -i info -u normal -t 3000 -- 'Locking screen in 30 seconds'"
+exec_always --no-startup-id /usr/bin/xautolock -resetsaver -detectsleep -time 3 -locker 'rofi-i3-locker' -notify 30 -notifier "notify-send -i info -u normal -t 3000 -- 'Locking screen in 30 seconds'"
 exec_always --no-startup-id /usr/bin/xmodmap ~/.xmodmap
 exec_always --no-startup-id /usr/bin/xrdb -load ~/.xresources
 exec_always --no-startup-id /usr/bin/gnome-settings-daemon &
@@ -128,7 +128,7 @@ exec_always --no-startup-id ~/.i3/ssh-agent.sh
 exec_always --no-startup-id xrandr --output DP-0 --primary --rotate normal --output DVI-I-1 --right-of DP-0 --rotate left --brightness 0.8
 
 # Start plexamp and move it to the default scratchpad
-exec_always --no-startup-id ~/.i3/startup-app.sh "/usr/local/etc/plexamp/Plexamp.AppImage" "plexamp"
+exec_always --no-startup-id ~/.i3/startup-app.sh "plexamp" "plexamp"
 for_window [class="Plexamp"] floating enable, border normal, move to scratchpad
 
 # Ensure that the keybase window always stays in floating mode
@@ -146,6 +146,9 @@ for_window [class="Alacritty" instance="scratch-terminal"] floating enable, bord
 # Start up a floating ergodox help reference & leave it in the scratchpad
 exec_always --no-startup-id ~/.i3/startup-app.sh "xpdf -title 'xpdf-ergodox-cheatsheet' -geometry '1024x650' -z '100' ~/ergodox-layout.pdf" "xpdf-ergodox-cheatsheet"
 for_window [title="xpdf-ergodox-cheatsheet"] floating enable, border normal, move to scratchpad
+
+# Always start gnome-calculator in floating mode
+for_window [class="Gnome-calculator"] floating enable, border normal, resize set 640 480
 
 # Scratchpad shortcuts
 bindsym $mod+minus scratchpad show

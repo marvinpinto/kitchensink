@@ -1,3 +1,4 @@
+{{ if (and (eq .chezmoi.os "linux") (not .is_devcontainer)) -}}
 #!/usr/bin/env bash
 
 DND_FILE="${HOME}/.do_not_disturb.txt"
@@ -6,7 +7,7 @@ I3LOCK='/usr/bin/i3lock --color 333333'
 if [ -z $@ ]; then
   function gen_options()
   {
-    option_list=("Lock Screen","Logout","Suspend Computer","Hibernate Computer","Reboot Computer","Shutdown Computer","Enable Screensaver","Disable Screensaver","Toggle Do Not Disturb (DND)","Initiate Backup","Check Email","Create Development Workspace","2FA Tokens","Emoji Picker","Development Chrome","Reset Workspace")
+    option_list=("Lock Screen","Logout","Suspend Computer","Hibernate Computer","Reboot Computer","Shutdown Computer","Enable Screensaver","Disable Screensaver","Toggle Do Not Disturb (DND)","Initiate Backup","Check Email","Create Development Workspace","2FA Tokens","Emoji Picker","Development Chrome","Reset Workspace","Grab Screenshot","Calculator")
     echo ${option_list[@]} | tr ',' '\n' | sort
   }
 
@@ -19,7 +20,7 @@ else
       exit 0
       ;;
     'Lock Screen')
-      coproc (/usr/local/bin/rofi-i3-locker)
+      coproc (rofi-i3-locker)
       ;;
     'Logout')
       /usr/bin/i3-msg exit
@@ -38,7 +39,7 @@ else
       ;;
     'Enable Screensaver')
       /usr/bin/xautolock -exit
-      /usr/bin/xautolock -resetsaver -detectsleep -time 3 -locker '/usr/local/bin/rofi-i3-locker' -notify 30 -notifier "notify-send -i info -u normal -t 3000 -- 'Locking screen in 30 seconds'" &
+      /usr/bin/xautolock -resetsaver -detectsleep -time 3 -locker 'rofi-i3-locker' -notify 30 -notifier "notify-send -i info -u normal -t 3000 -- 'Locking screen in 30 seconds'" &
       ;;
     'Disable Screensaver')
       /usr/bin/xautolock -exit
@@ -56,10 +57,10 @@ else
       coproc (${HOME}/.i3/dev-layout.sh)
       ;;
     '2FA Tokens')
-      coproc (/usr/local/bin/rofi-2fa)
+      coproc (rofi-2fa)
       ;;
     'Emoji Picker')
-      coproc (PINENTRY_USER_DATA=gui /usr/local/bin/rofi-emoji)
+      coproc (PINENTRY_USER_DATA=gui rofi-emoji)
       ;;
     'Development Chrome')
       coproc (nice -n 19 chromium-browser --disable-gpu --disable-gpu-compositing --disable-sync --auto-open-devtools-for-tabs)
@@ -67,8 +68,15 @@ else
     'Reset Workspace')
       coproc (/usr/bin/xset r rate 250 50)
       ;;
+    'Grab Screenshot')
+      coproc (/usr/bin/gnome-screenshot -i)
+      ;;
+    'Calculator')
+      coproc (/usr/bin/gnome-calculator)
+      ;;
     *)
       echo "Invalid option \"$OPTION\""
       exit 2
   esac
 fi
+{{ end -}}
