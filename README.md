@@ -21,7 +21,7 @@ xcode-select --install
 
 1. After the installation process completes, install a few bootstrap utilities to get going:
 ```bash
-sudo apt-get install -y curl
+sudo apt-get install -y curl ca-certificates
 ```
 
 
@@ -51,7 +51,7 @@ eval "$(/usr/local/bin/brew shellenv)"
 
 Run ansible to install & manage all the sytem components:
 ```bash
-make machine
+ANSIBLE_VERBOSITY=2 make machine
 ```
 
 Bootstrap the 1password CLI (for secrets), export the specified env vars after it completes:
