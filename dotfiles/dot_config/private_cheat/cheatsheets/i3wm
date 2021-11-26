@@ -33,3 +33,7 @@ mod + e  # toggle split layout
 # Reload configuration
 mod + shift + c  # reload i3wm configuration
 mod + shift + r  # restart i3wm
+
+# Dump the details of all the current windows. Useful for attempting to
+# determine window classes.
+i3-msg -t get_tree | jq -C | less
