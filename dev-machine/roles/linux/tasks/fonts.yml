@@ -12,6 +12,8 @@
     name:
       - "linuxbrew/fonts/font-inconsolata"
       - "linuxbrew/fonts/font-noto-color-emoji"
+      - "linuxbrew/fonts/font-awesome-terminal-fonts"
+      - "linuxbrew/fonts/font-powerline-symbols"
     state: "head"
     path: "/home/linuxbrew/.linuxbrew/bin"
   notify: 'linux_regenerate-font-cache'

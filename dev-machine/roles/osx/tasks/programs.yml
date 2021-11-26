@@ -27,6 +27,9 @@
       - "coreutils"
       - "the_silver_searcher"
       - "python"
+      - "iftop"
+      - "htop"
+      - "xclip"
     state: "present"
 
 - name: "Install all the homebrew managed cask apps"
