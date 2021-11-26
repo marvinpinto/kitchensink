@@ -10,5 +10,5 @@
   become_user: "marvin"
   community.general.homebrew_cask:
     name:
-      - "homebrew/cask-fonts/font-hack"
+      - "homebrew/cask-fonts/font-hack-nerd-font"
     state: "present"
