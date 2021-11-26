@@ -75,7 +75,7 @@ make chezmoi-init
 ```
 
 
-## Post software setup
+## Post Software Setup
 
 - **osx/linux**: reboot the machine and log back in
 
@@ -88,6 +88,11 @@ make chezmoi-init
   - Shortcuts -> Accessibility: Map Cmd+Q to "Invert Colors"
 
 - **osx**: Install divvy from the App Store, and ensure it runs on startup.
+
+- **linux**: Apply any updated software patches using the `yoloupdate` alias.
+
+- **osx/linux**: Reboot the machine at least once to verify everything worked correctly.
+
 
 ## Using the Kitchensink Tap
 
