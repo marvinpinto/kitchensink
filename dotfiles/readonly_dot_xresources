@@ -37,4 +37,4 @@ rofi.disable-history: true
 rofi.hide-scrollbar: true
 rofi.kb-row-tab: Shift+space
 rofi.kb-row-select: Tab
-rofi.terminal: gnome-terminal
+rofi.terminal: alacritty

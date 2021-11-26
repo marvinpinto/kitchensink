@@ -20,7 +20,7 @@ font pango:Terminus 7
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec gnome-terminal
+bindsym $mod+Return exec alacritty
 
 # start a browser
 bindsym $mod+BackSpace exec firefox
@@ -140,9 +140,8 @@ exec_always --no-startup-id ~/.i3/startup-app.sh "slack" "slack"
 for_window [class="Slack"] floating enable, border normal, move to scratchpad
 
 # Start up a floating terminal & leave it in the scratchpad
-exec_always --no-startup-id ~/.i3/startup-app.sh "/usr/lib/gnome-terminal/gnome-terminal-server --app-id i3wm.startup" "gnome-terminal-server.*i3wm.startup"
-exec_always --no-startup-id gnome-terminal --app-id i3wm.startup --role "scratch-terminal" --geometry "110x35"
-for_window [window_role="scratch-terminal"] floating enable, border normal, move to scratchpad
+exec_always --no-startup-id alacritty --class "scratch-terminal" --title "scratch terminal"
+for_window [class="Alacritty" instance="scratch-terminal"] floating enable, border normal, move to scratchpad
 
 # Start up a floating ergodox help reference & leave it in the scratchpad
 exec_always --no-startup-id ~/.i3/startup-app.sh "xpdf -title 'xpdf-ergodox-cheatsheet' -geometry '1024x650' -z '100' ~/ergodox-layout.pdf" "xpdf-ergodox-cheatsheet"
@@ -150,7 +149,7 @@ for_window [title="xpdf-ergodox-cheatsheet"] floating enable, border normal, mov
 
 # Scratchpad shortcuts
 bindsym $mod+minus scratchpad show
-bindsym $alt+t [window_role="scratch-terminal"] scratchpad show
+bindsym $alt+t [class="Alacritty" instance="scratch-terminal"] scratchpad show
 bindsym $alt+k [class="Keybase"] scratchpad show
 bindsym $alt+s [class="Slack"] scratchpad show
 bindsym $alt+e [title="xpdf-ergodox-cheatsheet"] scratchpad show

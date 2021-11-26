@@ -21,7 +21,7 @@ i3-msg 'append_layout ~/.i3/dev-layout.json'
 for i in {1..4}
 do
   sleep ${SLEEP_DURATION}
-  i3-msg exec "gnome-terminal --working-directory=${HOME}/projects/${WORKSPACE_NAME}"
+  i3-msg exec "alacritty --working-directory=${HOME}/projects/${WORKSPACE_NAME}"
   sleep ${SLEEP_DURATION}
   xdotool type "sink ${WORKSPACE_NAME}"
   xdotool key KP_Enter
@@ -31,7 +31,7 @@ do
   sleep ${SLEEP_DURATION}
 done
 
-i3-msg exec "gnome-terminal --working-directory=${HOME}/projects/${WORKSPACE_NAME}"
+i3-msg exec "alacritty --working-directory=${HOME}/projects/${WORKSPACE_NAME}"
 sleep ${SLEEP_DURATION}
 xdotool type "clear"
 xdotool key KP_Enter

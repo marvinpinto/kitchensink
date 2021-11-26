@@ -125,7 +125,7 @@
   become: true
   alternatives:
     name: "x-terminal-emulator"
-    path: "/usr/bin/gnome-terminal"
+    path: "/usr/bin/alacritty"
 
 - name: "Delete the ubuntu startup drumbeat sound"
   become: true
