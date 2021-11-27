@@ -1,0 +1,4 @@
+{{- if (and (eq .chezmoi.os "linux") (not .is_devcontainer)) -}}
+alias t="tmux"
+complete -F _tmux t
+{{ end -}}

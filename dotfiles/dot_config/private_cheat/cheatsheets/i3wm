@@ -9,6 +9,7 @@ mod + -          # cycle through all scratchpad windows
 alt + t          # bring up the floating terminal
 alt + k          # bring up the keybase window
 alt + s          # bring up the slack window
+alt + p          # bring up the 1password window
 
 # Windows & focus
 mod + <h,j,k,l>         # focus left,down,up,right

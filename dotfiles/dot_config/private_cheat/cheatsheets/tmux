@@ -1,0 +1,36 @@
+# Mod Key
+ctrl + a
+
+# Panes
+mod + %          # horizontal split
+mod + "          # vertical split
+mod + <h,j,k,l>  # focus left,down,up,right
+mod + x          # destroy pane
+
+# Windows
+mod + c       # create a new window
+mod + <p,n>   # go to prev/next window
+mod + <0..9>  # go to window n
+mod + ,       # rename window
+mod + $       # rename session
+
+# Buffers
+mod + [  # initiates vi copy mode - which you can then use to move around the
+         # buffer, and select/yank using v/y.
+mod + ]  # paste the contents of the copied buffer
+/        # initiates search in vi mode - then use regular vi search keys
+
+# Misc
+mod + r  # reload tmux config
+mod + :  # bring up the tmux command entry
+
+# Commands
+clear-history  # clears the scrollback history in a single pane
+
+# Session Management
+tmux ls                                  # list tmux sessions
+tmux kill-session -t <session-name>      # kill session
+mod + d                                  # detach from a session (within tmux)
+tmux attach -d -t <session-name>         # connect/attach to an existing session
+smug start quickdev                      # start a session named "quickdev" (default config)
+smug start -f /path/to/smug/session.yml  # start a session from the specified file

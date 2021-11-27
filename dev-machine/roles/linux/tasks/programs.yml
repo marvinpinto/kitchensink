@@ -35,6 +35,8 @@
       - "iftop"
       - "htop"
       - "xclip"
+      - "tmux"
+      - "smug"
     state: "present"
     path: "/home/linuxbrew/.linuxbrew/bin"
 

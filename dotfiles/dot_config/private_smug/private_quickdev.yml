@@ -1,0 +1,16 @@
+---
+session: quickdev
+
+root: ~/projects
+
+# ref: https://manpages.ubuntu.com/manpages/precise/en/man1/tmux.1.html#windows%20and%20panes
+
+windows:
+  - name: code
+    layout: even-horizontal 
+
+  - name: git
+    layout: main-vertical
+    panes:
+      - root: "."
+      - root: "."
