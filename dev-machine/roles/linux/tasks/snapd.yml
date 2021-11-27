@@ -1,0 +1,12 @@
+---
+- name: "Stop all the snapd services"
+  become: true
+  service:
+    name: "{{ item }}"
+    state: "stopped"
+    enabled: "no"
+  with_items:
+    - "snapd.service"
+    - "snapd.socket"
+    - "snapd.seeded"
+    - "snapd.snap-repair.timer"

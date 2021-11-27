@@ -23,4 +23,5 @@
 - include: "yubikey.yml"
 - include: "alacritty.yml"
 - include: "1password.yml"
+- include: "snapd.yml"
 - include: "clear_unmanaged_files.yml"

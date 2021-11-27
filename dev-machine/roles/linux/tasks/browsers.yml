@@ -3,7 +3,6 @@
   become: true
   apt:
     name:
-      - "chromium-browser"
       - "firefox"
     state: "present"
 
