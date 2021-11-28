@@ -47,7 +47,7 @@
 [core]
   # Use custom `.gitignore` and `.gitattributes`
   excludesfile = ~/.gitignore_global
-  attributesfile = ~/.gitattributes
+  attributesfile = ~/.gitattributes_global
   # Treat spaces before tabs, lines that are indented with 8 or more spaces, and
   # all kinds of trailing whitespace as an error.
   # [default] trailing-space: looks for spaces at the end of a line
@@ -66,6 +66,10 @@
   # Enable the experimental compaction heuristic option
   # https://github.com/git/git/commit/5580b271af518bae30148edfd42cc8459d8da384
   compactionHeuristic = true
+
+[diff "age"]
+  textconv = age-diff
+  cachetextconv = false
 
 [color]
   ui = true

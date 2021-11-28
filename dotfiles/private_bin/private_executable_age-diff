@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+filename=$1
+
+# Use the age identity file if it exists
+if [[ -e "$AGE_IDENTITY_FILE" ]]; then
+  age --decrypt --identity "$AGE_IDENTITY_FILE" "$filename" 2>/dev/null || cat "$filename"
+else
+  cat "$filename"
+fi

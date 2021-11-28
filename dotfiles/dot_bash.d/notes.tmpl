@@ -1,0 +1,88 @@
+{{- if (not .is_devcontainer) -}}
+# Bash function to make taking random notes slightly easier
+function note() {
+  local notes_dir="${HOME}/projects/notes"
+  local age_identity_file="${HOME}/.age-secure-notes.key"
+  local age_identity_pubkey={{ (onepasswordItemFields "dotfiles-secrets-age-keys" "Private").secureNotesPublic.v }}
+
+  if [ -z "$1" ]; then
+    echo "usage: note [push | ls | edit [filename]]>"
+    return 1
+  fi
+
+  case "$1" in
+    ls)
+      tree -aC -I '.git' --dirsfirst "$notes_dir"
+      ;;
+    status)
+      pushd "$notes_dir"
+      git status
+      popd
+      ;;
+    edit)
+      if [[ "$2" == "" ]]; then
+        echo "Missing filename to edit"
+        echo "usage: note [push | ls | edit [filename]]>"
+        return 1
+      fi
+
+      rm -rf /tmp/notes-*
+      local tdir=$(mktemp -d -t notes-XXXXXXXXX)
+      local note_full_filename="$2"
+      local note_filename=$(basename "$2" ".age")
+
+      if [[ -e "$notes_dir/$note_full_filename" ]]; then
+        age --decrypt -i "$age_identity_file" -o "${tdir}/$note_filename" "$notes_dir/$note_full_filename"
+        cp "${tdir}/$note_filename" "${tdir}/${note_filename}.orig"
+      else
+        # create if does not exist
+        touch "${tdir}/$note_filename"
+        touch "${tdir}/${note_filename}.orig"
+      fi
+      vim "${tdir}/$note_filename"
+      age --encrypt -r "$age_identity_pubkey" --armor -o "$notes_dir/${note_filename}.age" "${tdir}/$note_filename"
+
+      FILES_DIFFER=$(diff --brief "${tdir}/${note_filename}.orig" "${tdir}/$note_filename")
+      rm -rf "$tdir"
+
+      pushd "$notes_dir"
+      if [[ "${FILES_DIFFER}" != "" ]]; then
+        msg="Regenerated at $(date -u '+%Y-%m-%d %H:%M:%S') UTC"
+        git add "$notes_dir/${note_filename}.age"
+        git commit -m "$msg"
+      else
+        git checkout "$notes_dir/${note_filename}.age"
+      fi
+      popd
+      ;;
+  esac
+  return 0
+}
+
+function _note_completion() {
+  local cur prev
+  cur=${COMP_WORDS[COMP_CWORD]}
+  prev=${COMP_WORDS[COMP_CWORD-1]}
+  local notes_dir="${HOME}/projects/notes"
+
+  notelist=$(find "$notes_dir" -iname "*.age" -not -path "*.git*" | sed -n -e "s|^${notes_dir}/||p")
+
+  case ${COMP_CWORD} in
+    1)
+      COMPREPLY=($(compgen -W "ls status edit" -- ${cur}))
+      ;;
+    2)
+      case ${prev} in
+        edit)
+          COMPREPLY=($(compgen -W "$notelist" -- ${cur}))
+          ;;
+      esac
+      ;;
+    *)
+      COMPREPLY=()
+      ;;
+  esac
+}
+
+complete -F _note_completion note
+{{ end -}}

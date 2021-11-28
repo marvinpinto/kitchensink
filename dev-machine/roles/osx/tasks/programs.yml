@@ -30,6 +30,7 @@
       - "iftop"
       - "htop"
       - "xclip"
+      - "age"
     state: "present"
 
 - name: "Install all the homebrew managed cask apps"

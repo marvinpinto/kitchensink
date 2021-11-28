@@ -37,6 +37,7 @@
       - "xclip"
       - "tmux"
       - "smug"
+      - "age"
     state: "present"
     path: "/home/linuxbrew/.linuxbrew/bin"
 
