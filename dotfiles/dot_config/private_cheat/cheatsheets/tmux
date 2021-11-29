@@ -25,7 +25,8 @@ mod + r  # reload tmux config
 mod + :  # bring up the tmux command entry
 
 # Commands
-clear-history  # clears the scrollback history in a single pane
+clear-history      # clears the scrollback history in a single pane
+swap-window -t -1  # move the current window one left
 
 # Session Management
 tmux ls                                  # list tmux sessions

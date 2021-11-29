@@ -6,6 +6,9 @@ root: ~/projects
 # ref: https://manpages.ubuntu.com/manpages/precise/en/man1/tmux.1.html#windows%20and%20panes
 
 windows:
+  - name: notes
+    layout: even-horizontal 
+
   - name: code
     layout: even-horizontal 
 
