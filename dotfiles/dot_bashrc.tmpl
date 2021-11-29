@@ -114,8 +114,13 @@ alias dps="docker ps"
 # Command line weather
 alias weather="curl http://wttr.in/M6P?1n"
 
+{{ if (and (eq .chezmoi.os "linux") (not .is_devcontainer)) }}
 # System Update
-alias yoloupdate="sudo apt-get clean && sudo apt-get autoremove -y --purge && sudo apt-get update && sudo apt-get -y dist-upgrade"
+alias yoloupdate="sudo apt-get clean && sudo apt-get autoremove -y --purge && sudo apt-get update && sudo apt-get -y dist-upgrade && brew update && brew upgrade"
+{{ else if (eq .chezmoi.os "darwin") }}
+# System Update
+alias yoloupdate="sudo softwareupdate --install --all --agree-to-license && brew update && brew upgrade"
+{{ end }}
 
 # Alias docker-compose to dc
 alias dc="docker-compose"
