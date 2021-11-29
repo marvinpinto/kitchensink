@@ -7,7 +7,7 @@ I3LOCK='/usr/bin/i3lock --color 333333'
 if [ -z $@ ]; then
   function gen_options()
   {
-    option_list=("Lock Screen","Logout","Suspend Computer","Hibernate Computer","Reboot Computer","Shutdown Computer","Enable Screensaver","Disable Screensaver","Toggle Do Not Disturb (DND)","Initiate Backup","Check Email","Create Development Workspace","2FA Tokens","Emoji Picker","Development Chrome","Reset Workspace","Grab Screenshot","Calculator")
+    option_list=("Lock Screen","Logout","Suspend Computer","Hibernate Computer","Reboot Computer","Shutdown Computer","Enable Screensaver","Disable Screensaver","Toggle Do Not Disturb (DND)","Initiate Backup","Check Email","Create Development Workspace","2FA Tokens","Emoji Picker","Development Chrome","Reset Workspace","Grab Screenshot","Calculator","URL Cleaner")
     echo ${option_list[@]} | tr ',' '\n' | sort
   }
 
@@ -73,6 +73,9 @@ else
       ;;
     'Calculator')
       coproc (/usr/bin/gnome-calculator)
+      ;;
+    'URL Cleaner')
+      coproc (rofi-url-handler)
       ;;
     *)
       echo "Invalid option \"$OPTION\""

@@ -31,9 +31,6 @@ bindsym $mod+Shift+q kill
 # rofi launcher
 bindsym $mod+d exec "rofi -switchers 'workspaces:rofi-switch-workspaces,launcher:rofi-launcher,run' -show launcher"
 
-# link handler
-bindsym $mod+p exec "rofi-url-handler"
-
 # change focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down
