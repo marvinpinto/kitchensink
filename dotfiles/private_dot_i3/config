@@ -46,6 +46,9 @@ bindsym $mod+Shift+l move right
 # change focus to the other monitor
 bindsym $mod+o focus output left
 
+# when cycling through windows, do not move to the next window or workspace
+focus_wrapping workspace
+
 # Move the current workspace to another monitor
 bindsym $mod+Shift+o move workspace to output left
 
