@@ -71,6 +71,10 @@
   textconv = age-diff
   cachetextconv = false
 
+[diff "ansible-vault"]
+  textconv = ansible-vault view
+  cachetextconv = false
+
 [color]
   ui = true
 [color "branch"]
