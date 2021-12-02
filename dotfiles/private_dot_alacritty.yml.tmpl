@@ -247,3 +247,7 @@ working_directory: "/home/marvin"
 {{ else if (eq .chezmoi.os "darwin") }}
 working_directory: "/Users/marvin"
 {{ end }}
+
+mouse:
+  # If this is `true`, the cursor is temporarily hidden when typing.
+  hide_when_typing: true
