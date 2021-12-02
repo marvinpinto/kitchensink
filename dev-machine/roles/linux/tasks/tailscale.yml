@@ -1,0 +1,32 @@
+---
+- name: "Add the tailscale apt signing key"
+  become: true
+  apt_key:
+    url: "https://pkgs.tailscale.com/stable/ubuntu/{{ ansible_distribution_release }}.gpg"
+    state: "present"
+
+- name: "Add the tailscale ubuntu repo"
+  become: true
+  copy:
+    dest: '/etc/apt/sources.list.d/tailscale.list'
+    content: |
+      deb https://pkgs.tailscale.com/stable/ubuntu {{ ansible_distribution_release }} main
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  notify: 'linux_apt-get-update'
+
+- meta: flush_handlers
+
+- name: "Install tailscale"
+  become: true
+  apt:
+    name: "tailscale"
+    state: "present"
+
+- name: "Enable the tailscale service"
+  become: true
+  service:
+    name: "tailscaled"
+    state: "started"
+    enabled: "yes"

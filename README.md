@@ -87,7 +87,7 @@ make chezmoi-init
   - Modifier Keys: Change Caps lock to Ctrl
   - Shortcuts -> Accessibility: Map Cmd+Q to "Invert Colors"
 
-- **osx**: Install divvy from the App Store, and ensure it runs on startup.
+- **osx**: Install divvy and tailscale from the App Store and ensure they both run on startup.
 
 - **linux**: Apply any updated software patches using the `yoloupdate` alias.
 

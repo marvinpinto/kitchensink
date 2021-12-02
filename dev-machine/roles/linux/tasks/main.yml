@@ -24,4 +24,5 @@
 - include: "alacritty.yml"
 - include: "1password.yml"
 - include: "snapd.yml"
+- include: "tailscale.yml"
 - include: "clear_unmanaged_files.yml"
