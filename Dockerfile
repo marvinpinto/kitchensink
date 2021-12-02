@@ -15,6 +15,7 @@ RUN apt-get -qq update \
     apt-transport-https \
     ca-certificates \
     bash-completion \
+    iputils-ping \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
