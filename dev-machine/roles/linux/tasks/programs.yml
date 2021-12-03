@@ -38,6 +38,7 @@
       - "tmux"
       - "smug"
       - "age"
+      - "restic"
     state: "present"
     path: "/home/linuxbrew/.linuxbrew/bin"
 

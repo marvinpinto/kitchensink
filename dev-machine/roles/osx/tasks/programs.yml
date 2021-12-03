@@ -31,6 +31,7 @@
       - "htop"
       - "xclip"
       - "age"
+      - "restic"
     state: "present"
 
 - name: "Install all the homebrew managed cask apps"
