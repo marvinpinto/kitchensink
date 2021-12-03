@@ -12,7 +12,29 @@ if [ -e "${HOMEBREW_PREFIX}/etc/bash_completion.d/aws-vault.bash" ]; then
   complete -F _aws-vault_bash_autocomplete av
 fi
 
-ave() {
+function ave-init() {
+  local arg=$1
+
+  if [ -z "$OP_AWS_MFA_NAME" ]; then
+    echo "This utility needs the OP_AWS_MFA_NAME environment variable"
+    return 1
+  fi
+
+  if [[ -z "$arg" ]]; then
+    echo "usage: ave-init <aws profile name>"
+    return 1
+  fi
+
+  local avp=$(op get item --vault="Private" "$OP_AWS_MFA_NAME" | jq -r '.details.sections | .[0].fields | .[] | select(.t == "AWS_VAULT_FILE_PASSPHRASE").v')
+  if [ "$?" -ne 0 ]; then
+    echo "Failed to retrieve AWS_VAULT_FILE_PASSPHRASE"
+    return 1
+  fi
+  export AWS_VAULT_FILE_PASSPHRASE="$avp"
+  aws-vault add $arg
+}
+
+function ave() {
   if [ -z "$OP_AWS_MFA_NAME" ]; then
     echo "This utility needs the OP_AWS_MFA_NAME environment variable"
     return 1

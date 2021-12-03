@@ -91,6 +91,12 @@ make chezmoi-init
 
 - **linux**: Apply any updated software patches using the `yoloupdate` alias.
 
+- **osx/linux**: Add the core AWS vault credentials:
+  ```bash
+  export OP_AWS_MFA_NAME=AWS-useraccount-marvin-dev
+  ave-init marvin
+  ```
+
 - **osx/linux**: Reboot the machine at least once to verify everything worked correctly.
 
 
