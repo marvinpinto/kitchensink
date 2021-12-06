@@ -119,13 +119,13 @@ bindsym $alt+Control+Shift+l exec --no-startup-id rofi-i3-locker
 # Startup programs
 exec --no-startup-id compton -CGb
 exec --no-startup-id nm-applet
+exec --no-startup-id ~/.i3/ssh-agent.sh
 exec_always --no-startup-id hsetroot -solid "#00001A"
 exec_always --no-startup-id /usr/bin/xautolock -resetsaver -detectsleep -time 3 -locker 'rofi-i3-locker' -notify 30 -notifier "notify-send -i info -u normal -t 3000 -- 'Locking screen in 30 seconds'"
 exec_always --no-startup-id /usr/bin/xmodmap ~/.xmodmap
 exec_always --no-startup-id /usr/bin/xrdb -load ~/.xresources
 exec_always --no-startup-id /usr/bin/gnome-settings-daemon &
 exec_always --no-startup-id /usr/bin/xset r rate 250 50
-exec_always --no-startup-id ~/.i3/ssh-agent.sh
 exec_always --no-startup-id xrandr --output DP-0 --primary --rotate normal --output DVI-I-1 --right-of DP-0 --rotate left --brightness 0.8
 
 # Start plexamp and move it to the default scratchpad
@@ -144,10 +144,6 @@ for_window [class="Slack"] floating enable, border normal, move to scratchpad
 exec_always --no-startup-id alacritty --class "scratch-terminal" --title "scratch terminal"
 for_window [class="Alacritty" instance="scratch-terminal"] floating enable, border normal, move to scratchpad
 
-# Start up a floating ergodox help reference & leave it in the scratchpad
-exec_always --no-startup-id ~/.i3/startup-app.sh "xpdf -title 'xpdf-ergodox-cheatsheet' -geometry '1024x650' -z '100' ~/ergodox-layout.pdf" "xpdf-ergodox-cheatsheet"
-for_window [title="xpdf-ergodox-cheatsheet"] floating enable, border normal, move to scratchpad
-
 # Start 1password desktop and move it to the scratchpad
 exec_always --no-startup-id ~/.i3/startup-app.sh "1password --disable-gpu" "1password"
 for_window [class="1Password" instance="1password"] floating enable, border normal, resize set 640 480, move to scratchpad
@@ -160,7 +156,6 @@ bindsym $mod+minus scratchpad show
 bindsym $alt+t [class="Alacritty" instance="scratch-terminal"] scratchpad show
 bindsym $alt+k [class="Keybase"] scratchpad show
 bindsym $alt+s [class="Slack"] scratchpad show
-bindsym $alt+e [title="xpdf-ergodox-cheatsheet"] scratchpad show
 bindsym $alt+p [class="1Password" instance="1password"] scratchpad show
 
 # Ensure that the following windows always start in floating mode
