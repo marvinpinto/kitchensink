@@ -51,5 +51,10 @@ function ave() {
     return 1
   fi
 
+  local avp=$(op get item --vault="Private" "$OP_AWS_MFA_NAME" | jq -r '.details.sections | .[0].fields | .[] | select(.t == "AWS_VAULT_FILE_PASSPHRASE").v')
+  if [ "$?" -eq 0 ]; then
+    export AWS_VAULT_FILE_PASSPHRASE="$avp"
+  fi
+
   aws-vault exec --mfa-token=$(op get totp "$OP_AWS_MFA_NAME") $@
 }
