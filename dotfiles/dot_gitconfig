@@ -72,7 +72,7 @@
   cachetextconv = false
 
 [diff "ansible-vault"]
-  textconv = ansible-vault view
+  textconv = ansible-diff
   cachetextconv = false
 
 [color]
