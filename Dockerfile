@@ -62,7 +62,8 @@ RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" \
     awscli \
     git-delta \
     yarn-completion \
-    gcc@5
+    gcc@5 \
+    the_silver_searcher
 
 # Configure timezone and locale
 ENV TZ="America/Toronto"
