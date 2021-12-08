@@ -16,6 +16,7 @@ RUN apt-get -qq update \
     ca-certificates \
     bash-completion \
     iputils-ping \
+    wget \
   && apt-get clean autoclean \
   && apt-get autoremove -y --purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
