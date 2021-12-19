@@ -188,14 +188,21 @@ function __prompt_command() {
   local BOLD="\[$(tput bold)\]"
   local UNDERLINE="\[$(tput sgr 0 1)\]"
   local RESET="\[$(tput sgr0)\]"
+
+  {{ if (.is_devcontainer) }}
+  local PROMPTCOL="${GREEN}"
+  {{ else if (.is_remote_server) }}
+  local PROMPTCOL="${BLUE}"
+  {{ else }}
   local PROMPTCOL="${YELLOW}"
+  {{ end }}
 
   if [[ -n "${IS_ELEVATED}" ]]; then
     # Bright red prompt if in an elevated docker container
     PS1+="\n${RED}"
   elif [ -f '/.dockerenv' ]; then
     # We're inside a docker environment
-    PS1+="\n${GREEN}"
+    PS1+="\n${PROMPTCOL}"
   elif [ `id -u` == 0 ]; then
     # Bright red prompt if root
     PS1+="\n${RED}"
