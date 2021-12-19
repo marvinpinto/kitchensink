@@ -1,3 +1,4 @@
+{{- if (not .is_remote_server) -}}
 #!/usr/bin/env bash
 
 NVIMCMD="nvim"
@@ -19,3 +20,4 @@ fi
 
 # Install the vim-plug plugins
 $NVIMCMD -es -u ${HOME}/.config/nvim/init.vim -i NONE -c "PlugInstall" -c "qa" || true
+{{- end }}
