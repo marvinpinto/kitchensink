@@ -1,4 +1,4 @@
-{{- if (not .is_devcontainer) -}}
+{{- if and (not .is_devcontainer) (not .is_remote_server) -}}
 # Bash function to make taking random notes slightly easier
 function note() {
   local notes_dir="${HOME}/projects/notes"

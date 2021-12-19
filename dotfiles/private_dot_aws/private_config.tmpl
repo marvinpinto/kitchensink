@@ -1,4 +1,4 @@
-{{- if (not .is_devcontainer) -}}
+{{- if and (not .is_devcontainer) (not .is_remote_server) -}}
 {{ (onepassword "dotfiles-secrets-aws-config" "Private").details.notesPlain }}
 {{- end -}}
 
