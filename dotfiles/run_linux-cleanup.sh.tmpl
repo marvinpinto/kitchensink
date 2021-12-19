@@ -1,4 +1,4 @@
-{{ if (and (eq .chezmoi.os "linux") (not .is_devcontainer)) -}}
+{{ if (and (eq .chezmoi.os "linux") (not .is_devcontainer) (not .is_remote_server)) -}}
 #!/usr/bin/env bash
 
 ##########################
