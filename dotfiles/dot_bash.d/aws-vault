@@ -17,8 +17,8 @@ function av() {
     return 1
   fi
 
-  if [[ -z "$cmd" || ("$cmd" != "init" && "$cmd" != "login") ]]; then
-    echo "usage: av <init | login>"
+  if [[ -z "$cmd" || ("$cmd" != "init" && "$cmd" != "login" && "$cmd" != "check") ]]; then
+    echo "usage: av <init | login | check>"
     return 1
   fi
 
@@ -62,13 +62,23 @@ function av() {
 
     aws-vault login --mfa-token=$(op get totp "$OP_AWS_MFA_NAME") --stdout $profile
   fi
+
+  if [[ "$cmd" == "check" ]]; then
+    local profile=$2
+    if [[ -z "$profile" ]]; then
+      echo "usage: av check <aws_profile_name>"
+      return 1
+    fi
+
+    aws-vault exec --mfa-token=$(op get totp "$OP_AWS_MFA_NAME") $profile -- aws sts get-caller-identity
+  fi
 }
 
 function _av_completion() {
   local cur prev
   COMPREPLY=()
   cur="${COMP_WORDS[COMP_CWORD]}"
-  COMPREPLY=( $(compgen -W "init login" -- ${cur}) )
+  COMPREPLY=( $(compgen -W "init login check" -- ${cur}) )
   return 0
 }
 complete -F _av_completion av

@@ -14,3 +14,7 @@ av init <aws_profile_name>
 # AWS console web login
 export OP_AWS_MFA_NAME=...
 av login <aws_profile_name>
+
+# Check AWS session status
+export OP_AWS_MFA_NAME=...
+av check <aws_profile_name>
