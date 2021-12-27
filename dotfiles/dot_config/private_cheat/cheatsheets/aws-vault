@@ -1,0 +1,16 @@
+---
+syntax: bash
+---
+
+# Retrieve AWS credentials from an already initialized vault
+# usage: ave <aws_profile_name> --no-session -- env | grep AWS_
+export OP_AWS_MFA_NAME=AWS-useraccount-marvin-dev
+ave marvin --no-session -- env | grep AWS_
+
+# Bootstrap a new container environment to use aws-vault
+export OP_AWS_MFA_NAME=...
+av init <aws_profile_name>
+
+# AWS console web login
+export OP_AWS_MFA_NAME=...
+av login <aws_profile_name>

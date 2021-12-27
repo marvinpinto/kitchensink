@@ -3,25 +3,28 @@
 # Set the AWS vault backend
 export AWS_VAULT_BACKEND=file
 
-# Alias aws-vault to av
-alias av="aws-vault"
-
 # Use system aws-vault completions for the 'av' alias
 if [ -e "${HOMEBREW_PREFIX}/etc/bash_completion.d/aws-vault.bash" ]; then
   source ${HOMEBREW_PREFIX}/etc/bash_completion.d/aws-vault.bash
-  complete -F _aws-vault_bash_autocomplete av
 fi
 
-function ave-init() {
-  local arg=$1
+# aws-vault helper for some sub-commands (with an MFA token)
+function av() {
+  local cmd=$1
 
   if [ -z "$OP_AWS_MFA_NAME" ]; then
     echo "This utility needs the OP_AWS_MFA_NAME environment variable"
     return 1
   fi
 
-  if [[ -z "$arg" ]]; then
-    echo "usage: ave-init <aws profile name>"
+  if [[ -z "$cmd" || ("$cmd" != "init" && "$cmd" != "login") ]]; then
+    echo "usage: av <init | login>"
+    return 1
+  fi
+
+  OP_ACCT=$(op get account > /dev/null 2>&1)
+  if [[ $? != 0 ]]; then
+    echo "1password session does not appear to be active, try signing in again"
     return 1
   fi
 
@@ -31,9 +34,46 @@ function ave-init() {
     return 1
   fi
   export AWS_VAULT_FILE_PASSPHRASE="$avp"
-  aws-vault add $arg
+
+  if [[ "$cmd" == "init" ]]; then
+    local profile=$2
+    if [[ -z "$profile" ]]; then
+      echo "usage: av init <aws_profile_name>"
+      return 1
+    fi
+
+    # initialize the ~/.aws/config file if needed
+    if [[ ! -f "${HOME}/.aws/config" ]]; then
+      mkdir -p "${HOME}/.aws"
+      chmod 0700 "${HOME}/.aws"
+      local data=$(op get item --vault="Private" "dotfiles-secrets-aws-config" | jq -r '.details.notesPlain')
+      printf '%b' "$data" > "${HOME}/.aws/config"
+    fi
+
+    aws-vault add $profile
+  fi
+
+  if [[ "$cmd" == "login" ]]; then
+    local profile=$2
+    if [[ -z "$profile" ]]; then
+      echo "usage: av login <aws_profile_name>"
+      return 1
+    fi
+
+    aws-vault login --mfa-token=$(op get totp "$OP_AWS_MFA_NAME") --stdout $profile
+  fi
 }
 
+function _av_completion() {
+  local cur prev
+  COMPREPLY=()
+  cur="${COMP_WORDS[COMP_CWORD]}"
+  COMPREPLY=( $(compgen -W "init login" -- ${cur}) )
+  return 0
+}
+complete -F _av_completion av
+
+# aws-vault helper to directly execute commands with an MFA token
 function ave() {
   if [ -z "$OP_AWS_MFA_NAME" ]; then
     echo "This utility needs the OP_AWS_MFA_NAME environment variable"
@@ -42,12 +82,7 @@ function ave() {
 
   OP_ACCT=$(op get account > /dev/null 2>&1)
   if [[ $? != 0 ]]; then
-    eval $(op signin)
-  fi
-
-  OP_ACCT=$(op get account > /dev/null 2>&1)
-  if [[ $? != 0 ]]; then
-    echo "Sign-in failed, maybe try again"
+    echo "1password session does not appear to be active, try signing in again"
     return 1
   fi
 

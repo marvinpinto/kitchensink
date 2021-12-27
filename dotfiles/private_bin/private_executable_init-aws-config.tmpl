@@ -1,8 +1,0 @@
-{{ if (and (eq .chezmoi.os "linux") (.is_devcontainer)) -}}
-#!/usr/bin/env bash
-mkdir -p "${HOME}/.aws"
-chmod 0700 "${HOME}/.aws"
-
-data=$(op get item --vault="Private" "dotfiles-secrets-aws-config" | jq -r '.details.notesPlain')
-printf '%b' "$data" > "${HOME}/.aws/config"
-{{ end -}}
