@@ -6,7 +6,8 @@ function note() {
   local age_identity_pubkey={{ (onepasswordItemFields "dotfiles-secrets-age-keys" "Private").secureNotesPublic.v }}
 
   if [ -z "$1" ]; then
-    echo "usage: note [push | ls | edit [filename]]>"
+    echo "usage: note <ls | status | up | edit>"
+    echo "usage: note edit <filename>"
     return 1
   fi
 
@@ -16,6 +17,12 @@ function note() {
       ;;
     status)
       pushd "$notes_dir"
+      git status
+      popd
+      ;;
+    up)
+      pushd "$notes_dir"
+      git push
       git status
       popd
       ;;
@@ -33,12 +40,15 @@ function note() {
 
       if [[ -e "$notes_dir/$note_full_filename" ]]; then
         age --decrypt -i "$age_identity_file" -o "${tdir}/$note_filename" "$notes_dir/$note_full_filename"
+        # in the scenario the source file is empty, age does not produce an output file
+        touch "${tdir}/$note_filename"
         cp "${tdir}/$note_filename" "${tdir}/${note_filename}.orig"
       else
         # create if does not exist
         touch "${tdir}/$note_filename"
         touch "${tdir}/${note_filename}.orig"
       fi
+
       vim "${tdir}/$note_filename"
       age --encrypt -r "$age_identity_pubkey" --armor -o "$notes_dir/${note_filename}.age" "${tdir}/$note_filename"
 
@@ -69,7 +79,7 @@ function _note_completion() {
 
   case ${COMP_CWORD} in
     1)
-      COMPREPLY=($(compgen -W "ls status edit" -- ${cur}))
+      COMPREPLY=($(compgen -W "ls status up edit" -- ${cur}))
       ;;
     2)
       case ${prev} in
