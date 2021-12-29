@@ -31,9 +31,10 @@ mod + s  # stacked layout
 mod + w  # tabbed layout
 mod + e  # toggle split layout
 
-# Reload configuration
-mod + shift + c  # reload i3wm configuration
-mod + shift + r  # restart i3wm
+# Reload configuration (shell commands)
+i3-msg reload    # reload the configuration file
+i3-msg restart   # restart i3 inplace (preserves your layout/session, can be
+                 # used to upgrade i3)
 
 # Dump the details of all the current windows. Useful for attempting to
 # determine window classes.
