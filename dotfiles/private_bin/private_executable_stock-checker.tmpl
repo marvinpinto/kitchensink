@@ -1,0 +1,95 @@
+{{ if (and (eq .chezmoi.os "linux") (not .is_devcontainer) (not .is_remote_server)) -}}
+#!/usr/bin/env python3
+
+import json
+import urllib.request
+import urllib.error
+import sys
+import ssl
+import time
+import logging
+
+from pathlib import Path
+
+# # Enable for request debugging
+# http_handler = urllib.request.HTTPSHandler(debuglevel=5, context=ssl.SSLContext(ssl.PROTOCOL_TLSv1_2))
+# opener = urllib.request.build_opener(http_handler)
+# urllib.request.install_opener(opener)
+
+def ks_server_list() -> dict:
+    webURL = urllib.request.urlopen('https://www.ovh.com/engine/api/dedicated/server/availabilities?country=ca')
+    data = webURL.read()
+    encoding = webURL.info().get_content_charset('utf-8')
+    return json.loads(data.decode(encoding))
+
+def check_stock_list() -> dict:
+    return json.loads('{{ (onepassword "dotfiles-secrets-stock-checker" "Private").details.notesPlain }}')
+
+def send_osl_notification(data: str):
+    osl_webhook_token = '{{ (onepasswordItemFields "dotfiles-secrets-stock-checker" "Private").oslWebhookToken.v }}'
+
+    osl_webhook_url = 'https://automations.opensentinel.com/webhook?token={}'.format(osl_webhook_token)
+    req = urllib.request.Request(osl_webhook_url, method="POST")
+    req.add_header('Content-Type', 'text/plain')
+    urllib.request.urlopen(req, data=data.encode('utf-8'))
+
+def init_checker():
+    # silence this stock-checker if the /tmp/silence-stock-checker file is present
+    silence_file_name = '/tmp/silence-stock-checker'
+    silence_file = Path(silence_file_name)
+    if silence_file.is_file():
+        logging.info('Skipping run of {} run as silencer file {} is present'.format(sys.argv[0], silence_file_name))
+        return
+
+    logging.info('Checking stock levels to see if anything is available')
+
+    server_list = ks_server_list()
+    stock_list = check_stock_list()
+
+    for server in server_list:
+        hardware = server['hardware']
+        region = server['region']
+
+        for stock in stock_list:
+            if stock['region'] != region or stock['hardware'] != hardware:
+                # do not care about this hardware/region combo
+                continue
+
+            avail_loc = []
+
+            for dc in server['datacenters']:
+                if dc['datacenter'] == 'default':
+                    continue
+
+                if dc['availability'] != 'unavailable':
+                    avail_loc.append('_{loc}_ ({avail})'.format(loc=dc['datacenter'].upper(), avail=dc['availability']))
+
+            if len(avail_loc) > 0:
+                msg = []
+                msg.append('Kimsufi server `{hardware}` is now available in: {locations}'.format(hardware=hardware, locations=', '.join(avail_loc)))
+                msg.append('**Details:** {details}'.format(details=stock['desc']))
+                msg.append('**Order URL:** https://www.kimsufi.com/ca/en/order/kimsufi.xml?reference={hardware}'.format(hardware=hardware))
+                msg.append('')
+                msg.append('Disable this checker with: `touch {}`'.format(silence_file_name))
+
+                try:
+                    send_osl_notification('\n'.join(msg))
+                except urllib.error.HTTPError as e:
+                    resp = e.read()
+                    encoding = e.info().get_content_charset('utf-8')
+                    resp.decode(encoding)
+                    logging.error('Unable to send out opensentinel notification: Code {code}, Reason: {reason}, Response: {resp}'.format(code=e.code, reason=e.reason, resp=resp.decode(encoding)))
+
+    logging.info('Checking of stock levels complete')
+
+if __name__ == "__main__":
+    sleep_time = 60 * 15    # 15 mins
+
+    logging.basicConfig(format='stock-checker: %(message)s', level=logging.INFO)
+    logging.info('Starting up new instance')
+
+    while True:
+        init_checker()
+        time.sleep(sleep_time)
+
+{{ end -}}

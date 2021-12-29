@@ -127,6 +127,7 @@ exec_always --no-startup-id /usr/bin/xrdb -load ~/.xresources
 exec_always --no-startup-id /usr/bin/gnome-settings-daemon &
 exec_always --no-startup-id /usr/bin/xset r rate 250 50
 exec_always --no-startup-id xrandr --output DP-0 --primary --rotate normal --output DVI-I-1 --right-of DP-0 --rotate left --brightness 0.8
+exec_always --no-startup-id ~/.i3/startup-app.sh "/home/marvin/bin/stock-checker" "stock-checker"
 
 # Start plexamp and move it to the default scratchpad
 exec_always --no-startup-id ~/.i3/startup-app.sh "plexamp" "plexamp"
