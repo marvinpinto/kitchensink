@@ -32,6 +32,8 @@
       - "xclip"
       - "age"
       - "restic"
+      - "watch"
+      - "tio"
     state: "present"
 
 - name: "Install all the homebrew managed cask apps"

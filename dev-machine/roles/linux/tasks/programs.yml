@@ -39,6 +39,7 @@
       - "smug"
       - "age"
       - "restic"
+      - "tio"
     state: "present"
     path: "/home/linuxbrew/.linuxbrew/bin"
 
@@ -63,6 +64,9 @@
       - "language-pack-en-base"
       - "tzdata"
       - "ca-certificates"
+      - "net-tools"
+      - "simple-scan"
+      - "traceroute"
     state: "present"
 
 - name: "Remove a few things I do not care for"
