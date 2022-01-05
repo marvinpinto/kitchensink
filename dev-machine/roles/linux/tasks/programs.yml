@@ -67,6 +67,7 @@
       - "net-tools"
       - "simple-scan"
       - "traceroute"
+      - "pdfarranger"  # useful utility for adding/removing pdf pages, etc
     state: "present"
 
 - name: "Remove a few things I do not care for"
