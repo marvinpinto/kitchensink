@@ -1,0 +1,13 @@
+---
+syntax: bash
+---
+
+# Initialize dotfiles on a remote machine
+export REMOTE_SERVER=yes
+sh -c "$(curl -fsLS git.io/chezmoi)" -- init --apply "marvinpinto/kitchensink"
+
+# Refresh the local copy of all the dotfiles and apply changes
+chezmoi update
+
+# Update all local dotfiles
+chezmoi apply
