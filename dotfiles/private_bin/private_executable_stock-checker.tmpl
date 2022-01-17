@@ -33,12 +33,20 @@ def send_osl_notification(data: str):
     req.add_header('Content-Type', 'text/plain')
     urllib.request.urlopen(req, data=data.encode('utf-8'))
 
+def notify_hc(start: bool):
+    hc_ping_slug = '{{ (onepasswordItemFields "dotfiles-secrets-stock-checker" "Private").hcPingSlug.v }}'
+    hc_url = 'https://hc-ping.com/{slug}{start}'.format(slug=hc_ping_slug, start='/start' if start is True else '')
+    urllib.request.urlopen(hc_url, timeout=10)
+
 def init_checker():
+    notify_hc(True)
+
     # silence this stock-checker if the /tmp/silence-stock-checker file is present
     silence_file_name = '/tmp/silence-stock-checker'
     silence_file = Path(silence_file_name)
     if silence_file.is_file():
         logging.info('Skipping run of {} run as silencer file {} is present'.format(sys.argv[0], silence_file_name))
+        notify_hc(False)
         return
 
     logging.info('Checking stock levels to see if anything is available')
@@ -81,6 +89,7 @@ def init_checker():
                     logging.error('Unable to send out opensentinel notification: Code {code}, Reason: {reason}, Response: {resp}'.format(code=e.code, reason=e.reason, resp=resp.decode(encoding)))
 
     logging.info('Checking of stock levels complete')
+    notify_hc(False)
 
 if __name__ == "__main__":
     sleep_time = 60 * 15    # 15 mins
