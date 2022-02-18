@@ -1,0 +1,44 @@
+---
+syntax: markdown
+---
+
+1. Plug in the USB drive and try to determine where it is mounted:
+```
+sudo lsblk
+```
+
+2. In the following example output, `sdb` is the mount device
+```
+NAME                  MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINT
+loop0                   7:0    0     4K  1 loop  /snap/bare/5
+loop1                   7:1    0 147.8M  1 loop  /snap/chromium/1827
+loop2                   7:2    0 164.8M  1 loop  /snap/gnome-3-28-1804/161
+loop3                   7:3    0  65.2M  1 loop  /snap/gtk-common-themes/1519
+loop4                   7:4    0  55.5M  1 loop  /snap/core18/2253
+loop5                   7:5    0  42.2M  1 loop  /snap/snapd/14066
+sda                     8:0    0 223.6G  0 disk
+├─sda1                  8:1    0   512M  0 part  /boot/efi
+├─sda2                  8:2    0     1K  0 part
+├─sda5                  8:5    0   731M  0 part  /boot
+└─sda6                  8:6    0 222.4G  0 part
+  └─sda6_crypt        253:0    0 222.3G  0 crypt
+    ├─vgubuntu-root   253:1    0 221.4G  0 lvm   /
+    └─vgubuntu-swap_1 253:2    0   976M  0 lvm   [SWAP]
+sdb                     8:16   1  14.4G  0 disk
+└─sdb1                  8:17   1  14.4G  0 part
+```
+
+3. If not already present, create a mount point:
+```
+sudo mkdir /media/usbdrive
+```
+
+4. Finally, mount the USB drive at the specified mount point:
+```
+sudo mount /dev/sdb1 /media/usbdrive
+```
+
+5. When finished, unmount the drive:
+```
+sudo umount /media/usbdrive
+```
