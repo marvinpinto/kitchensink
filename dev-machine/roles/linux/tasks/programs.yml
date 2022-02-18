@@ -68,6 +68,7 @@
       - "simple-scan"
       - "traceroute"
       - "pdfarranger"  # useful utility for adding/removing pdf pages, etc
+      - "gimp"
     state: "present"
 
 - name: "Remove a few things I do not care for"
@@ -127,3 +128,12 @@
   file:
     path: "/usr/share/sounds/ubuntu/stereo/system-ready.ogg"
     state: "absent"
+
+- name: "Update the imagemagick config file"
+  become: true
+  copy:
+    src: "imagemagick-policy.xml"
+    dest: "/etc/ImageMagick-6/policy.xml"
+    owner: "root"
+    group: "root"
+    mode: "0644"
