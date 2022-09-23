@@ -8,6 +8,8 @@
 # i3 config file (v4)
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
+#
+# To restart or reload i3wm on the fly, issue the command: i3-msg <restart|reload>
 
 set $mod Mod4
 set $alt Mod1
@@ -124,6 +126,9 @@ exec_always --no-startup-id /usr/bin/xset r rate 250 50
 exec_always --no-startup-id xrandr --output DP-0 --primary --rotate normal --output DVI-I-1 --right-of DP-0 --rotate left --brightness 0.8
 exec_always --no-startup-id ~/.i3/startup-app.sh "/home/marvin/bin/stock-checker" "stock-checker"
 
+# NOTE: Use the "xprop" utility to find window class name strings, ref: https://www.tuxtips.info/linux/how-to-find-applications-window-class-in-i3-window-manager
+# WM_CLASS(STRING) = "<instance>", "<class>"
+
 # Start plexamp and move it to the default scratchpad
 exec_always --no-startup-id ~/.i3/startup-app.sh "plexamp" "plexamp"
 for_window [class="Plexamp"] floating enable, border normal, move to scratchpad
@@ -144,6 +149,10 @@ for_window [class="Alacritty" instance="scratch-terminal"] floating enable, bord
 exec_always --no-startup-id ~/.i3/startup-app.sh "1password --disable-gpu" "1password"
 for_window [class="1Password" instance="1password"] floating enable, border normal, resize set 640 480, move to scratchpad
 
+# Start discord and move it to the scratchpad
+exec_always --no-startup-id ~/.i3/startup-app.sh "discord" "discord"
+for_window [class="discord" instance="discord"] floating enable, border normal, move to scratchpad
+
 # Always start gnome-calculator in floating mode
 for_window [class="Gnome-calculator"] floating enable, border normal, resize set 640 480
 
@@ -153,10 +162,12 @@ bindsym $alt+t [class="Alacritty" instance="scratch-terminal"] scratchpad show
 bindsym $alt+k [class="Keybase"] scratchpad show
 bindsym $alt+s [class="Slack"] scratchpad show
 bindsym $alt+p [class="1Password" instance="1password"] scratchpad show
+bindsym $alt+d [class="discord" instance="discord"] scratchpad show
 
 # Ensure that the following windows always start in floating mode
 for_window [class="Pavucontrol"] floating enable, border normal
 for_window [class="Blueman-manager"] floating enable, border normal, resize set 640 480
+for_window [class="Org.gnome.clocks"] floating enable, border normal
 
 # Use special Ergodox keys to cycle through workspaces
 bindsym $alt+Control+Shift+Left workspace prev_on_output

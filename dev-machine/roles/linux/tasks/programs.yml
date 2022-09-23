@@ -69,6 +69,7 @@
       - "traceroute"
       - "pdfarranger"  # useful utility for adding/removing pdf pages, etc
       - "gimp"
+      - "gnome-clocks"
     state: "present"
 
 - name: "Remove a few things I do not care for"

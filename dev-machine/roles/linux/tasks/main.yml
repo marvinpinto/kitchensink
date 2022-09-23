@@ -14,6 +14,7 @@
 - include: "hostname.yml"
 - include: "i3wm.yml"
 - include: "keybase.yml"
+- include: "discord.yml"
 - include: "nvidia.yml"
 - include: "rng_tools.yml"
 - include: "rofi.yml"
