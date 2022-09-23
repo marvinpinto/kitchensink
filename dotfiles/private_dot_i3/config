@@ -164,6 +164,9 @@ bindsym $alt+s [class="Slack"] scratchpad show
 bindsym $alt+p [class="1Password" instance="1password"] scratchpad show
 bindsym $alt+d [class="discord" instance="discord"] scratchpad show
 
+# alt+r to toggle screen recording
+bindsym $alt+r exec bash ~/bin/screen-recorder
+
 # Ensure that the following windows always start in floating mode
 for_window [class="Pavucontrol"] floating enable, border normal
 for_window [class="Blueman-manager"] floating enable, border normal, resize set 640 480

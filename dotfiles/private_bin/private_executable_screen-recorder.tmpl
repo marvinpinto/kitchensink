@@ -1,0 +1,47 @@
+{{ if (and (eq .chezmoi.os "linux") (not .is_devcontainer)) -}}
+#!/usr/bin/env bash
+
+# Simtple script to wrap ffmpeg & toggle screencasting
+set -o errexit
+set -o pipefail
+
+PIDFILE="${HOME}/tmp/screencast.pid"
+OUTFILE="${HOME}/tmp/screencast-live.mp4"
+FINALFILE="${HOME}/crap/screencast--$(date +'%Y-%m-%d--%H-%M-%S').mp4"
+
+# check if this script is already running
+if [[ -s $PIDFILE ]] && [[ -d "/proc/$(cat $PIDFILE)" ]]; then
+  # stop the recording & clean up
+  kill $(cat $PIDFILE)
+  rm -f $PIDFILE
+  mv $OUTFILE $FINALFILE
+else
+  # SCREENRES=$(xrandr -q --current | grep '*' | awk '{print$1}')
+
+  # write to the pidfile
+  echo $$ > $PIDFILE &&
+
+  # NOTE: for the -i option - e.g. :0.0+25,100 => offset x by +25, y by +100
+  # pixels. Useful utilities:
+  # xwininfo
+  # xdotool getmouselocation --shell
+  # pactl list short sources
+
+  MIC_ID=$(pactl list sources short | grep "alsa_input.usb-USB_Audio_Device_USB_Audio_Device_20200508V100-00" | cut -f1)
+  SYSTEM_ID=$(pactl list sources short | grep "alsa_output.pci-0000_00_1b.0.analog-stereo" | cut -f1)
+
+  # let the recording process take over this pid
+  rm -f ${OUTFILE}
+  exec ffmpeg \
+    -f x11grab -s 1916x952 -i ':0.0+0,91' \
+    -f pulse -i $SYSTEM_ID \
+    -f pulse -i $MIC_ID \
+    -filter_complex "[1:a][2:a] amerge=inputs=2,pan=stereo|c0<c0+c2|c1<c1+c3[a]" \
+    -map 0 \
+    -map "[a]" \
+    -ac 2 -acodec aac \
+    -pix_fmt yuv420p -vcodec libx264 -crf 40 -preset ultrafast \
+    ${OUTFILE}
+
+fi
+{{ end -}}
