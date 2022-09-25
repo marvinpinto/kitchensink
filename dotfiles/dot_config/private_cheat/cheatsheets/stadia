@@ -1,0 +1,14 @@
+# Brief instructions on wiring discord + game audio/mic through ffmpeg &
+# headphones
+#
+# In order to see these entries in "pavucontrol" the applications need to
+# be up and running + transmitting/picking-up sound.
+#
+
+# 1. Ensure that the audio from discord voice channels is picked up on
+# the "game-voice-combined" sink
+pavucontrol, Playback tab, "WEBRTC VoiceEngine: playStream on", "game-voice-combined"
+
+# 2. Ensure that the audio from stadia is picked up on the
+# "game-audio-combined" sink
+pavucontrol, Playback tab, "Google Chrome: Playback on", "game-audio-combined"

@@ -29,14 +29,12 @@ function volUp {
   fi
 
   getCurVol
-  volSync
 }
 
 function volDown {
   setMuteStatus 0
   pactl set-sink-volume ${active_sink} "-${inc}%"
   getCurVol
-  volSync
 }
 
 function volSync {

@@ -1,0 +1,16 @@
+.include /etc/pulse/default.pa
+
+# default sink can be found by: pacmd list-sinks | egrep '^\s+name: .*alsa_output'
+
+# If updated, pulseaudio can be restarted using:
+# systemctl --user restart pulseaudio.service
+
+# pulseaudio null-sink & combined-sink for Game Audio (game audio has to feed
+# into headphones + recorder)
+load-module module-null-sink sink_name=game-audio-recording sink_properties=device.description=game-audio-recording
+load-module module-combine-sink sink_name=game-audio-combined sink_properties=device.description=game-audio-combined slaves=game-audio-recording,alsa_output.pci-0000_00_1b.0.analog-stereo
+
+# pulseaudio null-sink, combined-sink, and loopback for Game Voice (mic/discord)
+load-module module-null-sink sink_name=game-voice-recording sink_properties=device.description=game-voice-recording
+load-module module-combine-sink sink_name=game-voice-combined sink_properties=device.description=game-voice-combined slaves=game-voice-recording,alsa_output.pci-0000_00_1b.0.analog-stereo
+load-module module-loopback source=alsa_input.usb-USB_Audio_Device_USB_Audio_Device_20200508V100-00.mono-fallback sink=game-voice-recording latency_msec=1
