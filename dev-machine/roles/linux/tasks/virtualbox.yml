@@ -22,11 +22,13 @@
 
 - meta: flush_handlers
 
+# NOTE: Virtualbox major/minor/patch version info is at https://www.virtualbox.org/wiki/Downloads
+
 - name: "Install Virtualbox"
   vars:
     virtualbox_major_version: "6"
     virtualbox_minor_version: "1"
-    virtualbox_patch_version: "30"
+    virtualbox_patch_version: "38"
   become: true
   apt:
     name:
@@ -45,7 +47,7 @@
   vars:
     virtualbox_major_version: "6"
     virtualbox_minor_version: "1"
-    virtualbox_patch_version: "30"
+    virtualbox_patch_version: "38"
   become: true
   stat:
     path: "/usr/local/etc/virtualbox/Oracle_VM_VirtualBox_Extension_Pack-{{virtualbox_major_version}}.{{virtualbox_minor_version}}.{{virtualbox_patch_version}}.vbox-extpack"
@@ -55,7 +57,7 @@
   vars:
     virtualbox_major_version: "6"
     virtualbox_minor_version: "1"
-    virtualbox_patch_version: "30"
+    virtualbox_patch_version: "38"
   become: true
   get_url:
     url: "http://download.virtualbox.org/virtualbox/{{virtualbox_major_version}}.{{virtualbox_minor_version}}.{{virtualbox_patch_version}}/Oracle_VM_VirtualBox_Extension_Pack-{{virtualbox_major_version}}.{{virtualbox_minor_version}}.{{virtualbox_patch_version}}.vbox-extpack"
@@ -67,7 +69,7 @@
   vars:
     virtualbox_major_version: "6"
     virtualbox_minor_version: "1"
-    virtualbox_patch_version: "30"
+    virtualbox_patch_version: "38"
   become: true
   shell: "echo y | /usr/bin/VBoxManage extpack install --replace /usr/local/etc/virtualbox/Oracle_VM_VirtualBox_Extension_Pack-{{virtualbox_major_version}}.{{virtualbox_minor_version}}.{{virtualbox_patch_version}}.vbox-extpack"
   when: "extension_pack_binary.stat.exists == False"
