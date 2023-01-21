@@ -8,6 +8,7 @@
     excludes: 
       - "ubuntu-base.list"
       - "google-chrome.list"
+      - "chromium.list"
       - "docker.list"
       - "i3wm.list"
       - "keybase.list"
