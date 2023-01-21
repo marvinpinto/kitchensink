@@ -7,7 +7,7 @@ I3LOCK='/usr/bin/i3lock --color 333333'
 if [ -z $@ ]; then
   function gen_options()
   {
-    option_list=("Lock Screen","Logout","Suspend Computer","Hibernate Computer","Reboot Computer","Shutdown Computer","Enable Screensaver","Disable Screensaver","Toggle Do Not Disturb (DND)","Initiate Backup","Check Email","Create Development Workspace","2FA Tokens","Emoji Picker","Development Chrome","Reset Workspace","Grab Screenshot","Calculator","URL Cleaner","Clocks","DIV2-bot start","DIV2-bot wipe")
+    option_list=("Lock Screen","Logout","Suspend Computer","Hibernate Computer","Reboot Computer","Shutdown Computer","Enable Screensaver","Disable Screensaver","Toggle Do Not Disturb (DND)","Initiate Backup","Check Email","Create Development Workspace","2FA Tokens","Emoji Picker","Development Chrome","Reset Workspace","Grab Screenshot","Calculator","URL Cleaner","Clocks","DIV2-bot start","DIV2-bot wipe","DIV2-bot complete loop")
     echo ${option_list[@]} | tr ',' '\n' | sort
   }
 
@@ -85,6 +85,9 @@ else
       ;;
     'DIV2-bot wipe')
       coproc (div2-bot --end)
+      ;;
+    'DIV2-bot complete loop')
+      coproc (div2-bot --full)
       ;;
     *)
       echo "Invalid option \"$OPTION\""

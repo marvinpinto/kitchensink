@@ -83,5 +83,12 @@ case "$1" in
     wipe_loop
     loop_cleanup
     ;;
+  --full)
+    wipe_loop
+    loop_cleanup
+    sleep 11
+    start_loop
+    loop_cleanup
+    ;;
 esac
 {{ end -}}
