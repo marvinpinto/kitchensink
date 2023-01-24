@@ -23,10 +23,10 @@ def ks_server_list() -> dict:
     return json.loads(data.decode(encoding))
 
 def check_stock_list() -> dict:
-    return json.loads('{{ (onepassword "dotfiles-secrets-stock-checker" "Private").details.notesPlain }}')
+    return json.loads('{{ (index (onepassword "dotfiles-secrets-stock-checker" "Private").fields 0).value }}')
 
 def send_osl_notification(data: str):
-    osl_webhook_token = '{{ (onepasswordItemFields "dotfiles-secrets-stock-checker" "Private").oslWebhookToken.v }}'
+    osl_webhook_token = '{{ (onepasswordItemFields "dotfiles-secrets-stock-checker" "Private").oslWebhookToken.value }}'
 
     osl_webhook_url = 'https://automations.opensentinel.com/webhook?token={}'.format(osl_webhook_token)
     req = urllib.request.Request(osl_webhook_url, method="POST")
@@ -34,7 +34,7 @@ def send_osl_notification(data: str):
     urllib.request.urlopen(req, data=data.encode('utf-8'))
 
 def notify_hc(start: bool):
-    hc_ping_slug = '{{ (onepasswordItemFields "dotfiles-secrets-stock-checker" "Private").hcPingSlug.v }}'
+    hc_ping_slug = '{{ (onepasswordItemFields "dotfiles-secrets-stock-checker" "Private").hcPingSlug.value }}'
     hc_url = 'https://hc-ping.com/{slug}{start}'.format(slug=hc_ping_slug, start='/start' if start is True else '')
     urllib.request.urlopen(hc_url, timeout=10)
 

@@ -3,6 +3,10 @@
 {{- $isDevcontainer := or (env "REMOTE_CONTAINERS") (env "CODESPACES") (env "CODESPACES") (env "KITCHENSINK_CONTAINER") | not | not -}}
 {{- $isRemoteServer := or (env "REMOTE_SERVER") | not | not -}}
 
+# Disable the 1password sign-in prompt
+onepassword:
+  prompt: false
+
 # This retains the value passed with --source on chezmoi init, which is used in
 # the ./install script
 sourceDir: "{{ .chezmoi.sourceDir }}"

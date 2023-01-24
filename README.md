@@ -110,10 +110,10 @@ Add the `kitchensink` tap as follows:
 brew tap marvinpinto/kitchensink "https://github.com/marvinpinto/kitchensink.git"
 ```
 
-Then install a formula as follows - using the 1password cli as an example:
+Then install a formula as follows - using digikam as an example:
 
 ```bash
-brew install marvinpinto/kitchensink/op
+brew install marvinpinto/kitchensink/digikam
 ```
 
 

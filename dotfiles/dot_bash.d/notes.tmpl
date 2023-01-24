@@ -3,7 +3,7 @@
 function note() {
   local notes_dir="${HOME}/projects/notes"
   local age_identity_file="${HOME}/.age-secure-notes.key"
-  local age_identity_pubkey={{ (onepasswordItemFields "dotfiles-secrets-age-keys" "Private").secureNotesPublic.v }}
+  local age_identity_pubkey={{ (onepasswordItemFields "dotfiles-secrets-age-keys" "Private").secureNotesPublic.value }}
 
   if [ -z "$1" ]; then
     echo "usage: note <ls | status | up | edit>"

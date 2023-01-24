@@ -1,5 +1,6 @@
 # vim: set filetype=sh :
 # generated using: op completion bash > op-cli
+# bash completion for op                                   -*- shell-script -*-
 
 __op_debug()
 {
@@ -323,9 +324,9 @@ __op_handle_word()
     __op_handle_word
 }
 
-_op_add_connect_server()
+_op_account_add()
 {
-    last_command="op_add_connect_server"
+    last_command="op_account_add"
 
     command_aliases=()
 
@@ -337,16 +338,34 @@ _op_add_connect_server()
     flags_with_completion=()
     flags_completion=()
 
+    flags+=("--address=")
+    two_word_flags+=("--address")
+    local_nonpersistent_flags+=("--address=")
+    flags+=("--email=")
+    two_word_flags+=("--email")
+    local_nonpersistent_flags+=("--email=")
     flags+=("--help")
     flags+=("-h")
     local_nonpersistent_flags+=("--help")
+    flags+=("--raw")
+    local_nonpersistent_flags+=("--raw")
+    flags+=("--shorthand=")
+    two_word_flags+=("--shorthand")
+    local_nonpersistent_flags+=("--shorthand=")
+    flags+=("--signin")
+    local_nonpersistent_flags+=("--signin")
     flags+=("--account=")
     two_word_flags+=("--account")
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -355,14 +374,13 @@ _op_add_connect_server()
     noun_aliases=()
 }
 
-_op_add_connect()
+_op_account_forget()
 {
-    last_command="op_add_connect"
+    last_command="op_account_forget"
 
     command_aliases=()
 
     commands=()
-    commands+=("server")
 
     flags=()
     two_word_flags=()
@@ -370,6 +388,8 @@ _op_add_connect()
     flags_with_completion=()
     flags_completion=()
 
+    flags+=("--all")
+    local_nonpersistent_flags+=("--all")
     flags+=("--help")
     flags+=("-h")
     local_nonpersistent_flags+=("--help")
@@ -378,8 +398,13 @@ _op_add_connect()
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -388,9 +413,9 @@ _op_add_connect()
     noun_aliases=()
 }
 
-_op_add_group()
+_op_account_get()
 {
-    last_command="op_add_group"
+    last_command="op_account_get"
 
     command_aliases=()
 
@@ -410,8 +435,13 @@ _op_add_group()
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -420,9 +450,9 @@ _op_add_group()
     noun_aliases=()
 }
 
-_op_add_user()
+_op_account_list()
 {
-    last_command="op_add_user"
+    last_command="op_account_list"
 
     command_aliases=()
 
@@ -437,16 +467,18 @@ _op_add_user()
     flags+=("--help")
     flags+=("-h")
     local_nonpersistent_flags+=("--help")
-    flags+=("--role=")
-    two_word_flags+=("--role")
-    local_nonpersistent_flags+=("--role=")
     flags+=("--account=")
     two_word_flags+=("--account")
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -455,16 +487,21 @@ _op_add_user()
     noun_aliases=()
 }
 
-_op_add()
+_op_account()
 {
-    last_command="op_add"
+    last_command="op_account"
 
     command_aliases=()
 
     commands=()
-    commands+=("connect")
-    commands+=("group")
-    commands+=("user")
+    commands+=("add")
+    commands+=("forget")
+    commands+=("get")
+    commands+=("list")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("ls")
+        aliashash["ls"]="list"
+    fi
 
     flags=()
     two_word_flags=()
@@ -480,8 +517,13 @@ _op_add()
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -512,8 +554,13 @@ _op_completion()
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -522,9 +569,9 @@ _op_completion()
     noun_aliases=()
 }
 
-_op_confirm()
+_op_connect_group_grant()
 {
-    last_command="op_confirm"
+    last_command="op_connect_group_grant"
 
     command_aliases=()
 
@@ -536,8 +583,100 @@ _op_confirm()
     flags_with_completion=()
     flags_completion=()
 
-    flags+=("--all")
-    local_nonpersistent_flags+=("--all")
+    flags+=("--all-servers")
+    local_nonpersistent_flags+=("--all-servers")
+    flags+=("--group=")
+    two_word_flags+=("--group")
+    local_nonpersistent_flags+=("--group=")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--server=")
+    two_word_flags+=("--server")
+    local_nonpersistent_flags+=("--server=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_flag+=("--group=")
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_connect_group_revoke()
+{
+    last_command="op_connect_group_revoke"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--all-servers")
+    local_nonpersistent_flags+=("--all-servers")
+    flags+=("--group=")
+    two_word_flags+=("--group")
+    local_nonpersistent_flags+=("--group=")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--server=")
+    two_word_flags+=("--server")
+    local_nonpersistent_flags+=("--server=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_flag+=("--group=")
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_connect_group()
+{
+    last_command="op_connect_group"
+
+    command_aliases=()
+
+    commands=()
+    commands+=("grant")
+    commands+=("revoke")
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
     flags+=("--help")
     flags+=("-h")
     local_nonpersistent_flags+=("--help")
@@ -546,8 +685,13 @@ _op_confirm()
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -556,9 +700,9 @@ _op_confirm()
     noun_aliases=()
 }
 
-_op_create_connect_server()
+_op_connect_server_create()
 {
-    last_command="op_create_connect_server"
+    last_command="op_connect_server_create"
 
     command_aliases=()
 
@@ -570,6 +714,9 @@ _op_create_connect_server()
     flags_with_completion=()
     flags_completion=()
 
+    flags+=("--force")
+    flags+=("-f")
+    local_nonpersistent_flags+=("--force")
     flags+=("--help")
     flags+=("-h")
     local_nonpersistent_flags+=("--help")
@@ -581,8 +728,13 @@ _op_create_connect_server()
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -591,9 +743,212 @@ _op_create_connect_server()
     noun_aliases=()
 }
 
-_op_create_connect_token()
+_op_connect_server_delete()
 {
-    last_command="op_create_connect_token"
+    last_command="op_connect_server_delete"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_connect_server_edit()
+{
+    last_command="op_connect_server_edit"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--name=")
+    two_word_flags+=("--name")
+    local_nonpersistent_flags+=("--name=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_connect_server_get()
+{
+    last_command="op_connect_server_get"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_connect_server_list()
+{
+    last_command="op_connect_server_list"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_connect_server()
+{
+    last_command="op_connect_server"
+
+    command_aliases=()
+
+    commands=()
+    commands+=("create")
+    commands+=("delete")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("remove")
+        aliashash["remove"]="delete"
+        command_aliases+=("rm")
+        aliashash["rm"]="delete"
+    fi
+    commands+=("edit")
+    commands+=("get")
+    commands+=("list")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("ls")
+        aliashash["ls"]="list"
+    fi
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_connect_token_create()
+{
+    last_command="op_connect_token_create"
 
     command_aliases=()
 
@@ -611,6 +966,9 @@ _op_create_connect_token()
     flags+=("--help")
     flags+=("-h")
     local_nonpersistent_flags+=("--help")
+    flags+=("--server=")
+    two_word_flags+=("--server")
+    local_nonpersistent_flags+=("--server=")
     flags+=("--vault=")
     two_word_flags+=("--vault")
     local_nonpersistent_flags+=("--vault=")
@@ -619,8 +977,54 @@ _op_create_connect_token()
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_flag+=("--server=")
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_connect_token_delete()
+{
+    last_command="op_connect_token_delete"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--server=")
+    two_word_flags+=("--server")
+    local_nonpersistent_flags+=("--server=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -629,15 +1033,110 @@ _op_create_connect_token()
     noun_aliases=()
 }
 
-_op_create_connect()
+_op_connect_token_edit()
 {
-    last_command="op_create_connect"
+    last_command="op_connect_token_edit"
 
     command_aliases=()
 
     commands=()
-    commands+=("server")
-    commands+=("token")
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--name=")
+    two_word_flags+=("--name")
+    local_nonpersistent_flags+=("--name=")
+    flags+=("--server=")
+    two_word_flags+=("--server")
+    local_nonpersistent_flags+=("--server=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_connect_token_list()
+{
+    last_command="op_connect_token_list"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--server=")
+    two_word_flags+=("--server")
+    local_nonpersistent_flags+=("--server=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_connect_token()
+{
+    last_command="op_connect_token"
+
+    command_aliases=()
+
+    commands=()
+    commands+=("create")
+    commands+=("delete")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("remove")
+        aliashash["remove"]="delete"
+        command_aliases+=("rm")
+        aliashash["rm"]="delete"
+    fi
+    commands+=("edit")
+    commands+=("list")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("ls")
+        aliashash["ls"]="list"
+    fi
 
     flags=()
     two_word_flags=()
@@ -653,8 +1152,13 @@ _op_create_connect()
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -663,9 +1167,9 @@ _op_create_connect()
     noun_aliases=()
 }
 
-_op_create_document()
+_op_connect_vault_grant()
 {
-    last_command="op_create_document"
+    last_command="op_connect_vault_grant"
 
     command_aliases=()
 
@@ -677,9 +1181,187 @@ _op_create_document()
     flags_with_completion=()
     flags_completion=()
 
-    flags+=("--filename=")
-    two_word_flags+=("--filename")
-    local_nonpersistent_flags+=("--filename=")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--server=")
+    two_word_flags+=("--server")
+    local_nonpersistent_flags+=("--server=")
+    flags+=("--vault=")
+    two_word_flags+=("--vault")
+    local_nonpersistent_flags+=("--vault=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_flag+=("--server=")
+    must_have_one_flag+=("--vault=")
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_connect_vault_revoke()
+{
+    last_command="op_connect_vault_revoke"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--server=")
+    two_word_flags+=("--server")
+    local_nonpersistent_flags+=("--server=")
+    flags+=("--vault=")
+    two_word_flags+=("--vault")
+    local_nonpersistent_flags+=("--vault=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_flag+=("--server=")
+    must_have_one_flag+=("--vault=")
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_connect_vault()
+{
+    last_command="op_connect_vault"
+
+    command_aliases=()
+
+    commands=()
+    commands+=("grant")
+    commands+=("revoke")
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_connect()
+{
+    last_command="op_connect"
+
+    command_aliases=()
+
+    commands=()
+    commands+=("group")
+    commands+=("server")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("servers")
+        aliashash["servers"]="server"
+    fi
+    commands+=("token")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("tokens")
+        aliashash["tokens"]="token"
+    fi
+    commands+=("vault")
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_document_create()
+{
+    last_command="op_document_create"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--file-name=")
+    two_word_flags+=("--file-name")
+    local_nonpersistent_flags+=("--file-name=")
     flags+=("--help")
     flags+=("-h")
     local_nonpersistent_flags+=("--help")
@@ -697,8 +1379,13 @@ _op_create_document()
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -707,9 +1394,9 @@ _op_create_document()
     noun_aliases=()
 }
 
-_op_create_group()
+_op_document_delete()
 {
-    last_command="op_create_group"
+    last_command="op_document_delete"
 
     command_aliases=()
 
@@ -721,19 +1408,26 @@ _op_create_group()
     flags_with_completion=()
     flags_completion=()
 
-    flags+=("--description=")
-    two_word_flags+=("--description")
-    local_nonpersistent_flags+=("--description=")
+    flags+=("--archive")
+    local_nonpersistent_flags+=("--archive")
     flags+=("--help")
     flags+=("-h")
     local_nonpersistent_flags+=("--help")
+    flags+=("--vault=")
+    two_word_flags+=("--vault")
+    local_nonpersistent_flags+=("--vault=")
     flags+=("--account=")
     two_word_flags+=("--account")
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -742,9 +1436,199 @@ _op_create_group()
     noun_aliases=()
 }
 
-_op_create_integration_events-api()
+_op_document_edit()
 {
-    last_command="op_create_integration_events-api"
+    last_command="op_document_edit"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--file-name=")
+    two_word_flags+=("--file-name")
+    local_nonpersistent_flags+=("--file-name=")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--tags=")
+    two_word_flags+=("--tags")
+    local_nonpersistent_flags+=("--tags=")
+    flags+=("--title=")
+    two_word_flags+=("--title")
+    local_nonpersistent_flags+=("--title=")
+    flags+=("--vault=")
+    two_word_flags+=("--vault")
+    local_nonpersistent_flags+=("--vault=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_document_get()
+{
+    last_command="op_document_get"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--force")
+    local_nonpersistent_flags+=("--force")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--include-archive")
+    local_nonpersistent_flags+=("--include-archive")
+    flags+=("--output=")
+    two_word_flags+=("--output")
+    local_nonpersistent_flags+=("--output=")
+    flags+=("--vault=")
+    two_word_flags+=("--vault")
+    local_nonpersistent_flags+=("--vault=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_document_list()
+{
+    last_command="op_document_list"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--include-archive")
+    local_nonpersistent_flags+=("--include-archive")
+    flags+=("--vault=")
+    two_word_flags+=("--vault")
+    local_nonpersistent_flags+=("--vault=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_document()
+{
+    last_command="op_document"
+
+    command_aliases=()
+
+    commands=()
+    commands+=("create")
+    commands+=("delete")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("remove")
+        aliashash["remove"]="delete"
+        command_aliases+=("rm")
+        aliashash["rm"]="delete"
+    fi
+    commands+=("edit")
+    commands+=("get")
+    commands+=("list")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("ls")
+        aliashash["ls"]="list"
+    fi
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_events-api_create()
+{
+    last_command="op_events-api_create"
 
     command_aliases=()
 
@@ -770,8 +1654,13 @@ _op_create_integration_events-api()
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -780,14 +1669,14 @@ _op_create_integration_events-api()
     noun_aliases=()
 }
 
-_op_create_integration()
+_op_events-api()
 {
-    last_command="op_create_integration"
+    last_command="op_events-api"
 
     command_aliases=()
 
     commands=()
-    commands+=("events-api")
+    commands+=("create")
 
     flags=()
     two_word_flags=()
@@ -803,8 +1692,13 @@ _op_create_integration()
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -813,9 +1707,9 @@ _op_create_integration()
     noun_aliases=()
 }
 
-_op_create_item()
+_op_group_create()
 {
-    last_command="op_create_item"
+    last_command="op_group_create"
 
     command_aliases=()
 
@@ -827,6 +1721,493 @@ _op_create_item()
     flags_with_completion=()
     flags_completion=()
 
+    flags+=("--description=")
+    two_word_flags+=("--description")
+    local_nonpersistent_flags+=("--description=")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_group_delete()
+{
+    last_command="op_group_delete"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_group_edit()
+{
+    last_command="op_group_edit"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--description=")
+    two_word_flags+=("--description")
+    local_nonpersistent_flags+=("--description=")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--name=")
+    two_word_flags+=("--name")
+    local_nonpersistent_flags+=("--name=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_group_get()
+{
+    last_command="op_group_get"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_group_list()
+{
+    last_command="op_group_list"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--user=")
+    two_word_flags+=("--user")
+    local_nonpersistent_flags+=("--user=")
+    flags+=("--vault=")
+    two_word_flags+=("--vault")
+    local_nonpersistent_flags+=("--vault=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_group_user_grant()
+{
+    last_command="op_group_user_grant"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--group=")
+    two_word_flags+=("--group")
+    local_nonpersistent_flags+=("--group=")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--role=")
+    two_word_flags+=("--role")
+    local_nonpersistent_flags+=("--role=")
+    flags+=("--user=")
+    two_word_flags+=("--user")
+    local_nonpersistent_flags+=("--user=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_flag+=("--group=")
+    must_have_one_flag+=("--user=")
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_group_user_list()
+{
+    last_command="op_group_user_list"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_group_user_revoke()
+{
+    last_command="op_group_user_revoke"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--group=")
+    two_word_flags+=("--group")
+    local_nonpersistent_flags+=("--group=")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--user=")
+    two_word_flags+=("--user")
+    local_nonpersistent_flags+=("--user=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_flag+=("--group=")
+    must_have_one_flag+=("--user=")
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_group_user()
+{
+    last_command="op_group_user"
+
+    command_aliases=()
+
+    commands=()
+    commands+=("grant")
+    commands+=("list")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("ls")
+        aliashash["ls"]="list"
+    fi
+    commands+=("revoke")
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_group()
+{
+    last_command="op_group"
+
+    command_aliases=()
+
+    commands=()
+    commands+=("create")
+    commands+=("delete")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("remove")
+        aliashash["remove"]="delete"
+        command_aliases+=("rm")
+        aliashash["rm"]="delete"
+    fi
+    commands+=("edit")
+    commands+=("get")
+    commands+=("list")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("ls")
+        aliashash["ls"]="list"
+    fi
+    commands+=("user")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("users")
+        aliashash["users"]="user"
+    fi
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_inject()
+{
+    last_command="op_inject"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--file-mode=")
+    two_word_flags+=("--file-mode")
+    local_nonpersistent_flags+=("--file-mode=")
+    flags+=("--force")
+    flags+=("-f")
+    local_nonpersistent_flags+=("--force")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--in-file=")
+    two_word_flags+=("--in-file")
+    two_word_flags+=("-i")
+    local_nonpersistent_flags+=("--in-file=")
+    flags+=("--out-file=")
+    two_word_flags+=("--out-file")
+    two_word_flags+=("-o")
+    local_nonpersistent_flags+=("--out-file=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_item_create()
+{
+    last_command="op_item_create"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--category=")
+    two_word_flags+=("--category")
+    local_nonpersistent_flags+=("--category=")
+    flags+=("--dry-run")
+    local_nonpersistent_flags+=("--dry-run")
     flags+=("--generate-password")
     local_nonpersistent_flags+=("--generate-password")
     flags+=("--help")
@@ -852,8 +2233,13 @@ _op_create_item()
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -862,9 +2248,297 @@ _op_create_item()
     noun_aliases=()
 }
 
-_op_create_user()
+_op_item_delete()
 {
-    last_command="op_create_user"
+    last_command="op_item_delete"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--archive")
+    local_nonpersistent_flags+=("--archive")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--vault=")
+    two_word_flags+=("--vault")
+    local_nonpersistent_flags+=("--vault=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_item_edit()
+{
+    last_command="op_item_edit"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--dry-run")
+    local_nonpersistent_flags+=("--dry-run")
+    flags+=("--generate-password")
+    local_nonpersistent_flags+=("--generate-password")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--tags=")
+    two_word_flags+=("--tags")
+    local_nonpersistent_flags+=("--tags=")
+    flags+=("--title=")
+    two_word_flags+=("--title")
+    local_nonpersistent_flags+=("--title=")
+    flags+=("--url=")
+    two_word_flags+=("--url")
+    local_nonpersistent_flags+=("--url=")
+    flags+=("--vault=")
+    two_word_flags+=("--vault")
+    local_nonpersistent_flags+=("--vault=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_item_get()
+{
+    last_command="op_item_get"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--fields=")
+    two_word_flags+=("--fields")
+    local_nonpersistent_flags+=("--fields=")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--include-archive")
+    local_nonpersistent_flags+=("--include-archive")
+    flags+=("--otp")
+    local_nonpersistent_flags+=("--otp")
+    flags+=("--share-link")
+    local_nonpersistent_flags+=("--share-link")
+    flags+=("--vault=")
+    two_word_flags+=("--vault")
+    local_nonpersistent_flags+=("--vault=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_item_list()
+{
+    last_command="op_item_list"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--categories=")
+    two_word_flags+=("--categories")
+    local_nonpersistent_flags+=("--categories=")
+    flags+=("--favorite")
+    local_nonpersistent_flags+=("--favorite")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--include-archive")
+    local_nonpersistent_flags+=("--include-archive")
+    flags+=("--long")
+    local_nonpersistent_flags+=("--long")
+    flags+=("--tags=")
+    two_word_flags+=("--tags")
+    local_nonpersistent_flags+=("--tags=")
+    flags+=("--vault=")
+    two_word_flags+=("--vault")
+    local_nonpersistent_flags+=("--vault=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_item_share()
+{
+    last_command="op_item_share"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--emails=")
+    two_word_flags+=("--emails")
+    local_nonpersistent_flags+=("--emails=")
+    flags+=("--expiry=")
+    two_word_flags+=("--expiry")
+    local_nonpersistent_flags+=("--expiry=")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--vault=")
+    two_word_flags+=("--vault")
+    local_nonpersistent_flags+=("--vault=")
+    flags+=("--view-once")
+    local_nonpersistent_flags+=("--view-once")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_item_template_get()
+{
+    last_command="op_item_template_get"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--force")
+    flags+=("-f")
+    local_nonpersistent_flags+=("--force")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--out-file=")
+    two_word_flags+=("--out-file")
+    two_word_flags+=("-o")
+    local_nonpersistent_flags+=("--out-file=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_item_template_list()
+{
+    last_command="op_item_template_list"
 
     command_aliases=()
 
@@ -879,16 +2553,18 @@ _op_create_user()
     flags+=("--help")
     flags+=("-h")
     local_nonpersistent_flags+=("--help")
-    flags+=("--language=")
-    two_word_flags+=("--language")
-    local_nonpersistent_flags+=("--language=")
     flags+=("--account=")
     two_word_flags+=("--account")
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -897,9 +2573,1033 @@ _op_create_user()
     noun_aliases=()
 }
 
-_op_create_vault()
+_op_item_template()
 {
-    last_command="op_create_vault"
+    last_command="op_item_template"
+
+    command_aliases=()
+
+    commands=()
+    commands+=("get")
+    commands+=("list")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("ls")
+        aliashash["ls"]="list"
+    fi
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_item()
+{
+    last_command="op_item"
+
+    command_aliases=()
+
+    commands=()
+    commands+=("create")
+    commands+=("delete")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("remove")
+        aliashash["remove"]="delete"
+        command_aliases+=("rm")
+        aliashash["rm"]="delete"
+    fi
+    commands+=("edit")
+    commands+=("get")
+    commands+=("list")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("ls")
+        aliashash["ls"]="list"
+    fi
+    commands+=("share")
+    commands+=("template")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("templates")
+        aliashash["templates"]="template"
+    fi
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_plugin_clear()
+{
+    last_command="op_plugin_clear"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--all")
+    local_nonpersistent_flags+=("--all")
+    flags+=("--force")
+    flags+=("-f")
+    local_nonpersistent_flags+=("--force")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_plugin_credential_import()
+{
+    last_command="op_plugin_credential_import"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_plugin_credential()
+{
+    last_command="op_plugin_credential"
+
+    command_aliases=()
+
+    commands=()
+    commands+=("import")
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_plugin_init()
+{
+    last_command="op_plugin_init"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_plugin_inspect()
+{
+    last_command="op_plugin_inspect"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_plugin_list()
+{
+    last_command="op_plugin_list"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_plugin_run()
+{
+    last_command="op_plugin_run"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_plugin()
+{
+    last_command="op_plugin"
+
+    command_aliases=()
+
+    commands=()
+    commands+=("clear")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("reset")
+        aliashash["reset"]="clear"
+    fi
+    commands+=("credential")
+    commands+=("init")
+    commands+=("inspect")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("info")
+        aliashash["info"]="inspect"
+    fi
+    commands+=("list")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("ls")
+        aliashash["ls"]="list"
+    fi
+    commands+=("run")
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_read()
+{
+    last_command="op_read"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--file-mode=")
+    two_word_flags+=("--file-mode")
+    local_nonpersistent_flags+=("--file-mode=")
+    flags+=("--force")
+    flags+=("-f")
+    local_nonpersistent_flags+=("--force")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--no-newline")
+    flags+=("-n")
+    local_nonpersistent_flags+=("--no-newline")
+    flags+=("--out-file=")
+    two_word_flags+=("--out-file")
+    two_word_flags+=("-o")
+    local_nonpersistent_flags+=("--out-file=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_run()
+{
+    last_command="op_run"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--env-file=")
+    two_word_flags+=("--env-file")
+    local_nonpersistent_flags+=("--env-file=")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--no-masking")
+    local_nonpersistent_flags+=("--no-masking")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_signin()
+{
+    last_command="op_signin"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--force")
+    flags+=("-f")
+    local_nonpersistent_flags+=("--force")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--raw")
+    local_nonpersistent_flags+=("--raw")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_signout()
+{
+    last_command="op_signout"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--all")
+    local_nonpersistent_flags+=("--all")
+    flags+=("--forget")
+    local_nonpersistent_flags+=("--forget")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_update()
+{
+    last_command="op_update"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--channel=")
+    two_word_flags+=("--channel")
+    local_nonpersistent_flags+=("--channel=")
+    flags+=("--directory=")
+    two_word_flags+=("--directory")
+    local_nonpersistent_flags+=("--directory=")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_user_confirm()
+{
+    last_command="op_user_confirm"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--all")
+    local_nonpersistent_flags+=("--all")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_user_delete()
+{
+    last_command="op_user_delete"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_user_edit()
+{
+    last_command="op_user_edit"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--name=")
+    two_word_flags+=("--name")
+    local_nonpersistent_flags+=("--name=")
+    flags+=("--travel-mode=")
+    two_word_flags+=("--travel-mode")
+    local_nonpersistent_flags+=("--travel-mode=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_user_get()
+{
+    last_command="op_user_get"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--fingerprint")
+    local_nonpersistent_flags+=("--fingerprint")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--me")
+    local_nonpersistent_flags+=("--me")
+    flags+=("--public-key")
+    local_nonpersistent_flags+=("--public-key")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_user_list()
+{
+    last_command="op_user_list"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--group=")
+    two_word_flags+=("--group")
+    local_nonpersistent_flags+=("--group=")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--vault=")
+    two_word_flags+=("--vault")
+    local_nonpersistent_flags+=("--vault=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_user_provision()
+{
+    last_command="op_user_provision"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--email=")
+    two_word_flags+=("--email")
+    local_nonpersistent_flags+=("--email=")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--language=")
+    two_word_flags+=("--language")
+    local_nonpersistent_flags+=("--language=")
+    flags+=("--name=")
+    two_word_flags+=("--name")
+    local_nonpersistent_flags+=("--name=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_flag+=("--email=")
+    must_have_one_flag+=("--name=")
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_user_reactivate()
+{
+    last_command="op_user_reactivate"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_user_suspend()
+{
+    last_command="op_user_suspend"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--deauthorize-devices-after=")
+    two_word_flags+=("--deauthorize-devices-after")
+    local_nonpersistent_flags+=("--deauthorize-devices-after=")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_user()
+{
+    last_command="op_user"
+
+    command_aliases=()
+
+    commands=()
+    commands+=("confirm")
+    commands+=("delete")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("remove")
+        aliashash["remove"]="delete"
+        command_aliases+=("rm")
+        aliashash["rm"]="delete"
+    fi
+    commands+=("edit")
+    commands+=("get")
+    commands+=("list")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("ls")
+        aliashash["ls"]="list"
+    fi
+    commands+=("provision")
+    commands+=("reactivate")
+    commands+=("suspend")
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_vault_create()
+{
+    last_command="op_vault_create"
 
     command_aliases=()
 
@@ -928,8 +3628,13 @@ _op_create_vault()
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -938,48 +3643,9 @@ _op_create_vault()
     noun_aliases=()
 }
 
-_op_create()
+_op_vault_delete()
 {
-    last_command="op_create"
-
-    command_aliases=()
-
-    commands=()
-    commands+=("connect")
-    commands+=("document")
-    commands+=("group")
-    commands+=("integration")
-    commands+=("item")
-    commands+=("user")
-    commands+=("vault")
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_delete_connect_server()
-{
-    last_command="op_delete_connect_server"
+    last_command="op_vault_delete"
 
     command_aliases=()
 
@@ -999,8 +3665,13 @@ _op_delete_connect_server()
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -1009,550 +3680,9 @@ _op_delete_connect_server()
     noun_aliases=()
 }
 
-_op_delete_connect_token()
+_op_vault_edit()
 {
-    last_command="op_delete_connect_token"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--server=")
-    two_word_flags+=("--server")
-    local_nonpersistent_flags+=("--server=")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_delete_connect()
-{
-    last_command="op_delete_connect"
-
-    command_aliases=()
-
-    commands=()
-    commands+=("server")
-    commands+=("token")
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_delete_document()
-{
-    last_command="op_delete_document"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--archive")
-    local_nonpersistent_flags+=("--archive")
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--vault=")
-    two_word_flags+=("--vault")
-    local_nonpersistent_flags+=("--vault=")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_delete_group()
-{
-    last_command="op_delete_group"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_delete_item()
-{
-    last_command="op_delete_item"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--archive")
-    local_nonpersistent_flags+=("--archive")
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--vault=")
-    two_word_flags+=("--vault")
-    local_nonpersistent_flags+=("--vault=")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_delete_user()
-{
-    last_command="op_delete_user"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_delete_vault()
-{
-    last_command="op_delete_vault"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_delete()
-{
-    last_command="op_delete"
-
-    command_aliases=()
-
-    commands=()
-    commands+=("connect")
-    commands+=("document")
-    commands+=("group")
-    commands+=("item")
-    commands+=("user")
-    commands+=("vault")
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_edit_connect_server()
-{
-    last_command="op_edit_connect_server"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--name=")
-    two_word_flags+=("--name")
-    local_nonpersistent_flags+=("--name=")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_edit_connect_token()
-{
-    last_command="op_edit_connect_token"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--name=")
-    two_word_flags+=("--name")
-    local_nonpersistent_flags+=("--name=")
-    flags+=("--server=")
-    two_word_flags+=("--server")
-    local_nonpersistent_flags+=("--server=")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_edit_connect()
-{
-    last_command="op_edit_connect"
-
-    command_aliases=()
-
-    commands=()
-    commands+=("server")
-    commands+=("token")
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_edit_document()
-{
-    last_command="op_edit_document"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--filename=")
-    two_word_flags+=("--filename")
-    local_nonpersistent_flags+=("--filename=")
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--tags=")
-    two_word_flags+=("--tags")
-    local_nonpersistent_flags+=("--tags=")
-    flags+=("--title=")
-    two_word_flags+=("--title")
-    local_nonpersistent_flags+=("--title=")
-    flags+=("--vault=")
-    two_word_flags+=("--vault")
-    local_nonpersistent_flags+=("--vault=")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_edit_group()
-{
-    last_command="op_edit_group"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--description=")
-    two_word_flags+=("--description")
-    local_nonpersistent_flags+=("--description=")
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--name=")
-    two_word_flags+=("--name")
-    local_nonpersistent_flags+=("--name=")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_edit_item()
-{
-    last_command="op_edit_item"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--generate-password")
-    local_nonpersistent_flags+=("--generate-password")
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--vault=")
-    two_word_flags+=("--vault")
-    local_nonpersistent_flags+=("--vault=")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_edit_user()
-{
-    last_command="op_edit_user"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--name=")
-    two_word_flags+=("--name")
-    local_nonpersistent_flags+=("--name=")
-    flags+=("--travelmode=")
-    two_word_flags+=("--travelmode")
-    local_nonpersistent_flags+=("--travelmode=")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_edit_vault()
-{
-    last_command="op_edit_vault"
+    last_command="op_vault_edit"
 
     command_aliases=()
 
@@ -1576,264 +3706,21 @@ _op_edit_vault()
     flags+=("--name=")
     two_word_flags+=("--name")
     local_nonpersistent_flags+=("--name=")
+    flags+=("--travel-mode=")
+    two_word_flags+=("--travel-mode")
+    local_nonpersistent_flags+=("--travel-mode=")
     flags+=("--account=")
     two_word_flags+=("--account")
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_edit()
-{
-    last_command="op_edit"
-
-    command_aliases=()
-
-    commands=()
-    commands+=("connect")
-    commands+=("document")
-    commands+=("group")
-    commands+=("item")
-    commands+=("user")
-    commands+=("vault")
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_encode()
-{
-    last_command="op_encode"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_forget()
-{
-    last_command="op_forget"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_get_account()
-{
-    last_command="op_get_account"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_get_document()
-{
-    last_command="op_get_document"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--include-archive")
-    local_nonpersistent_flags+=("--include-archive")
-    flags+=("--output=")
-    two_word_flags+=("--output")
-    local_nonpersistent_flags+=("--output=")
-    flags+=("--vault=")
-    two_word_flags+=("--vault")
-    local_nonpersistent_flags+=("--vault=")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_get_group()
-{
-    last_command="op_get_group"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_get_item()
-{
-    last_command="op_get_item"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--fields=")
-    two_word_flags+=("--fields")
-    local_nonpersistent_flags+=("--fields=")
     flags+=("--format=")
     two_word_flags+=("--format")
-    local_nonpersistent_flags+=("--format=")
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--include-archive")
-    local_nonpersistent_flags+=("--include-archive")
-    flags+=("--share-link")
-    local_nonpersistent_flags+=("--share-link")
-    flags+=("--vault=")
-    two_word_flags+=("--vault")
-    local_nonpersistent_flags+=("--vault=")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -1842,9 +3729,9 @@ _op_get_item()
     noun_aliases=()
 }
 
-_op_get_template()
+_op_vault_get()
 {
-    last_command="op_get_template"
+    last_command="op_vault_get"
 
     command_aliases=()
 
@@ -1864,8 +3751,13 @@ _op_get_template()
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -1874,440 +3766,9 @@ _op_get_template()
     noun_aliases=()
 }
 
-_op_get_totp()
+_op_vault_group_grant()
 {
-    last_command="op_get_totp"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--vault=")
-    two_word_flags+=("--vault")
-    local_nonpersistent_flags+=("--vault=")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_get_user()
-{
-    last_command="op_get_user"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--fingerprint")
-    local_nonpersistent_flags+=("--fingerprint")
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--publickey")
-    local_nonpersistent_flags+=("--publickey")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_get_vault()
-{
-    last_command="op_get_vault"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_get()
-{
-    last_command="op_get"
-
-    command_aliases=()
-
-    commands=()
-    commands+=("account")
-    commands+=("document")
-    commands+=("group")
-    commands+=("item")
-    commands+=("template")
-    commands+=("totp")
-    commands+=("user")
-    commands+=("vault")
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_list_connect_servers()
-{
-    last_command="op_list_connect_servers"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_list_connect_tokens()
-{
-    last_command="op_list_connect_tokens"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--server=")
-    two_word_flags+=("--server")
-    local_nonpersistent_flags+=("--server=")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_list_connect()
-{
-    last_command="op_list_connect"
-
-    command_aliases=()
-
-    commands=()
-    commands+=("servers")
-    commands+=("tokens")
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_list_documents()
-{
-    last_command="op_list_documents"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--include-archive")
-    local_nonpersistent_flags+=("--include-archive")
-    flags+=("--vault=")
-    two_word_flags+=("--vault")
-    local_nonpersistent_flags+=("--vault=")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_list_events()
-{
-    last_command="op_list_events"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--eventid=")
-    two_word_flags+=("--eventid")
-    local_nonpersistent_flags+=("--eventid=")
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--older")
-    local_nonpersistent_flags+=("--older")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_list_groups()
-{
-    last_command="op_list_groups"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--user=")
-    two_word_flags+=("--user")
-    local_nonpersistent_flags+=("--user=")
-    flags+=("--vault=")
-    two_word_flags+=("--vault")
-    local_nonpersistent_flags+=("--vault=")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_list_items()
-{
-    last_command="op_list_items"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--categories=")
-    two_word_flags+=("--categories")
-    local_nonpersistent_flags+=("--categories=")
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--include-archive")
-    local_nonpersistent_flags+=("--include-archive")
-    flags+=("--tags=")
-    two_word_flags+=("--tags")
-    local_nonpersistent_flags+=("--tags=")
-    flags+=("--vault=")
-    two_word_flags+=("--vault")
-    local_nonpersistent_flags+=("--vault=")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_list_templates()
-{
-    last_command="op_list_templates"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_list_users()
-{
-    last_command="op_list_users"
+    last_command="op_vault_group_grant"
 
     command_aliases=()
 
@@ -2325,6 +3786,11 @@ _op_list_users()
     flags+=("--help")
     flags+=("-h")
     local_nonpersistent_flags+=("--help")
+    flags+=("--no-input")
+    local_nonpersistent_flags+=("--no-input")
+    flags+=("--permissions=")
+    two_word_flags+=("--permissions")
+    local_nonpersistent_flags+=("--permissions=")
     flags+=("--vault=")
     two_word_flags+=("--vault")
     local_nonpersistent_flags+=("--vault=")
@@ -2333,8 +3799,53 @@ _op_list_users()
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_flag+=("--group=")
+    must_have_one_flag+=("--permissions=")
+    must_have_one_flag+=("--vault=")
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_vault_group_list()
+{
+    last_command="op_vault_group_list"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -2343,9 +3854,103 @@ _op_list_users()
     noun_aliases=()
 }
 
-_op_list_vaults()
+_op_vault_group_revoke()
 {
-    last_command="op_list_vaults"
+    last_command="op_vault_group_revoke"
+
+    command_aliases=()
+
+    commands=()
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--group=")
+    two_word_flags+=("--group")
+    local_nonpersistent_flags+=("--group=")
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--no-input")
+    local_nonpersistent_flags+=("--no-input")
+    flags+=("--permissions=")
+    two_word_flags+=("--permissions")
+    local_nonpersistent_flags+=("--permissions=")
+    flags+=("--vault=")
+    two_word_flags+=("--vault")
+    local_nonpersistent_flags+=("--vault=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_flag+=("--group=")
+    must_have_one_flag+=("--vault=")
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_vault_group()
+{
+    last_command="op_vault_group"
+
+    command_aliases=()
+
+    commands=()
+    commands+=("grant")
+    commands+=("list")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("ls")
+        aliashash["ls"]="list"
+    fi
+    commands+=("revoke")
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_vault_list()
+{
+    last_command="op_vault_list"
 
     command_aliases=()
 
@@ -2371,8 +3976,13 @@ _op_list_vaults()
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -2381,49 +3991,9 @@ _op_list_vaults()
     noun_aliases=()
 }
 
-_op_list()
+_op_vault_user_grant()
 {
-    last_command="op_list"
-
-    command_aliases=()
-
-    commands=()
-    commands+=("connect")
-    commands+=("documents")
-    commands+=("events")
-    commands+=("groups")
-    commands+=("items")
-    commands+=("templates")
-    commands+=("users")
-    commands+=("vaults")
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_manage_connect_add()
-{
-    last_command="op_manage_connect_add"
+    last_command="op_vault_user_grant"
 
     command_aliases=()
 
@@ -2438,24 +4008,43 @@ _op_manage_connect_add()
     flags+=("--help")
     flags+=("-h")
     local_nonpersistent_flags+=("--help")
+    flags+=("--no-input")
+    local_nonpersistent_flags+=("--no-input")
+    flags+=("--permissions=")
+    two_word_flags+=("--permissions")
+    local_nonpersistent_flags+=("--permissions=")
+    flags+=("--user=")
+    two_word_flags+=("--user")
+    local_nonpersistent_flags+=("--user=")
+    flags+=("--vault=")
+    two_word_flags+=("--vault")
+    local_nonpersistent_flags+=("--vault=")
     flags+=("--account=")
     two_word_flags+=("--account")
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
     must_have_one_flag=()
+    must_have_one_flag+=("--permissions=")
+    must_have_one_flag+=("--user=")
+    must_have_one_flag+=("--vault=")
     must_have_one_noun=()
     noun_aliases=()
 }
 
-_op_manage_connect_remove()
+_op_vault_user_list()
 {
-    last_command="op_manage_connect_remove"
+    last_command="op_vault_user_list"
 
     command_aliases=()
 
@@ -2475,8 +4064,13 @@ _op_manage_connect_remove()
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -2485,15 +4079,70 @@ _op_manage_connect_remove()
     noun_aliases=()
 }
 
-_op_manage_connect()
+_op_vault_user_revoke()
 {
-    last_command="op_manage_connect"
+    last_command="op_vault_user_revoke"
 
     command_aliases=()
 
     commands=()
-    commands+=("add")
-    commands+=("remove")
+
+    flags=()
+    two_word_flags=()
+    local_nonpersistent_flags=()
+    flags_with_completion=()
+    flags_completion=()
+
+    flags+=("--help")
+    flags+=("-h")
+    local_nonpersistent_flags+=("--help")
+    flags+=("--no-input")
+    local_nonpersistent_flags+=("--no-input")
+    flags+=("--permissions=")
+    two_word_flags+=("--permissions")
+    local_nonpersistent_flags+=("--permissions=")
+    flags+=("--user=")
+    two_word_flags+=("--user")
+    local_nonpersistent_flags+=("--user=")
+    flags+=("--vault=")
+    two_word_flags+=("--vault")
+    local_nonpersistent_flags+=("--vault=")
+    flags+=("--account=")
+    two_word_flags+=("--account")
+    flags+=("--cache")
+    flags+=("--config=")
+    two_word_flags+=("--config")
+    flags+=("--debug")
+    flags+=("--encoding=")
+    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
+    flags+=("--session=")
+    two_word_flags+=("--session")
+
+    must_have_one_flag=()
+    must_have_one_flag+=("--user=")
+    must_have_one_flag+=("--vault=")
+    must_have_one_noun=()
+    noun_aliases=()
+}
+
+_op_vault_user()
+{
+    last_command="op_vault_user"
+
+    command_aliases=()
+
+    commands=()
+    commands+=("grant")
+    commands+=("list")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("ls")
+        aliashash["ls"]="list"
+    fi
+    commands+=("revoke")
 
     flags=()
     two_word_flags=()
@@ -2509,8 +4158,13 @@ _op_manage_connect()
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -2519,210 +4173,38 @@ _op_manage_connect()
     noun_aliases=()
 }
 
-_op_manage()
+_op_vault()
 {
-    last_command="op_manage"
+    last_command="op_vault"
 
     command_aliases=()
 
     commands=()
-    commands+=("connect")
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_reactivate()
-{
-    last_command="op_reactivate"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_remove_connect_server()
-{
-    last_command="op_remove_connect_server"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_remove_connect()
-{
-    last_command="op_remove_connect"
-
-    command_aliases=()
-
-    commands=()
-    commands+=("server")
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_remove_group()
-{
-    last_command="op_remove_group"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_remove_user()
-{
-    last_command="op_remove_user"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_remove()
-{
-    last_command="op_remove"
-
-    command_aliases=()
-
-    commands=()
-    commands+=("connect")
+    commands+=("create")
+    commands+=("delete")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("remove")
+        aliashash["remove"]="delete"
+        command_aliases+=("rm")
+        aliashash["rm"]="delete"
+    fi
+    commands+=("edit")
+    commands+=("get")
     commands+=("group")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("groups")
+        aliashash["groups"]="group"
+    fi
+    commands+=("list")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("ls")
+        aliashash["ls"]="list"
+    fi
     commands+=("user")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("users")
+        aliashash["users"]="user"
+    fi
 
     flags=()
     two_word_flags=()
@@ -2738,8 +4220,13 @@ _op_remove()
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -2748,9 +4235,9 @@ _op_remove()
     noun_aliases=()
 }
 
-_op_signin()
+_op_whoami()
 {
-    last_command="op_signin"
+    last_command="op_whoami"
 
     command_aliases=()
 
@@ -2765,125 +4252,18 @@ _op_signin()
     flags+=("--help")
     flags+=("-h")
     local_nonpersistent_flags+=("--help")
-    flags+=("--list")
-    flags+=("-l")
-    local_nonpersistent_flags+=("--list")
-    flags+=("--raw")
-    flags+=("-r")
-    local_nonpersistent_flags+=("--raw")
-    flags+=("--shorthand=")
-    two_word_flags+=("--shorthand")
-    local_nonpersistent_flags+=("--shorthand=")
     flags+=("--account=")
     two_word_flags+=("--account")
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_signout()
-{
-    last_command="op_signout"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--forget")
-    local_nonpersistent_flags+=("--forget")
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_suspend()
-{
-    last_command="op_suspend"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--deauthorize-devices")
-    local_nonpersistent_flags+=("--deauthorize-devices")
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
-    flags+=("--session=")
-    two_word_flags+=("--session")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_op_update()
-{
-    last_command="op_update"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--directory=")
-    two_word_flags+=("--directory")
-    local_nonpersistent_flags+=("--directory=")
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    flags+=("--account=")
-    two_word_flags+=("--account")
-    flags+=("--cache")
-    flags+=("--config=")
-    two_word_flags+=("--config")
-    flags+=("--encoding=")
-    two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -2899,23 +4279,47 @@ _op_root_command()
     command_aliases=()
 
     commands=()
-    commands+=("add")
+    commands+=("account")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("accounts")
+        aliashash["accounts"]="account"
+    fi
     commands+=("completion")
-    commands+=("confirm")
-    commands+=("create")
-    commands+=("delete")
-    commands+=("edit")
-    commands+=("encode")
-    commands+=("forget")
-    commands+=("get")
-    commands+=("list")
-    commands+=("manage")
-    commands+=("reactivate")
-    commands+=("remove")
+    commands+=("connect")
+    commands+=("document")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("documents")
+        aliashash["documents"]="document"
+    fi
+    commands+=("events-api")
+    commands+=("group")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("groups")
+        aliashash["groups"]="group"
+    fi
+    commands+=("inject")
+    commands+=("item")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("items")
+        aliashash["items"]="item"
+    fi
+    commands+=("plugin")
+    commands+=("read")
+    commands+=("run")
     commands+=("signin")
     commands+=("signout")
-    commands+=("suspend")
     commands+=("update")
+    commands+=("user")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("users")
+        aliashash["users"]="user"
+    fi
+    commands+=("vault")
+    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
+        command_aliases+=("vaults")
+        aliashash["vaults"]="vault"
+    fi
+    commands+=("whoami")
 
     flags=()
     two_word_flags=()
@@ -2928,11 +4332,16 @@ _op_root_command()
     flags+=("--cache")
     flags+=("--config=")
     two_word_flags+=("--config")
+    flags+=("--debug")
     flags+=("--encoding=")
     two_word_flags+=("--encoding")
+    flags+=("--format=")
+    two_word_flags+=("--format")
     flags+=("--help")
     flags+=("-h")
     local_nonpersistent_flags+=("--help")
+    flags+=("--iso-timestamps")
+    flags+=("--no-color")
     flags+=("--session=")
     two_word_flags+=("--session")
 
@@ -2973,3 +4382,5 @@ if [[ $(type -t compopt) = "builtin" ]]; then
 else
     complete -o default -o nospace -F __start_op op
 fi
+
+# ex: ts=4 sw=4 et filetype=sh
