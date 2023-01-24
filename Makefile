@@ -25,7 +25,7 @@ op-init: ## initialize the 1password CLI
 	@chmod 0700 "${HOME}/.openv-cfg-dir" 
 	@OP_CONFIG_DIR=${HOME}/.openv-cfg-dir && \
 		read -p "1password email address: " op_email && \
-		token=$$(op account add --address my.1password.ca --email "$$op_email" --signin --raw) && \
+		token=$$(op account add --address my.1password.ca --email "$$op_email" --signin --raw --config "$$OP_CONFIG_DIR") && \
 		echo "$$token" > "${HOME}/.openv-session" && \
 		echo "************************************" && \
 		echo "export OP_CONFIG_DIR=$$OP_CONFIG_DIR" && \

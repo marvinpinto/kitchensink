@@ -39,6 +39,7 @@
       - "age"
       - "restic"
       - "tio"
+      - "countdown"
     state: "present"
     path: "/home/linuxbrew/.linuxbrew/bin"
 

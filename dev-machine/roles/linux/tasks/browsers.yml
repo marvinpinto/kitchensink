@@ -31,17 +31,3 @@
   apt:
     name: "google-chrome-stable"
     state: "present"
-
-- name: "Add the chromium repo"
-  become: true
-  apt_repository:
-    repo: "ppa:saiarcot895/chromium-beta"
-    state: "present"
-    update_cache: "yes"
-    filename: "chromium"
-
-- name: 'Install Chromium'
-  become: true
-  apt:
-    name: "chromium-browser"
-    state: "present"
