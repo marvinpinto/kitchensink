@@ -7,7 +7,7 @@ I3LOCK='/usr/bin/i3lock --color 333333'
 if [ -z $@ ]; then
   function gen_options()
   {
-    option_list=("Lock Screen","Logout","Suspend Computer","Hibernate Computer","Reboot Computer","Shutdown Computer","Enable Screensaver","Disable Screensaver","Toggle Do Not Disturb (DND)","Initiate Backup","Check Email","Create Development Workspace","2FA Tokens","Emoji Picker","Development Chrome","Reset Workspace","Grab Screenshot","Calculator","URL Cleaner","Clocks")
+    option_list=("Lock Screen","Logout","Suspend Computer","Hibernate Computer","Reboot Computer","Shutdown Computer","Enable Screensaver","Disable Screensaver","Toggle Do Not Disturb (DND)","Initiate Backup","Check Email","Create Development Workspace","2FA Tokens","Emoji Picker","Reset Workspace","Grab Screenshot","Calculator","URL Cleaner","Clocks","Move Discord to Scratchpad")
     echo ${option_list[@]} | tr ',' '\n' | sort
   }
 
@@ -62,9 +62,6 @@ else
     'Emoji Picker')
       coproc (PINENTRY_USER_DATA=gui rofi-emoji)
       ;;
-    'Development Chrome')
-      coproc (nice -n 19 chromium-browser --disable-gpu --disable-gpu-compositing --disable-sync --auto-open-devtools-for-tabs)
-      ;;
     'Reset Workspace')
       coproc (/usr/bin/xset r rate 250 50)
       ;;
@@ -79,6 +76,9 @@ else
       ;;
     'Clocks')
       coproc (/usr/bin/gnome-clocks)
+      ;;
+    'Move Discord to Scratchpad')
+      coproc (/usr/bin/i3-msg "[class=discord instance=discord] floating enable, border normal, move to scratchpad")
       ;;
     *)
       echo "Invalid option \"$OPTION\""
