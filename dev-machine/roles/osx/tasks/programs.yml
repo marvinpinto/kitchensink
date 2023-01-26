@@ -35,6 +35,7 @@
       - "watch"
       - "tio"
       - "xdotool"
+      - "imagemagick"
     state: "present"
 
 - name: "Install all the homebrew managed cask apps"
