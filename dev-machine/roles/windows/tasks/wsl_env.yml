@@ -1,0 +1,20 @@
+---
+- name: "Install base Ubuntu programs"
+  become: true
+  become_user: "root"
+  apt:
+    name:
+      - "vim-gtk"
+      - "tmux"
+      - "fonts-inconsolata"
+      - "imagemagick"
+      - "whois"
+      - "default-jre"
+      - "cpulimit"
+      - "language-pack-en-base"
+      - "tzdata"
+      - "ca-certificates"
+      - "net-tools"
+      - "traceroute"
+      - "ffmpeg"
+    state: "present"

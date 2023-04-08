@@ -18,6 +18,16 @@ machine: /tmp/ansible-galaxy-roles ## setup or update the base dev machine
 		machine.yml
 	@echo "Setting up dev machine: complete"
 
+windows: /tmp/ansible-galaxy-roles ## setup or update the windows machine
+	@echo "Setting up windows machine..."
+	@cd dev-machine && \
+	ANSIBLE_ROLES_PATH=./roles:/tmp/ansible-galaxy-roles ansible-playbook \
+		--ask-pass \
+		--inventory=127.0.0.1, \
+		--ask-become-pass \
+		windows.yml
+	@echo "Setting up windows machine: complete"
+
 op-init: ## initialize the 1password CLI
 	@echo "Initializing 1password CLI..."
 	@rm -rf "${HOME}/.openv-cfg-dir"

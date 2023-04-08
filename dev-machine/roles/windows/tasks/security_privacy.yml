@@ -1,0 +1,286 @@
+---
+- name: "Show file extensions"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+    name: "HideFileExt"
+    data: "0"
+    type: "dword"
+
+- name: "Show hidden and system files"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+    name: "Hidden"
+    data: "1"
+    type: "dword"
+
+- name: "Show full path in title bar"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\CabinetState'
+    name: "FullPath"
+    data: "1"
+    type: "dword"
+
+- name: "Require signing for remote scripts"
+  ansible.windows.win_regedit:
+    path: 'HKLM:\SOFTWARE\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell'
+    name: "ExecutionPolicy"
+    data: "RemoteSigned"
+    type: "string"
+
+- name: "Let apps show personalized ads"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo'
+    name: "Enabled"
+    data: "0"
+    type: "dword"
+
+- name: "Let apps show personalized ads"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\CPSS\Store\AdvertisingInfo'
+    name: "Value"
+    data: "0"
+    type: "dword"
+
+- name: "Allow Websites Access to Language List"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Control Panel\International\User Profile'
+    name: "HttpAcceptLanguageOptOut"
+    data: "1"
+    type: "dword"
+
+- name: "Allow Websites Access to Language List"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Software\Microsoft\Internet Explorer\International'
+    name: "AcceptLanguage"
+    state: "absent"
+
+- name: "Improve Search by Tracking App Launches"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+    name: "Start_TrackProgs"
+    data: "0"
+    type: "dword"
+
+- name: "Show suggested content in settings"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager'
+    name: "SubscribedContent-353696Enabled"
+    data: "0"
+    type: "dword"
+
+- name: "Show suggested content in settings"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager'
+    name: "SubscribedContent-353694Enabled"
+    data: "0"
+    type: "dword"
+
+- name: "Show suggested content in settings"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager'
+    name: "SubscribedContent-338393Enabled"
+    data: "0"
+    type: "dword"
+
+- name: "Online Speech Recognition"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Software\Microsoft\Speech_OneCore\Settings\OnlineSpeechPrivacy'
+    name: "HasAccepted"
+    data: "0"
+    type: "dword"
+
+- name: "Personal inking & typing dictionary"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\CPSS\Store\InkingAndTypingPersonalization'
+    name: "Value"
+    data: "0"
+    type: "dword"
+
+- name: "Personal inking & typing dictionary"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Software\Microsoft\InputPersonalization'
+    name: "RestrictImplicitInkCollection"
+    data: "1"
+    type: "dword"
+
+- name: "Personal inking & typing dictionary"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Software\Microsoft\InputPersonalization'
+    name: "RestrictImplicitTextCollection"
+    data: "1"
+    type: "dword"
+
+- name: "Personal inking & typing dictionary"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Software\Microsoft\Personalization\Settings'
+    name: "AcceptedPrivacyPolicy"
+    data: "0"
+    type: "dword"
+
+- name: "Personal inking & typing dictionary"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Software\Microsoft\InputPersonalization\TrainedDataStore'
+    name: "HarvestContacts"
+    data: "0"
+    type: "dword"
+
+
+- name: "Send Optional Diagnostic Data"
+  ansible.windows.win_regedit:
+    path: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\DataCollection'
+    name: "AllowTelemetry"
+    data: "1"
+    type: "dword"
+
+- name: "Send Optional Diagnostic Data"
+  ansible.windows.win_regedit:
+    path: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\DataCollection'
+    name: "MaxTelemetryAllowed"
+    data: "1"
+    type: "dword"
+
+- name: "Send Optional Diagnostic Data"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Diagnostics\DiagTrack'
+    name: "ShowedToastAtLevel"
+    data: "1"
+    type: "dword"
+
+- name: "Send Inking and Typing Data"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Software\Microsoft\Input\TIPC'
+    name: "Enabled"
+    data: "0"
+    type: "dword"
+
+- name: "Send Inking and Typing Data"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\CPSS\Store\ImproveInkingAndTyping'
+    name: "Value"
+    data: "0"
+    type: "dword"
+
+- name: "Tailored Experience"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Privacy'
+    name: "TailoredExperiencesWithDiagnosticDataEnabled"
+    data: "0"
+    type: "dword"
+
+- name: "Feedback Frequency (never)"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Software\Microsoft\Siuf\Rules'
+    name: "NumberOfSIUFInPeriod"
+    data: "0"
+    type: "dword"
+
+- name: "Feedback Frequency (never)"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Software\Microsoft\Siuf\Rules'
+    name: "PeriodInNanoSeconds"
+    state: "absent"
+
+- name: "Safe Search (off)"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\SearchSettings'
+    name: "SafeSearchMode"
+    data: "0"
+    type: "dword"
+
+- name: "Search history (off)"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\SearchSettings'
+    name: "IsDeviceSearchHistoryEnabled"
+    data: "0"
+    type: "dword"
+
+- name: "Location Services (off)"
+  ansible.windows.win_regedit:
+    path: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location'
+    name: "Value"
+    data: "Deny"
+    type: "string"
+
+- name: "Location Services (off)"
+  ansible.windows.win_regedit:
+    path: 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Sensor\Overrides\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}'
+    name: "SensorPermissionState"
+    data: "0"
+    type: "dword"
+
+- name: "Voice Activation (off)"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Software\Microsoft\Speech_OneCore\Settings\VoiceActivation\UserPreferenceForAllApps'
+    name: "AgentActivationEnabled"
+    data: "0"
+    type: "dword"
+
+- name: "Account Information Access (off)"
+  ansible.windows.win_regedit:
+    path: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\userAccountInformation'
+    name: "Value"
+    data: "Deny"
+    type: "string"
+
+- name: "Contacts Access (off)"
+  ansible.windows.win_regedit:
+    path: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\contacts'
+    name: "Value"
+    data: "Deny"
+    type: "string"
+
+- name: "Calendar Access (off)"
+  ansible.windows.win_regedit:
+    path: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\appointments'
+    name: "Value"
+    data: "Deny"
+    type: "string"
+
+- name: "Phone Call Access (off)"
+  ansible.windows.win_regedit:
+    path: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\phoneCall'
+    name: "Value"
+    data: "Deny"
+    type: "string"
+
+- name: "Phone Call History Access (off)"
+  ansible.windows.win_regedit:
+    path: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\phoneCallHistory'
+    name: "Value"
+    data: "Deny"
+    type: "string"
+
+- name: "Email Access (off)"
+  ansible.windows.win_regedit:
+    path: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\email'
+    name: "Value"
+    data: "Deny"
+    type: "string"
+
+- name: "Tasks Access (off)"
+  ansible.windows.win_regedit:
+    path: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\userDataTasks'
+    name: "Value"
+    data: "Deny"
+    type: "string"
+
+- name: "Messaging Access (off)"
+  ansible.windows.win_regedit:
+    path: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\chat'
+    name: "Value"
+    data: "Deny"
+    type: "string"
+
+- name: "Communicate with Unpaired Devices (off)"
+  ansible.windows.win_regedit:
+    path: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\bluetoothSync'
+    name: "Value"
+    data: "Deny"
+    type: "string"
+
+- name: "App Diagnostics Access (off)"
+  ansible.windows.win_regedit:
+    path: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\appDiagnostics'
+    name: "Value"
+    data: "Deny"
+    type: "string"

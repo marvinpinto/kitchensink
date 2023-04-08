@@ -1,0 +1,29 @@
+---
+- name: "Get info for all installed services"
+  changed_when: false
+  ansible.windows.win_service_info:
+  register: "service_info"
+
+- name: "Disable un-needed services"
+  become: true
+  vars:
+    services_to_disable:
+      - "lfsvc" # Geolocation
+      - "MapsBroker" # Downloaded Maps Manager
+      - "NetTcpPortSharing" # Net.Tcp Port Sharing Service
+      - "RemoteAccess" # Routing and Remote Access
+      - "RemoteRegistry" # Remote Registry
+      - "SharedAccess" # Internet Connection Sharing (ICS)
+      - "TrkWks" # Distributed Link Tracking Client
+      - "WbioSrvc" # Windows Biometric Service
+      - "WMPNetworkSvc" # Windows Media Player Network Sharing Service
+      - "XblAuthManager" # Xbox Live Auth Manager
+      - "XblGameSave" # Xbox Live Game Save
+      - "XboxNetApiSvc" # Xbox Live Networking Service
+      - "DiagTrack" # Connected User Experiences and Telemetry
+  ansible.windows.win_service:
+    name: "{{ item.name }}"
+    state: "stopped"
+    start_mode: "disabled"
+  with_items: "{{ service_info.services }}"
+  when: "item.name in services_to_disable"

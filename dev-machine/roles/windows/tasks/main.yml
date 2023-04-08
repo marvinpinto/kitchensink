@@ -1,0 +1,12 @@
+---
+- include: "services.yml"
+- include: "security_privacy.yml"
+- include: "ui.yml"
+- include: "locale.yml"
+- include: "remove_onedrive.yml"
+- include: "programs.yml"
+- include: "desktop.yml"
+- include: "wsl_env.yml"
+  vars:
+    ansible_connection: "local"
+

@@ -1,0 +1,9 @@
+---
+- hosts: "all"
+  connection: "winrm"
+  user: "marvin"
+  become_user: "marvin"
+  vars:
+    ansible_winrm_server_cert_validation: "ignore"
+  roles:
+    - role: "windows"

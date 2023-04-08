@@ -3,6 +3,10 @@
 <img alt="kitchen sink logo" height="200px" src="logo.png">
 
 
+## Bootable Media
+Use [etcher](https://github.com/balena-io/etcher) to create a bootable Ubuntu USB disk, and follow [these instructions](https://alexlubbock.com/bootable-windows-usb-on-mac) to create a Windows 11 bootable USB.
+
+
 ## OSX Manual Preparation
 
 Install Xcode:
@@ -25,6 +29,57 @@ sudo apt-get install -y curl ca-certificates
 ```
 
 
+## Windows Manual Preparation
+
+1. Boot up the machine with the USB key in place and manually install [Win 11 Home](https://www.microsoft.com/en-ca/software-download/windows11).
+
+1. When testing in Virtualbox: shift+F10, regedit, create the following key + DWORD entries `HKEY_LOCAL_MACHINE\SYSTEM\Setup\LabConfig`:
+  - BypassTPMCheck: 1
+  - BypassRAMCheck: 1
+  - BypassSecureBootCheck: 1
+
+1. During the installation process use `a@a.com` and a blank password when prompted for the online account. This should help bypass that and allow for a local account.
+
+1. Install Virtualbox Guest additions when testing.
+
+1. After installation, activate Windows using a license key. When [testing in Virtualbox](https://github.com/massgravel/Microsoft-Activation-Scripts) use the following and select `HWID`:
+```
+irm https://massgrave.dev/get | iex
+```
+
+1. Upgrade Powershell & DotNet
+```
+winget install Microsoft.PowerShell
+winget install Microsoft.DotNet.DesktopRuntime.7
+```
+
+1. Enable the Windows Substem for Linux optional feature & reboot if prompted
+```
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+```
+
+1. Bootstrap Windows using an admin powershell terminal
+```
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+$url = "https://raw.githubusercontent.com/ansible/ansible/v2.14.4/examples/scripts/ConfigureRemotingForAnsible.ps1"
+$file = "$env:temp\setup.ps1"
+(New-Object -TypeName System.Net.WebClient).DownloadFile($url, $file)
+Write-Verbose "Configuring the WinRM service for Ansible..." -Verbose
+powershell.exe -ExecutionPolicy ByPass -File $file -Verbose
+
+Write-Verbose "Installing Chocolatey..." -Verbose
+Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+```
+
+1. Install Ubuntu under a non-admin powershell terminal
+```
+wsl --set-default-version 1
+wsl --install -d Ubuntu
+```
+
+1. Reboot the machine
+
+
 ## Software Setup
 
 Initialize the software installation process with homebrew and a few other basics:
@@ -40,7 +95,7 @@ cd /tmp/kitchensink
 
 Setup the homebrew path initially:
 ```bash
-# linux
+# linux/wsl
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 ```
 
@@ -52,6 +107,10 @@ eval "$(/usr/local/bin/brew shellenv)"
 Run ansible to install & manage all the sytem components:
 ```bash
 ANSIBLE_VERBOSITY=2 make machine
+```
+
+```bash
+ANSIBLE_PIPELINING=1 ANSIBLE_VERBOSITY=2 make windows
 ```
 
 Bootstrap the 1password CLI (for secrets), export the specified env vars after it completes:
@@ -77,7 +136,13 @@ make chezmoi-init
 
 ## Post Software Setup
 
-- **osx/linux**: reboot the machine and log back in
+- **osx/linux/windows**: reboot the machine and log back in
+
+- **windows**: install all the `winget` applications manually:
+```
+winget install -e --id Alacritty.Alacritty
+winget install -e --id AgileBits.1Password
+```
 
 - **osx**: If a homebrew cask/cli app throws a "cannot be verified" error, ctrl+click the app icon in Finder/Applications, and then choose "Open". This effectively saves the exception in security settings and it should not throw this error again.
 
@@ -98,7 +163,6 @@ make chezmoi-init
   ```
 
 - **osx/linux**: Reboot the machine at least once to verify everything worked correctly.
-
 
 ## Using the Kitchensink Tap
 

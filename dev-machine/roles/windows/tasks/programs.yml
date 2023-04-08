@@ -1,0 +1,88 @@
+---
+- name: "Base chocolatey programs"
+  become: true
+  chocolatey.chocolatey.win_chocolatey:
+    name: "{{ item }}"
+  loop:
+    - "obs-studio"
+    - "ubisoft-connect"
+    - "steam"
+    - "epicgameslauncher"
+    - "firefox"
+    - "googlechrome"
+    - "vlc"
+    - "discord"
+    - "autohotkey"
+    - "yubico-authenticator"
+    - "chezmoi"
+    - "op"
+    - "aws-vault"
+    - "git"
+    - "git-lfs"
+    - "rclone"
+    - "age.portable"
+    - "gnuplot"
+    - "notepadplusplus"
+    - "livesplit"
+    - "spotify"
+
+- name: "Clean chocolatey and nuget cache"
+  block:
+    - name: "Clean up the chocolatey and NuGet cache"
+      ansible.windows.win_file:
+        path: "{{ item }}"
+        state: "absent"
+      loop:
+        - '%UserProfile%\AppData\Local\Temp\chocolatey\'
+        - '%UserProfile%\AppData\Local\Temp\nuget\'
+        - '%UserProfile%\AppData\Local\NuGet\Cache\'
+      register: "cleanup_task"
+  rescue:
+    - name: "{{ cleanup_task.msg }}"
+      ansible.builtin.debug:
+        msg: >
+          "Some chocolatey cache files are still in use. You may need to reboot your machine to resolve the error"
+
+- name: "Remove un-needed programs"
+  become: true
+  ansible.windows.win_package:
+    product_id: "{{ item }}"
+    state: "absent"
+  loop:
+    - "Microsoft.OneDrive"
+    - "Microsoft.OneDriveSync"
+    - "MicrosoftTeams"
+    - "Microsoft.ZuneMusic"
+    - "Microsoft.ZuneVideo"
+    - "Microsoft.Xbox"
+    - "Microsoft.Xbox.TCUI"
+    - "Microsoft.XboxApp"
+    - "Microsoft.XboxGameOverlay"
+    - "Microsoft.XboxSpeechToTextOverlay"
+    - "Microsoft.Windows.Photos"
+    - "Microsoft.WindowsAlarms"
+    - "Microsoft.ScreenSketch"
+    - "Microsoft.People"
+    - "Microsoft.Microsoft3DViewer"
+    - "Microsoft.MicrosoftOfficeHub"
+    - "Microsoft.MicrosoftSolitaireCollection"
+    - "Microsoft.MicrosoftStickyNotes"
+    - "Microsoft.BingNews"
+    - "Microsoft.BingWeather"
+    - "Microsoft.GamingApp"
+    - "Microsoft.GetHelp"
+    - "Microsoft.Getstarted"
+    - "Microsoft.MixedReality.Portal"
+    - "Microsoft.Office.OneNote"
+    - "Microsoft.OneConnect"
+    - "Microsoft.PowerAutomateDesktop"
+    - "Microsoft.Print3D"
+    - "Microsoft.SkypeApp"
+    - "Microsoft.Todos"
+    - "Microsoft.Wallet"
+    - "Microsoft.WindowsCamera"
+    - "Microsoft.WindowsFeedbackHub"
+    - "Microsoft.WindowsMaps"
+    - "Microsoft.WindowsSoundRecorder"
+    - "9MSSGKG348SP" # windows 11 widgets
+
