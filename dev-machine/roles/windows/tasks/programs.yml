@@ -25,7 +25,7 @@
     - "notepadplusplus"
     - "livesplit"
     - "spotify"
-    - "geforce-eperience"
+    - "geforce-experience"
 
 - name: "Clean chocolatey and nuget cache"
   block:
