@@ -23,3 +23,38 @@
     name: "DynamicDaylightTimeDisabled"
     data: "0"
     type: "dword"
+
+- name: "Time: first day of week"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Control Panel\International'
+    name: "iFirstDayOfWeek"
+    data: "0"
+    type: "string"
+
+- name: "Time: short date"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Control Panel\International'
+    name: "sShortDate"
+    data: "yyyy-MM-dd"
+    type: "string"
+
+- name: "Time: long date"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Control Panel\International'
+    name: "sLongDate"
+    data: "MMMM d, yyyy"
+    type: "string"
+
+- name: "Time: short time"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Control Panel\International'
+    name: "sShortTime"
+    data: "HH:mm"
+    type: "string"
+
+- name: "Time: long time"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Control Panel\International'
+    name: "sTimeFormat"
+    data: "HH:mm:ss"
+    type: "string"

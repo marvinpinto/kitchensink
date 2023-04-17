@@ -1,0 +1,28 @@
+---
+- name: "Enhanced Pointer Precision (disable)"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Control Panel\Mouse'
+    name: "MouseSpeed"
+    data: "0"
+    type: "string"
+
+- name: "Enhanced Pointer Precision (disable)"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Control Panel\Mouse'
+    name: "MouseThreshold1"
+    data: "0"
+    type: "string"
+
+- name: "Enhanced Pointer Precision (disable)"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Control Panel\Mouse'
+    name: "MouseThreshold2"
+    data: "0"
+    type: "string"
+
+- name: "Pointer speed (ui -> 6/11)"
+  ansible.windows.win_regedit:
+    path: 'HKCU:\Control Panel\Mouse'
+    name: "MouseSensitivity"
+    data: "10"
+    type: "string"

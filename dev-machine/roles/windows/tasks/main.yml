@@ -2,6 +2,7 @@
 - include: "services.yml"
 - include: "security_privacy.yml"
 - include: "ui.yml"
+- include: "mouse.yml"
 - include: "locale.yml"
 - include: "remove_onedrive.yml"
 - include: "programs.yml"

@@ -27,3 +27,16 @@
     start_mode: "disabled"
   with_items: "{{ service_info.services }}"
   when: "item.name in services_to_disable"
+
+- name: "Disable some known startup items"
+  ansible.windows.win_regedit:
+    path: "{{ item.path }}"
+    name: "{{ item.name }}"
+    state: "absent"
+  loop:
+    - path: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Run'
+      name: "RtkAudUService"
+    - path: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Run'
+      name: "LGHUB"
+    - path: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Run'
+      name: "Steam"
