@@ -22,7 +22,8 @@
       - "Alacritty.lnk"
       - "Notepad++.lnk"
       - "Spotify.lnk"
-      - "Ubisoft Connect.lnk"
+      - "Division 2.lnk"
+      - "Aim Lab.lnk"
   win_file:
     path: "{{ item.path }}"
     state: "absent"
