@@ -142,6 +142,7 @@ make chezmoi-init
 ```
 winget install -e --id Alacritty.Alacritty
 winget install -e --id AgileBits.1Password
+winget install -e --id Logitech.GHUB
 ```
 
 - **osx**: If a homebrew cask/cli app throws a "cannot be verified" error, ctrl+click the app icon in Finder/Applications, and then choose "Open". This effectively saves the exception in security settings and it should not throw this error again.
