@@ -34,4 +34,31 @@
     mode: "0644"
   notify: "linux_update-grub"
 
+- name: "Add a text-mode entry to grub"
+  become: true
+  copy:
+    content: |
+      #!/bin/sh
+      exec tail -n +3 $0
+      # This file provides an easy way to add custom menu entries.  Simply type the
+      # menu entries you want to add after this comment.  Be careful not to change
+      # the 'exec tail' line above.
+      menuentry 'Ubuntu (text mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-simple-d94f3b61-d586-4924-915b-d8659715ea29' {
+        recordfail
+        load_video
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+        insmod part_gpt
+        insmod ext2
+        search --no-floppy --fs-uuid --set=root d94f3b61-d586-4924-915b-d8659715ea29
+        linux /boot/vmlinuz root=UUID=d94f3b61-d586-4924-915b-d8659715ea29 systemd.unit=multi-user.target ro
+        initrd /boot/initrd.img
+      }
+    dest: "/etc/grub.d/40_custom"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+  notify: "linux_update-grub"
+
 - meta: flush_handlers

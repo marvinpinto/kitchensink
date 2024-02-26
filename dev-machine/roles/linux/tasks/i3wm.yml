@@ -19,6 +19,23 @@
     mode: '0644'
   notify: 'linux_apt-get-update'
 
+- name: "Use the i3wm repo only for i3 packages"
+  become: true
+  copy:
+    content: |
+      Package: *
+      Pin: origin debian.sur5r.net
+      Pin-Priority: 100
+
+      Package: i3*
+      Pin: origin debian.sur5r.net
+      Pin-Priority: 1000
+    dest: "/etc/apt/preferences.d/i3wm"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  notify: 'linux_apt-get-update'
+
 - meta: flush_handlers
 
 - name: 'Install i3wm + friends'
@@ -28,6 +45,5 @@
       - 'i3'
       - 'i3lock'
       - 'i3status'
-      - 'compton'
       - 'hsetroot'
     state: 'present'

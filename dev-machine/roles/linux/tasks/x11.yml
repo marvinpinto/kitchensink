@@ -24,7 +24,7 @@
     owner: "root"
     group: "root"
     mode: "0755"
-    state: directory
+    state: "directory"
 
 - name: "Put the /etc/modprobe.d/hid_apple.conf file in place"
   become: true
@@ -37,32 +37,6 @@
     group: "root"
     mode: "0644"
   notify: "linux_initramfs-bootfile-update"
-
-- name: "Put the 60-magictrackpad.conf file in place"
-  become: true
-  copy:
-    content: |
-      # Apple Magic Trackpad
-      Section "InputClass"
-        Identifier "Apple Magic Trackpad"
-        MatchProduct "Trackpad"
-        MatchDevicePath "/dev/input/event*"
-        MatchIsTouchpad "on"
-        Driver "synaptics"
-
-        # Option "FingerHigh" "50"
-        # Option "RTCornerButton" "0"
-        # Option "RBCornerButton" "0"
-        Option "MinSpeed" "0.7"
-        Option "MaxSpeed" "1.7"
-        # Option "SHMConfig" "on"
-        # Option "TapAndDragGesture" "on"
-        # Option "PalmDetect" "on"
-      EndSection
-    dest: "/etc/X11/xorg.conf.d/60-magictrackpad.conf"
-    owner: "root"
-    group: "root"
-    mode: "0644"
 
 - name: "Put the 70-optical-mice.conf file in place"
   become: true
@@ -89,40 +63,6 @@
         Option "AdaptiveDeceleration" "2"
       EndSection
     dest: "/etc/X11/xorg.conf.d/70-optical-mice.conf"
-    owner: "root"
-    group: "root"
-    mode: "0644"
-
-- name: "Put the 99-M570Logitech.conf file in place"
-  become: true
-  copy:
-    content: |
-      Section "InputClass" 
-          # User-defined name for this profile/input class
-          Identifier      "Logitech M570"
-          # Tailed /var/log/Xorg.0.log to figure out the following
-          MatchProduct    "Logitech M570"
-          MatchIsPointer  "on"
-          MatchDevicePath "/dev/input/event*"
-          Driver          "evdev"
-          ## OPTIONS
-          Option "SendCoreEvents" "true"
-          # EmulateWheel refers to emulating a mouse wheel using the trackball
-          Option "EmulateWheel" "true"
-          # Set to middle-click
-          Option "EmulateWheelButton" "9"
-          # Affects distance trackball needs to move register scroll movement 
-          Option "EmulateWheelInertia" "10"
-          # Timeout between EmulateWheelButton click and "emulation" to begin
-          Option "EmulateWheelTimeout" "200"
-          # Comment out XAxis if you do not want horizontal scroll
-          Option "ZAxisMapping" "4 5"
-          Option "XAxisMapping" "6 7"
-          Option "DeviceAccelProfile" "2"
-          Option "AdaptiveDeceleration" "2"
-          Option "VelocityScale" "1.7
-      EndSection
-    dest: "/etc/X11/xorg.conf.d/99-M570Logitech.conf"
     owner: "root"
     group: "root"
     mode: "0644"

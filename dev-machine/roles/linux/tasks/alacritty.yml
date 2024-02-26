@@ -1,11 +1,61 @@
 ---
-- name: "Add a PPA containing a newish version of alacritty"
-  become: true
-  apt_repository:
-    repo: "ppa:mmstick76/alacritty"
+- name: "Add the aslatter alacritty ubuntu repo"
+  ansible.builtin.deb822_repository:
+    name: "alacritty"
+    types: "deb"
+    architectures: "amd64"
+    uris: "https://ppa.launchpadcontent.net/aslatter/ppa/ubuntu"
+    suites: "{{ansible_distribution_release|lower}}"
+    components: "main"
+    signed_by: |-
+      -----BEGIN PGP PUBLIC KEY BLOCK-----
+
+      xsFNBF8SeIEBEACvzPAKMY+l2AkrfcQvLoRLSYnzRnTFVrKdwGOBJkkfNNikwrNO
+      2cYYRLz187GEp8Y+RgEc2zZ0p0DzYwfkE6nU/eimlu6L6f0nt5QeOvXSy0niOkKE
+      r6OQxmgNqbSK5Lnp89gG7uJK0SonKUI4otzrsZfiwwaf8jQDFyYPc4cY5do982Lz
+      ZkvtPdEL3WfRHjSK5gcJSLFvrAXjPEpqUUQQjmQUAEz+O0I7BAVuZpwEJMYbDwfJ
+      FjucdLLwWxDxmFqv5Yx4qtu3JnJIFUS98R4k9MGa9Yr3KhWsrtFQgvSPwdHb30HN
+      hh+D6s4QEJY5qoB0eVW2Hz2rnVN0KzoJ+0Z/S7Fdi15uzLtXTqScrX0PMpXy17z6
+      g7NM51vy509R4dgCsTyl75p9M79L2QMhrWnaZLOAzAe+udHWInzsKiK9MiHpM7jf
+      QdS/T/Z66XAinOznxKWtXvN4BRcSBJKeM/usaCBtQBl1tgLKRViTTh/JPWENiVwF
+      Z3V9nDuuLIoXrJWLA1I758mDUow/BuDLydLJLtaJY1A8WMFuUmPtpXm3DmreQP24
+      trqRn9G1lBj4l8GPtXU0hh0KUIHJLJ8dTboLVOLi9LqNMICxrgFXdhz8DfqyMF54
+      3RD2DT8y0jzFUH3UmpvOYKm+VdQipMf/NkqAnoO4d1j2vr3XJkDR0UqZowARAQAB
+      zSBMYXVuY2hwYWQgUFBBIGZvciBBbnRvaW5lIExhdHRlcsLBeAQTAQIAIgUCXxJ4
+      gQIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQUrJN99Q7U3cGVBAAhm8T
+      SVDijNOlFJvf+KrP7Sz35jEOCHA4dGug0ZLcrZE5YcalrOfg+KgbnupY0qCOLvef
+      MMjpaD+Ug0mdAbxGGEJlRH88XOJmSJEs1JqT4w0l0pderaoSADrrrb/9UBfKS797
+      UOP7g7W+OdgdPCxj8+pUcrgbhhlts7ubmCwQe9dBnGWZ8jPYCGxRAywMdZUnphby
+      YJd6YobJXpinSa8LTUdWhaAcCEaadLADN+wVkENNvZGGR2drnxjW2QZLCsUAYNZ4
+      U7NJJAiINn04FYya0EySBpzbkM1KDWNPqUW0/z2oy0o92W2vIQFj77OrFfFrrr1A
+      J09JKY7ugwZMWkfPfFGni9oFXtgSIvz252XSapMjAyb5PWeUzXs1zsf+CwxiNcmO
+      9ZwI22IXkXcvBRT+kh7qw0pZu46Mu5zfYd2OW1NMueQz9gcQPlz1zNozMtx+rK0y
+      XfB4dtX1bYFDX9uxnMxnCeWicpkfSCbtHEteW78Ebnua0ypdyUNocWFqQm2q/7H+
+      jcYYKQwbxlUH2NSXlwbwBBNATsjPu83NyBhwaiDFH6nD5plZMUOtuKlJmLImRPLM
+      5kbirLewAbXR4EFGXGX/qop03Fv3hiV9ZmkAVskwblifdHcn0WWr0t59dJXqkHYQ
+      g0Bn/2KT1Qzum5AaZnzmt0zI78t3VuDX2nxRsx0=
+      =O8zs
+      -----END PGP PUBLIC KEY BLOCK-----
     state: "present"
-    update_cache: "yes"
-    filename: "alacritty"
+    enabled: "yes"
+  notify: 'linux_apt-get-update'
+
+- name: "Use the aslatter repo only for specific packages"
+  become: true
+  copy:
+    content: |
+      Package: *
+      Pin: release o=LP-PPA-aslatter
+      Pin-Priority: 100
+
+      Package: alacritty
+      Pin: release o=LP-PPA-aslatter
+      Pin-Priority: 1000
+    dest: "/etc/apt/preferences.d/alacritty"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  notify: 'linux_apt-get-update'
 
 - name: "Install alacritty"
   become: true

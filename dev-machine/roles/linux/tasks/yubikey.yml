@@ -1,17 +1,8 @@
 ---
-- name: "Add the yubikey ubuntu repo"
-  become: true
-  apt_repository:
-    repo: "ppa:yubico/stable"
-    state: "present"
-    update_cache: "yes"
-    filename: "yubikey"
-
 - name: "Install a few requirements needed by the various yubikey tools"
   become: true
   apt:
     name:
-      - "python-usb"
       - "gnupg2"
       - "pinentry-curses"
       - "pcscd"

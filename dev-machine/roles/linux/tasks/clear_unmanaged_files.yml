@@ -1,4 +1,29 @@
 ---
+- name: "Searching for apt preferences files not managed by us"
+  become: true
+  changed_when: false
+  find:
+    paths: "/etc/apt/preferences.d"
+    file_type: "file"
+    excludes:
+      - "mozilla"
+      - "google"
+      - "docker"
+      - "i3wm"
+      - "1password"
+      - "virtualbox"
+      - "alacritty"
+      - "graphics-drivers"
+  register: "apt_prefs_found_files"
+
+- name: "Delete apt preferences files not managed by us"
+  become: true
+  file:
+    path: "{{ item.path }}"
+    state: "absent"
+  with_items: "{{ apt_prefs_found_files['files'] }}"
+  notify: 'linux_apt-get-update'
+
 - name: "Searching for apt list files not managed by us"
   become: true
   changed_when: false
@@ -7,17 +32,14 @@
     file_type: "file"
     excludes: 
       - "ubuntu-base.list"
-      - "google-chrome.list"
-      - "docker.list"
+      - "google.sources"
+      - "docker.sources"
       - "i3wm.list"
-      - "keybase.list"
-      - "slack.list"
-      - "virtualbox.list"
-      - "yubikey.list"
-      - "microsoft.list"
-      - "alacritty.list"
-      - "1password.list"
-      - "tailscale.list"
+      - "virtualbox.sources"
+      - "alacritty.sources"
+      - "1password.sources"
+      - "graphics-drivers.sources"
+      - "mozilla.sources"
   register: "apt_found_files"
 
 - name: "Delete apt list files not managed by us"

@@ -13,34 +13,50 @@
     name:
       - "aws-vault"
       - "cheat"
-      - "marvinpinto/kitchensink/digikam"
       - "fzf"
       - "git"
       - "ansible"
       - "git-lfs"
-      - "marvinpinto/kitchensink/inkscape"
-      - "marvinpinto/kitchensink/kdenlive"
+    state: "present"
+    path: "/home/linuxbrew/.linuxbrew/bin"
+
+- name: "Install all the homebrew managed apps"
+  become: true
+  become_user: "marvin"
+  community.general.homebrew:
+    name:
       - "mkcert"
       - "neovim"
-      - "marvinpinto/kitchensink/openaudible"
-      - "marvinpinto/kitchensink/peek"
-      - "marvinpinto/kitchensink/plexamp"
       - "rclone"
       - "jq"
       - "git-delta"
       - "tree"
+    state: "present"
+    path: "/home/linuxbrew/.linuxbrew/bin"
+
+- name: "Install all the homebrew managed apps"
+  become: true
+  become_user: "marvin"
+  community.general.homebrew:
+    name:
       - "the_silver_searcher"
       - "python"
       - "iftop"
       - "htop"
       - "xclip"
       - "tmux"
+    state: "present"
+    path: "/home/linuxbrew/.linuxbrew/bin"
+
+- name: "Install all the homebrew managed apps"
+  become: true
+  become_user: "marvin"
+  community.general.homebrew:
+    name:
       - "smug"
       - "age"
       - "restic"
       - "tio"
-      - "countdown"
-      - "gnuplot"
     state: "present"
     path: "/home/linuxbrew/.linuxbrew/bin"
 
@@ -83,7 +99,6 @@
       - "libreoffice-base-core"
       - "rhythmbox"
       - "thunderbird"
-      - "evolution-data-server"
       - "empathy"
       - "duplicity"
       - "friends"
@@ -97,40 +112,16 @@
       - "telepathy-logger"
       - "telepathy-mission-control-5"
       - "totem"
-      - "libreoffice-avmedia-backend-gstreamer"
-      - "libreoffice-common"
-      - "libreoffice-core"
-      - "libreoffice-draw"
-      - "libreoffice-gnome"
-      - "libreoffice-gtk"
-      - "libreoffice-impress"
-      - "libreoffice-math"
-      - "libreoffice-ogltrans"
-      - "libreoffice-pdfimport"
-      - "libreoffice-presentation-minimizer"
-      - "libreoffice-style-human"
-      - "account-plugin-facebook"
-      - "account-plugin-flickr"
-      - "account-plugin-google"
-      - "libaccount-plugin-generic-oauth"
-      - "libaccount-plugin-google"
-      - "libpam-gnome-keyring"
+      - "libreoffice-*"
       - "flashplugin-installer"
       - "evince"
       - "evince-common"
       - "brltty"
       - "cups-browsed"
       - "speech-dispatcher"
-      - "modem-manager"
       - "command-not-found"
     state: "absent"
     purge: "yes"
-
-- name: "Delete the ubuntu startup drumbeat sound"
-  become: true
-  file:
-    path: "/usr/share/sounds/ubuntu/stereo/system-ready.ogg"
-    state: "absent"
 
 - name: "Update the imagemagick config file"
   become: true

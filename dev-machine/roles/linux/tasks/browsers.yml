@@ -1,27 +1,62 @@
 ---
-- name: 'Install a few base browsers'
-  become: true
-  apt:
-    name:
-      - "firefox"
+- name: "Add the Google Chrome ubuntu repo"
+  ansible.builtin.deb822_repository:
+    name: "google"
+    types: "deb"
+    architectures: "amd64"
+    uris: "http://dl.google.com/linux/chrome/deb"
+    suites: "stable"
+    components: "main"
+    signed_by: "https://dl.google.com/linux/linux_signing_key.pub"
     state: "present"
+    enabled: "yes"
+  notify: 'linux_apt-get-update'
 
-- name: 'Add the Google apt signing key'
-  become: true
-  apt_key:
-    url: 'https://dl.google.com/linux/linux_signing_key.pub'
-    state: "present"
-
-- name: 'Add the Google Chrome ubuntu repo'
+- name: "Use the Google repo only for specific packages"
   become: true
   copy:
-    dest: '/etc/apt/sources.list.d/google-chrome.list'
     content: |
-      deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+      Package: *
+      Pin: origin dl.google.com
+      Pin-Priority: 100
 
-    owner: 'root'
-    group: 'root'
-    mode: '0644'
+      Package: google-chrome-*
+      Pin: origin dl.google.com
+      Pin-Priority: 1000
+    dest: "/etc/apt/preferences.d/google"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  notify: 'linux_apt-get-update'
+
+- name: "Add the Mozilla Firefox ubuntu repo"
+  ansible.builtin.deb822_repository:
+    name: "mozilla"
+    types: "deb"
+    architectures: "amd64"
+    uris: "https://packages.mozilla.org/apt"
+    suites: "mozilla"
+    components: "main"
+    signed_by: "https://packages.mozilla.org/apt/repo-signing-key.gpg"
+    state: "present"
+    enabled: "yes"
+  notify: 'linux_apt-get-update'
+
+- name: "Use the Mozilla repo only for firefox packages"
+  become: true
+  copy:
+    content: |
+      Package: *
+      Pin: origin packages.mozilla.org
+      Pin-Priority: 100
+
+      Package: firefox*
+      Pin: origin packages.mozilla.org
+      Pin-Priority: 1000
+    dest: "/etc/apt/preferences.d/mozilla"
+    owner: "root"
+    group: "root"
+    mode: "0644"
   notify: 'linux_apt-get-update'
 
 - meta: flush_handlers
@@ -30,4 +65,10 @@
   become: true
   apt:
     name: "google-chrome-stable"
+    state: "present"
+
+- name: "Install Firefox"
+  become: true
+  apt:
+    name: "firefox"
     state: "present"

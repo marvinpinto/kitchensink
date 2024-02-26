@@ -1,9 +1,194 @@
 ---
-- name: "Install the supported nvidia graphics drivers [NVIDIA Corporation GF108GL [Quadro 600] (rev a1)]"
+- name: "Add the graphics drivers ubuntu repo"
+  ansible.builtin.deb822_repository:
+    name: "graphics-drivers"
+    types: "deb"
+    architectures: "amd64"
+    uris: "https://ppa.launchpadcontent.net/graphics-drivers/ppa/ubuntu"
+    suites: "{{ansible_distribution_release|lower}}"
+    components: "main"
+    signed_by: |-
+      -----BEGIN PGP PUBLIC KEY BLOCK-----
+
+      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
+      =fbFd
+      -----END PGP PUBLIC KEY BLOCK-----
+    state: "present"
+    enabled: "yes"
+  notify: 'linux_apt-get-update'
+  when:
+    - ansible_system_vendor == "ASRock"
+    - ansible_product_name == "B760 Pro RS"
+
+- name: "Use the graphics drivers repo only for specific packages"
+  become: true
+  copy:
+    content: |
+      Package: *
+      Pin: release o=LP-PPA-graphics-drivers
+      Pin-Priority: 100
+
+      Package: nvidia-driver-*
+      Pin: release o=LP-PPA-graphics-drivers
+      Pin-Priority: 1000
+    dest: "/etc/apt/preferences.d/graphics-drivers"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  notify: 'linux_apt-get-update'
+  when:
+    - ansible_system_vendor == "ASRock"
+    - ansible_product_name == "B760 Pro RS"
+
+- meta: flush_handlers
+
+# The "nvidia-smi" cli tool is useful here to probe the graphics card and get some basic info
+# Model: Nvidia GeForce 4070Ti
+# Can find updated driver info here: https://www.nvidia.com/download/index.aspx
+- name: "Install the supported nvidia graphics drivers"
   become: true
   apt:
-    name: "nvidia-driver-390"
+    name: "nvidia-driver-550"
     state: "present"
   when:
-    - ansible_system_vendor == "Dell Inc."
-    - ansible_product_name == "Precision T1700"
+    - ansible_system_vendor == "ASRock"
+    - ansible_product_name == "B760 Pro RS"

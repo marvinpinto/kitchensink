@@ -15,7 +15,7 @@ xcode-select --install
 
 1. Boot up the machine with the USB key in place and manually install a recent [Ubuntu Desktop](https://ubuntu.com/download/desktop) LTS release.
 
-1. For the Dell T1700, hit F12 on startup and select USB Storage Device.
+1. For the main machine, hit F12 on startup and select USB Storage Device.
 
 1. After the installation process completes, disable power saving & screen lock (so that the bootstrap process proceeds without complications). Power Button (top right) -> Settings -> Power > Blank Screen -> Never.
 
@@ -152,6 +152,15 @@ exit
 ```
 
 The above function creates the container (from the [Dockerfile](/Dockerfile) image), optionally mounts a source directory, then initializes the dotfiles within the container using [chezmoi](https://github.com/twpayne/chezmoi).
+
+
+## Troubleshooting Tips
+
+Use the following to discover ansible built-in variables:
+
+```text
+ansible localhost -m ansible.builtin.setup | less
+```
 
 
 ## License

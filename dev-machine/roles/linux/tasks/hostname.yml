@@ -1,22 +1,22 @@
 ---
-- name: 'Set the hostname for the Dell T1700'
+- name: 'Set the hostname for the machine'
   become: true
   hostname:
-    name: 'mp-desktop'
+    name: 'mp-linux-desktop'
   when:
-    - ansible_system_vendor == "Dell Inc."
-    - ansible_product_name == "Precision T1700"
+    - ansible_system_vendor == "ASRock"
+    - ansible_product_name == "B760 Pro RS"
 
-- name: 'Update the /etc/hosts entry for the Dell T1700'
+- name: 'Update the /etc/hosts entry for the mp-linux-desktop'
   become: true
   lineinfile:
     dest: '/etc/hosts'
     state: 'present'
-    line: '127.0.1.1 mp-desktop'
+    line: '127.0.1.1 mp-linux-desktop'
     regexp: '^127.0.1.1'
     owner: 'root'
     group: 'root'
     mode: '0644'
   when:
-    - ansible_system_vendor == "Dell Inc."
-    - ansible_product_name == "Precision T1700"
+    - ansible_system_vendor == "ASRock"
+    - ansible_product_name == "B760 Pro RS"
