@@ -64,9 +64,6 @@ GNOME_TERMINAL_PROFILE="org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/le
 # Use a custom terminal font
 /usr/bin/gsettings set "$GNOME_TERMINAL_PROFILE" font "Hack Nerd Font Regular 11"
 
-# Disable the keyboard plugin
-/usr/bin/gsettings set org.gnome.settings-daemon.plugins.keyboard active false
-
 # Disable the gnome lock screen
 /usr/bin/gsettings set org.gnome.desktop.lockdown disable-lock-screen true
 
