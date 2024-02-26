@@ -1,0 +1,160 @@
+# vim: set filetype=toml :
+
+# Config specification: https://alacritty.org/config-alacritty.html
+
+import = [
+  "~/.config/alacritty/afterglow-theme.toml"
+]
+
+# Startup directory
+{{ if (eq .chezmoi.os "linux") }}
+working_directory = "/home/marvin"
+{{ else if (eq .chezmoi.os "darwin") }}
+working_directory = "/Users/marvin"
+{{ end }}
+
+[env]
+# TERM variable
+#
+# This value is used to set the `$TERM` environment variable for
+# each instance of Alacritty. If it is not present, alacritty will
+# check the local terminfo database and use `alacritty` if it is
+# available, otherwise `xterm-256color` is used.
+TERM = "xterm-256color"
+
+[window]
+{{ if (eq .chezmoi.os "darwin") -}}
+# Window dimensions
+dimensions = { columns = 80, lines = 25 }
+{{ end }}
+
+# Window padding (changes require restart)
+#
+# Blank space added around the window in pixels. This padding is scaled
+# by DPI and the specified value is always added at both opposing sides.
+padding = { x = 2, y = 2 }
+
+# Spread additional padding evenly around the terminal content.
+dynamic_padding = true
+
+# Window decorations
+#
+# Values for `decorations`:
+#     - full: Borders and title bar
+#     - none: Neither borders nor title bar
+#
+# Values for `decorations` (macOS only):
+#     - transparent: Title bar, transparent background and title bar buttons
+#     - buttonless: Title bar, transparent background and no title bar buttons
+decorations = "Full"
+
+# Startup Mode (changes require restart)
+#
+# Values for `startup_mode`:
+#   - Windowed
+#   - Maximized
+#   - Fullscreen
+#
+# Values for `startup_mode` (macOS only):
+#   - SimpleFullscreen
+startup_mode = "Windowed"
+
+# Window title
+title = "terminal"
+
+# Allow terminal applications to change Alacritty's window title.
+dynamic_title = true
+
+# Window class
+class = { instance = "Alacritty", general = "Alacritty" }
+
+# Decorations theme variant
+#
+# Override the variant of the GTK theme. Commonly supported values are `dark`
+# and `light`. Set this to `None` to use the default theme variant.
+decorations_theme_variant = "None"
+
+# Background opacity
+#
+# Window opacity as a floating point number from `0.0` to `1.0`.
+# The value `0.0` is completely transparent and `1.0` is opaque.
+opacity = 1.0
+
+[scrolling]
+# Maximum number of lines in the scrollback buffer.
+# Specifying '0' will disable scrolling.
+history = 5000
+
+# Scrolling distance multiplier.
+multiplier = 3
+
+# Font configuration
+[font]
+# Normal (roman) font face
+normal = { family = "Hack Nerd Font Mono", style = "Regular" }
+
+# Bold font face
+bold = { family = "Hack Nerd Font Mono", style = "Bold" }
+
+# Italic font face
+italic = { family = "Hack Nerd Font Mono", style = "Italic" }
+
+# Bold italic font face
+bold_italic = { family = "Hack Nerd Font Mono", style = "Bold Italic" }
+
+# Point size
+{{ if (eq .chezmoi.os "linux") }}
+size = 11.0
+{{ else if (eq .chezmoi.os "darwin") }}
+size = 14.0
+{{ end }}
+
+# Offset is the extra space around each character. `offset.y` can be thought
+# of as modifying the line spacing, and `offset.x` as modifying the letter
+# spacing.
+{{ if (eq .chezmoi.os "linux") }}
+offset = { x = 0, y = 0 }
+{{ else if (eq .chezmoi.os "darwin") }}
+offset = { x = 1, y = 1 }
+{{ end }}
+
+[colors]
+# If `true`, bold text is drawn using the bright color variants.
+draw_bold_text_with_bright_colors = false
+
+# Bell
+#
+# The bell is rung every time the BEL control character is received.
+[bell]
+# Duration of the visual bell flash in milliseconds. A `duration` of `0` will
+# disable the visual bell animation.
+duration = 0
+
+# Bell Command
+#
+# This program is executed whenever the bell is rung.
+#
+# When set to `command: None`, no command will be executed.
+#
+# Example:
+#   command:
+#     program: notify-send
+#     args: ["Hello, World!"]
+#
+command = "None"
+
+[selection]
+# This string contains all characters that are used as separators for
+# "semantic words" in Alacritty.
+semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
+
+# When set to `true`, selected text will be copied to the primary clipboard.
+save_to_clipboard = true
+
+[cursor.style]
+shape = "Block"
+blinking = "Off"
+
+[mouse]
+# If this is `true`, the cursor is temporarily hidden when typing.
+hide_when_typing = true
