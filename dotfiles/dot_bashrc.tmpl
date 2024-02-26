@@ -65,6 +65,11 @@ export LESS="-i -R"
 export LESSHISTFILE='/dev/null'
 export LESSHISTSIZE=0
 
+# Disable the "log" function in less using a lesskey input file. This was
+# previously compiled directly using the lesskey binary, but newer versions of
+# less are able to read the lesskey input file directly.
+export LESSKEYIN="~/.lesskey"
+
 # git prompt related environment variables
 export GIT_PS1_SHOWDIRTYSTATE='yes'
 export GIT_PS1_SHOWSTASHSTATE='yes'
