@@ -30,7 +30,7 @@ jobs:
 
       - name: "Retrieve the short SHA"
         id: "sha"
-        run: echo "::set-output name=value::$(echo ${GITHUB_SHA::8})"
+        run: echo "value=$(echo ${GITHUB_SHA::8})" >> "$GITHUB_OUTPUT"
 
       - name: "Set up QEMU"
         uses: "docker/setup-qemu-action@v3"
