@@ -4,6 +4,9 @@ ARG UBUNTU_VERSION=20.04
 FROM ubuntu:${UBUNTU_VERSION}
 LABEL org.opencontainers.image.source https://github.com/marvinpinto/kitchensink
 
+# Manually add a /.dockerenv file (to work around buildx not providing it)
+RUN touch /.dockerenv
+
 # Base utilities
 RUN apt-get -qq update \
   && apt-get install -y \
@@ -35,7 +38,6 @@ RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" \
   && brew install gcc git ansible chezmoi \
   && brew tap marvinpinto/kitchensink "https://github.com/marvinpinto/kitchensink.git" \
   && brew install \
-    marvinpinto/kitchensink/op \
     aws-vault \
     cheat \
     fzf \
@@ -46,10 +48,9 @@ RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" \
     neovim \
     rclone \
     jq \
-    go@1.17 \
+    go@1.22 \
     nvm \
     terraform \
-    packer \
     python \
     openjdk@11 \
     maven \
@@ -62,7 +63,7 @@ RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" \
     awscli \
     git-delta \
     yarn-completion \
-    gcc@5 \
+    gcc@13 \
     the_silver_searcher
 
 # Configure timezone and locale
