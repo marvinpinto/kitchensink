@@ -1,0 +1,38 @@
+- name: "Add the signal ubuntu repo"
+  ansible.builtin.deb822_repository:
+    name: "signal"
+    types: "deb"
+    architectures: "amd64"
+    uris: "https://updates.signal.org/desktop/apt"
+    suites: "xenial" # signal seems to have hardcoded "xenial" here for all debian/ubuntu systems?
+    components: "main"
+    signed_by: "https://updates.signal.org/desktop/apt/keys.asc"
+    state: "present"
+    enabled: "yes"
+  notify: 'linux_apt-get-update'
+
+- name: "Use the signal repo only for specific packages"
+  become: true
+  copy:
+    content: |
+      Package: *
+      Pin: origin updates.signal.org
+      Pin-Priority: 100
+
+      Package: signal-desktop
+      Pin: origin updates.signal.org
+      Pin-Priority: 1000
+    dest: "/etc/apt/preferences.d/signal"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  notify: 'linux_apt-get-update'
+
+- meta: flush_handlers
+
+- name: "Install Signal desktop"
+  become: true
+  apt:
+    name:
+      - "signal-desktop"
+    state: "present"

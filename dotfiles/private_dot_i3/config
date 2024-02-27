@@ -127,6 +127,10 @@ exec_always --no-startup-id xrandr --output DP-0 --primary --rotate normal --out
 # NOTE: Use the "xprop" utility to find window class name strings, ref: https://www.tuxtips.info/linux/how-to-find-applications-window-class-in-i3-window-manager
 # WM_CLASS(STRING) = "<instance>", "<class>"
 
+# Ensure that the signal window always stays in floating mode
+exec_always --no-startup-id ~/.i3/startup-app.sh "signal-desktop" "signal-desktop"
+for_window [class="Signal" instance="signal"] floating enable, border normal, move to scratchpad
+
 # Start up a floating terminal & leave it in the scratchpad
 exec_always --no-startup-id alacritty --class "scratch-terminal" --title "scratch terminal"
 for_window [class="scratch-terminal" instance="scratch-terminal"] floating enable, border normal, move to scratchpad

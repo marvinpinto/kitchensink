@@ -14,6 +14,7 @@
       - "virtualbox"
       - "alacritty"
       - "graphics-drivers"
+      - "signal"
   register: "apt_prefs_found_files"
 
 - name: "Delete apt preferences files not managed by us"
@@ -40,6 +41,7 @@
       - "1password.sources"
       - "graphics-drivers.sources"
       - "mozilla.sources"
+      - "signal.sources"
   register: "apt_found_files"
 
 - name: "Delete apt list files not managed by us"
