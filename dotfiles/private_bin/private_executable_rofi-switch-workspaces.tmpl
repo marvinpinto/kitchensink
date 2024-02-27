@@ -1,3 +1,4 @@
+{{- /* vim: set filetype=sh : */ -}}
 {{ if (and (eq .chezmoi.os "linux") (not .is_devcontainer)) -}}
 #!/usr/bin/env bash
 if [ -z $@ ]; then
@@ -5,11 +6,14 @@ if [ -z $@ ]; then
   {
     i3-msg -t get_workspaces | jq --raw-output ".[] | (.name)" | sort -n
   }
-  echo temporary; gen_workspaces
+  echo -ne "NEW\nscratch\n"; gen_workspaces
 else
     WORKSPACE=$@
-    if [ x"temporary" = x"${WORKSPACE}" ]; then
+    if [ x"scratch" = x"${WORKSPACE}" ]; then
       i3-msg workspace scratch >/dev/null
+    elif [ x"NEW" = x"${WORKSPACE}" ]; then
+      ws_name=new_workspace_$(echo $RANDOM | md5sum | head -c 5)
+      i3-msg workspace "${ws_name}" >/dev/null
     elif [ -n "${WORKSPACE}" ]; then
       i3-msg workspace "${WORKSPACE}" >/dev/null
     fi

@@ -1,0 +1,11 @@
+{{- /* vim: set filetype=sh : */ -}}
+{{ if (and (eq .chezmoi.os "linux") (not .is_devcontainer)) -}}
+#!/usr/bin/env bash
+CURRENT_WS_NAME=$(i3-msg -t get_workspaces | jq '.[] | select(.focused==true).name')
+NEW_WS_NAME=$(zenity --title="Rename: ${CURRENT_WS_NAME}" --text="New name:" --entry)
+if [ -z "$NEW_WS_NAME" ]; then
+  zenity --error --text="This script needs a workspace name to function correctly"
+  exit 1
+fi
+i3-msg "rename workspace to \"${NEW_WS_NAME}\""
+{{ end -}}

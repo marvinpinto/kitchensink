@@ -8,11 +8,10 @@ I3LOCK='/usr/bin/i3lock --color 333333'
 if [ -z $@ ]; then
   function gen_options()
   {
-    option_list=("Lock Screen","Logout","Reboot Computer","Shutdown Computer","Enable Screensaver","Disable Screensaver","Toggle Do Not Disturb (DND)","Initiate Backup","Check Email","Create Development Workspace","2FA Tokens","Emoji Picker","Reset Workspace","Grab Screenshot","Calculator","URL Cleaner")
+    option_list=("Lock Screen","Logout","Reboot Computer","Shutdown Computer","Enable Screensaver","Disable Screensaver","Toggle Do Not Disturb (DND)","Initiate Backup","Check Email","Create Development Workspace","2FA Tokens","Emoji Picker","Reset Workspace","Grab Screenshot","Calculator","URL Cleaner","Rename i3 Workspace")
     echo ${option_list[@]} | tr ',' '\n' | sort
   }
-
-  echo "Choose an option from the list below:"; gen_options
+  gen_options
 else
   OPTION=$@
 
@@ -68,6 +67,9 @@ else
       ;;
     'URL Cleaner')
       coproc (rofi-url-handler)
+      ;;
+    'Rename i3 Workspace')
+      coproc (rofi-i3-rename-workspace)
       ;;
     *)
       echo "Invalid option \"$OPTION\""

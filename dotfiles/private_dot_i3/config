@@ -31,7 +31,7 @@ bindsym $mod+BackSpace exec firefox
 bindsym $mod+Shift+q kill
 
 # rofi launcher
-bindsym $mod+d exec "rofi -switchers 'workspaces:rofi-switch-workspaces,launcher:rofi-launcher,run' -show launcher"
+bindsym $mod+d exec "rofi -combi-modi 'launcher:rofi-launcher,workspaces:rofi-switch-workspaces,drun' -show combi -modes combi -display-combi 'choice'"
 
 # change focus
 bindsym $mod+h focus left
