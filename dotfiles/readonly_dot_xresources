@@ -25,16 +25,3 @@
 !white
 *color7:         rgb:ff/ff/ff
 *color15:        rgb:dd/dd/dd
-
-! Rofi settings
-rofi.theme: android_notification
-rofi.font: mono 10
-rofi.color-enabled: true
-rofi.bw: 0
-rofi.modi: combi
-rofi.sidebar-mode: true
-rofi.disable-history: true
-rofi.hide-scrollbar: true
-rofi.kb-row-tab: Shift+space
-rofi.kb-row-select: Tab
-rofi.terminal: alacritty

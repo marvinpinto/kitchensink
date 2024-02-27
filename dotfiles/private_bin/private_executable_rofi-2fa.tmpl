@@ -1,9 +1,11 @@
+{{- /* vim: set filetype=sh : */ -}}
 {{ if (and (eq .chezmoi.os "linux") (not .is_devcontainer)) -}}
 #!/usr/bin/env bash
 pkill -9 scdaemon || true
 ykman oath &> /dev/null
-DMENU="rofi -dmenu"
 if [ $? -eq 0 ]; then
-  ykman oath accounts code -s $(ykman oath accounts list | ${DMENU} -i -p "Select Credential" -no-custom) | xclip -selection "clipboard"
+  twofa_code=`ykman oath accounts code -s $(ykman oath accounts list | rofi -dmenu -i -p "Select Credential" -no-custom)`
+  echo -ne xclip ${twofa_code} | xclip -i selection "clipboard"
+  /usr/bin/notify-send "$(basename "$0")" "Copied TOTP code ${twofa_code} to clipboard"
 fi
 {{ end -}}

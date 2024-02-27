@@ -1,3 +1,4 @@
+{{- /* vim: set filetype=sh : */ -}}
 {{ if (and (eq .chezmoi.os "linux") (not .is_devcontainer)) -}}
 #!/usr/bin/env bash
 
@@ -7,7 +8,7 @@ I3LOCK='/usr/bin/i3lock --color 333333'
 if [ -z $@ ]; then
   function gen_options()
   {
-    option_list=("Lock Screen","Logout","Suspend Computer","Hibernate Computer","Reboot Computer","Shutdown Computer","Enable Screensaver","Disable Screensaver","Toggle Do Not Disturb (DND)","Initiate Backup","Check Email","Create Development Workspace","2FA Tokens","Emoji Picker","Reset Workspace","Grab Screenshot","Calculator","URL Cleaner","Clocks","Move Discord to Scratchpad")
+    option_list=("Lock Screen","Logout","Reboot Computer","Shutdown Computer","Enable Screensaver","Disable Screensaver","Toggle Do Not Disturb (DND)","Initiate Backup","Check Email","Create Development Workspace","2FA Tokens","Emoji Picker","Reset Workspace","Grab Screenshot","Calculator","URL Cleaner")
     echo ${option_list[@]} | tr ',' '\n' | sort
   }
 
@@ -24,12 +25,6 @@ else
       ;;
     'Logout')
       /usr/bin/i3-msg exit
-      ;;
-    'Suspend Computer')
-      ${I3LOCK} && /usr/bin/dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1 "org.freedesktop.login1.Manager.Suspend" boolean:true
-      ;;
-    'Hibernate Computer')
-      ${I3LOCK} && /usr/bin/dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1 "org.freedesktop.login1.Manager.Hibernate" boolean:true
       ;;
     'Reboot Computer')
       /usr/bin/dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1 "org.freedesktop.login1.Manager.Reboot" boolean:true
@@ -60,7 +55,7 @@ else
       coproc (rofi-2fa)
       ;;
     'Emoji Picker')
-      coproc (PINENTRY_USER_DATA=gui rofi-emoji)
+      coproc (rofi-emoji)
       ;;
     'Reset Workspace')
       coproc (/usr/bin/xset r rate 250 50)
@@ -73,12 +68,6 @@ else
       ;;
     'URL Cleaner')
       coproc (rofi-url-handler)
-      ;;
-    'Clocks')
-      coproc (/usr/bin/gnome-clocks)
-      ;;
-    'Move Discord to Scratchpad')
-      coproc (/usr/bin/i3-msg "[class=discord instance=discord] floating enable, border normal, move to scratchpad")
       ;;
     *)
       echo "Invalid option \"$OPTION\""

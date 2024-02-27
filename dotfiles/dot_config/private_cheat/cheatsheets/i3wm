@@ -39,3 +39,6 @@ i3-msg restart   # restart i3 inplace (preserves your layout/session, can be
 # Dump the details of all the current windows. Useful for attempting to
 # determine window classes.
 i3-msg -t get_tree | jq -C | less
+
+# Dmenu/rofi specific
+alt + <number>  # switch between the various "modi" options (i.e. bottom tabs)

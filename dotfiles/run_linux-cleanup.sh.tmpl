@@ -74,4 +74,7 @@ GNOME_TERMINAL_PROFILE="org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/le
 /usr/bin/gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 50
 /usr/bin/gsettings set org.gnome.desktop.peripherals.keyboard delay 250
 /usr/bin/xset r rate 250 50
+
+# Re-generate the font cache
+/usr/bin/fc-cache -f -r
 {{ end -}}

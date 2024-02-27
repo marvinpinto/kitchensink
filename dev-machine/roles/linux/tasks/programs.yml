@@ -88,6 +88,7 @@
       - "gimp"
       - "gnome-clocks"
       - "ffmpeg"
+      - "gnome-screenshot"
     state: "present"
 
 - name: "Remove a few things I do not care for"

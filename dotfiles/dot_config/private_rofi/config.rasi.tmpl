@@ -1,0 +1,22 @@
+/* vim: set filetype=rasi : */
+
+configuration {
+  modi: "combi";
+  font: "mono 12";
+  show-icons: false;
+  terminal: "alacritty";
+  disable-history: true;
+  sidebar-mode: true;
+
+  timeout {
+      action: "kb-cancel";
+      delay:  0;
+  }
+
+  filebrowser {
+      directories-first: true;
+      sorting-method:    "name";
+  }
+}
+
+@theme "android_notification"
