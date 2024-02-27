@@ -80,11 +80,10 @@ workspace "other" output DP-3
 # Workspaces mapped to the primary monitor
 workspace "misc" output DP-0
 
-# Volume controls for the Dell T1700
-bindsym XF86AudioRaiseVolume exec --no-startup-id ~/.i3/pavolume.sh --up
-bindsym XF86AudioLowerVolume exec --no-startup-id ~/.i3/pavolume.sh --down
-bindsym XF86AudioMute exec --no-startup-id ~/.i3/pavolume.sh --togmute
-bindsym XF86Calculator exec --no-startup-id gnome-calculator
+# Volume controls (sink #1, `pactl list sinks`)
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 1 +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume 1 -5% #decrease sound volume
+bindsym XF86AudioMute exec pactl set-sink-mute 1 toggle # mute sound
 
 # do not allow control+q to kill firefox or anything else
 bindsym Control+q nop
@@ -124,14 +123,13 @@ exec_always --no-startup-id /usr/bin/xrdb -load ~/.xresources
 exec_always --no-startup-id /usr/bin/gnome-settings-daemon &
 exec_always --no-startup-id /usr/bin/xset r rate 250 50
 exec_always --no-startup-id xrandr --output DP-0 --primary --rotate normal --output DP-3 --left-of DP-0 --rotate right --brightness 0.8
-exec_always --no-startup-id ~/.i3/startup-app.sh "/home/marvin/bin/stock-checker" "stock-checker"
 
 # NOTE: Use the "xprop" utility to find window class name strings, ref: https://www.tuxtips.info/linux/how-to-find-applications-window-class-in-i3-window-manager
 # WM_CLASS(STRING) = "<instance>", "<class>"
 
 # Start up a floating terminal & leave it in the scratchpad
 exec_always --no-startup-id alacritty --class "scratch-terminal" --title "scratch terminal"
-for_window [class="Alacritty" instance="scratch-terminal"] floating enable, border normal, move to scratchpad
+for_window [class="scratch-terminal" instance="scratch-terminal"] floating enable, border normal, move to scratchpad
 
 # Start 1password desktop and move it to the scratchpad
 exec_always --no-startup-id ~/.i3/startup-app.sh "1password --disable-gpu" "1password"
