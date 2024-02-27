@@ -80,10 +80,10 @@ workspace "other" output DP-3
 # Workspaces mapped to the primary monitor
 workspace "misc" output DP-0
 
-# Volume controls (sink #1, `pactl list sinks`)
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 1 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume 1 -5% #decrease sound volume
-bindsym XF86AudioMute exec pactl set-sink-mute 1 toggle # mute sound
+# Volume controls (`pactl list sinks`, second arugment is the sink #)
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 2 +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume 2 -5% #decrease sound volume
+bindsym XF86AudioMute exec pactl set-sink-mute 2 toggle # mute sound
 
 # do not allow control+q to kill firefox or anything else
 bindsym Control+q nop
