@@ -31,7 +31,6 @@ COLORS = {
 backup_status_file = "%s/tmp/backup-timestamp.txt" % os.environ['HOME']
 backup_pid_file = "%s/tmp/acd-backup-lockfile.txt" % os.environ['HOME']
 do_not_disturb_file = "%s/.irssi/do_not_disturb.txt" % os.environ['HOME']
-screencast_pid_file = "%s/tmp/screencast.pid" % os.environ['HOME']
 
 def get_pid(name):
     return check_output(["pidof", name]).strip()
@@ -57,15 +56,15 @@ def get_backup_status():
     if os.path.isfile(backup_status_file):
         last_backup_time = os.path.getmtime(backup_status_file)
     elif os.path.isfile(backup_pid_file) and checkPidRunning(int(open(backup_pid_file, 'r').readlines()[0])):
-        backup_status['full_text'] = " Backups IN PROGRESS"
+        backup_status['full_text'] = "☁️ Backups IN PROGRESS"
         backup_status['color'] = COLORS['DEGRADED']
         return backup_status;
     else:
-        backup_status['full_text'] = " Last Backup: ERROR"
+        backup_status['full_text'] = "☁️ Last Backup: ERROR"
         backup_status['color'] = COLORS['BAD']
         return backup_status
 
-    backup_str = " Last Backup: %s" % datetime.fromtimestamp(last_backup_time).strftime("%Y-%m-%d")
+    backup_str = "☁️ Last Backup: %s" % datetime.fromtimestamp(last_backup_time).strftime("%Y-%m-%d")
     current_time = int(time.time())
     backup_status['full_text'] = backup_str
     backup_time_seconds = current_time - last_backup_time
@@ -106,18 +105,6 @@ def get_screensaver_running_status():
         return screensaver
     return None
 
-def get_screencast_status():
-    """ Get the current screencast recording status. """
-    screencast_status = {
-      'name': 'screencast'
-    }
-
-    if os.path.isfile(screencast_pid_file) and checkPidRunning(int(open(screencast_pid_file, 'r').readlines()[0])):
-        screencast_status['full_text'] = "📺 Recording IN PROGRESS"
-        screencast_status['color'] = COLORS['DEGRADED']
-        return screencast_status;
-    return None
-
 
 def print_line(message):
     """ Non-buffered printing to stdout. """
@@ -155,5 +142,4 @@ if __name__ == '__main__':
         j = json.loads(line)
         j.insert(1, get_backup_status())
         j.insert(2, get_screensaver_running_status())
-        j.insert(3, get_screencast_status())
         print_line(prefix+json.dumps(j))
