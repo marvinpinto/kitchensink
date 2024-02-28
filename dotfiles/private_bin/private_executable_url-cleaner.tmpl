@@ -73,12 +73,27 @@ def remove_twitter_tracking(url):
     return cleaned_url
 
 
+def clean_domain_redirectors(url):
+    cleaned_url = ""
+
+    try:
+        parsed_url = urlparse(url)
+    except ValueError:
+        return url;
+
+    if re.match(".*vxtwitter\.com", parsed_url.netloc, re.IGNORECASE):
+        return urljoin("https://twitter.com", parsed_url.path)
+
+    return url
+
+
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print('Usage: %s <url>' % sys.argv[0])
         sys.exit(1)
 
     input_url = sys.argv[1]
+    input_url = clean_domain_redirectors(input_url)
     input_url = remove_amazon_tracking(input_url)
     input_url = remove_utm_tracking(input_url)
     input_url = remove_twitter_tracking(input_url)
