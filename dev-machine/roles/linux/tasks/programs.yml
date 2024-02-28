@@ -53,7 +53,7 @@
   become_user: "marvin"
   community.general.homebrew:
     name:
-      - "smug"
+      - "tmuxinator"
       - "age"
       - "restic"
       - "tio"

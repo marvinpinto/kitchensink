@@ -1,0 +1,22 @@
+---
+name: quickdev
+root: ~/projects
+
+# Pre-created layouts: https://github.com/tmux/tmux/wiki/Getting-Started#window-layouts
+# - even-horizontal: Spread out evenly across
+# - even-vertical: Spread out evenly up and down
+# - main-horizontal: One large pane at the top, the rest spread out evenly across
+# - main-vertical: One large pane on the left, the rest spread out evenly up and down
+# - tiled: Tiled in the same number of rows as columns
+
+startup_window: code
+
+windows:
+  - code: vim
+  - cli:
+      layout: main-vertical
+      panes:
+        - git:
+          - ls -al
+        - ls -al
+        - ls -al

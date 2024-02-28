@@ -33,5 +33,5 @@ tmux ls                                  # list tmux sessions
 tmux kill-session -t <session-name>      # kill session
 mod + d                                  # detach from a session (within tmux)
 tmux attach -d -t <session-name>         # connect/attach to an existing session
-smug start quickdev                      # start a session named "quickdev" (default config)
-smug start -f /path/to/smug/session.yml  # start a session from the specified file
+tmuxinator start <name>                  # start a named session sourced from a file in ~/.config/tmuxinator (i.e. "quickdev")
+tmuxinator start/stop                    # start or stop a named session sourced from a local ./.tmuxinator.yml file

@@ -1,4 +1,6 @@
 {{- if (and (eq .chezmoi.os "linux") (not .is_devcontainer)) -}}
 alias t="tmux"
 complete -F _tmux t
+alias mux="tmuxinator"
+complete -F _tmuxinator mux
 {{ end -}}
