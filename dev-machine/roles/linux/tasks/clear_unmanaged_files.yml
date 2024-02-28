@@ -15,6 +15,7 @@
       - "alacritty"
       - "graphics-drivers"
       - "signal"
+      - "spotify"
   register: "apt_prefs_found_files"
 
 - name: "Delete apt preferences files not managed by us"
@@ -42,6 +43,7 @@
       - "graphics-drivers.sources"
       - "mozilla.sources"
       - "signal.sources"
+      - "spotify.sources"
   register: "apt_found_files"
 
 - name: "Delete apt list files not managed by us"

@@ -21,4 +21,5 @@
 - include_tasks: "1password.yml"
 - include_tasks: "snapd.yml"
 - include_tasks: "signal.yml"
+- include_tasks: "spotify.yml"
 - include_tasks: "clear_unmanaged_files.yml"

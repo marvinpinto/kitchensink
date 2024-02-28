@@ -139,6 +139,10 @@ for_window [class="scratch-terminal" instance="scratch-terminal"] floating enabl
 exec_always --no-startup-id ~/.i3/startup-app.sh "1password --disable-gpu" "1password"
 for_window [class="1Password" instance="1password"] floating enable, border normal, resize set 640 480, move to scratchpad
 
+# Ensure that the spotify window always stays in floating mode
+exec_always --no-startup-id ~/.i3/startup-app.sh "spotify" "spotify"
+for_window [class="Spotify" instance="spotify"] floating enable, border normal, move to scratchpad
+
 # Always start gnome-calculator in floating mode
 for_window [class="Gnome-calculator"] floating enable, border normal, resize set 640 480
 

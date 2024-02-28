@@ -1,0 +1,62 @@
+---
+- name: "Add the spotify ubuntu repo"
+  ansible.builtin.deb822_repository:
+    name: "spotify"
+    types: "deb"
+    architectures: "amd64"
+    uris: "http://repository.spotify.com"
+    suites: "stable"
+    components: "non-free"
+    signed_by: "https://download.spotify.com/debian/pubkey_6224F9941A8AA6D1.gpg"
+    state: "present"
+    enabled: "yes"
+  notify: 'linux_apt-get-update'
+
+- name: "Use the spotify repo only for specific packages"
+  become: true
+  copy:
+    content: |
+      Package: *
+      Pin: origin repository.spotify.com
+      Pin-Priority: 100
+
+      Package: spotify-client
+      Pin: origin repository.spotify.com
+      Pin-Priority: 1000
+    dest: "/etc/apt/preferences.d/spotify"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  notify: 'linux_apt-get-update'
+
+- meta: flush_handlers
+
+- name: "Install Spotify"
+  become: true
+  apt:
+    name:
+      - "spotify-client"
+    state: "present"
+
+# https://github.com/SpotX-Official/SpotX-Bash
+- name: "Download the SpotX-Bash installer"
+  changed_when: false
+  get_url:
+    url: "https://spotx-official.github.io/SpotX-Bash/spotx.sh"
+    dest: "/tmp/SpotX-Bash-run.sh"
+    mode: '0755'
+    force: true
+
+- name: "Run the SpotX-Bash installer"
+  changed_when: false
+  become: true
+  shell: "/tmp/SpotX-Bash-run.sh -cfh"
+  args:
+    chdir: "/tmp"
+
+- name: "Ensure the spotify binary is accessible (after SpotX)"
+  ansible.builtin.file:
+    path: "/usr/share/spotify/spotify"
+    owner: "root"
+    group: "root"
+    mode: "0755"
