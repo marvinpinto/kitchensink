@@ -109,6 +109,10 @@ RUN apt-get -qq update \
 RUN curl -L "https://github.com/marvinpinto/slc/releases/download/latest/slc_linux_amd64" -o /usr/local/bin/slc \
   && chmod +x /usr/local/bin/slc
 
+# Install the 1password "op" cli tool
+COPY --from=1password/op:2 /usr/local/bin/op /usr/local/bin/op
+RUN /usr/local/bin/op --version
+
 # Environment setup
 RUN mkdir -p /home/worker/app \
   && touch /home/worker/app/.placeholder \
