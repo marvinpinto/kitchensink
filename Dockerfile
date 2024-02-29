@@ -113,6 +113,12 @@ RUN curl -L "https://github.com/marvinpinto/slc/releases/download/latest/slc_lin
 COPY --from=1password/op:2 /usr/local/bin/op /usr/local/bin/op
 RUN /usr/local/bin/op --version
 
+# pip modules
+RUN /home/linuxbrew/.linuxbrew/bin/pip3 install \
+  --break-system-packages \
+  --root-user-action=ignore \
+  openshift pyyaml kubernetes
+
 # Environment setup
 RUN mkdir -p /home/worker/app \
   && touch /home/worker/app/.placeholder \
