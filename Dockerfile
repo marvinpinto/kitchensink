@@ -87,10 +87,10 @@ ENV NVM_DIR /usr/local/nvm
 RUN mkdir -p $NVM_DIR \
   && . /home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh \
   && echo "yarn" > $NVM_DIR/default-packages \
-  && nvm install lts/dubnium \
+  && nvm install lts/iron \
   && nvm install lts/erbium \
   && nvm install lts/fermium \
-  && nvm alias default lts/dubnium \
+  && nvm alias default lts/iron \
   && nvm use default
 
 # Utilities needed to run playwright inside the docker container
