@@ -1,0 +1,12 @@
+# List all tags available in a Docker repo
+export IMAGE="prom/prometheus"
+export IMAGE="library/mariadb"
+export TOKEN=$(curl https://auth.docker.io/token\?scope\=repository:$IMAGE:pull\&service\=registry.docker.io | jq -r .token)
+export URL="index.docker.io"
+curl -v -H "Accept: application/vnd.docker.distribution.manifest.v2+json" -H "Accept: application/vnd.docker.distribution.manifest.list.v2+json"  -H "Authorization: Bearer $TOKEN" https://$URL/v2/$IMAGE/tags/list | jq -C | less
+
+# List all tags available in a GitHub docker repo
+export IMAGE="marvinpinto/kitchensink"
+export TOKEN=$(curl https://ghcr.io/token?scope=repository:$IMAGE:pull | jq -r .token)
+export URL="ghcr.io"
+curl -v -H "Accept: application/vnd.docker.distribution.manifest.v2+json" -H "Accept: application/vnd.docker.distribution.manifest.list.v2+json"  -H "Authorization: Bearer $TOKEN" https://$URL/v2/$IMAGE/tags/list | jq -C | less
