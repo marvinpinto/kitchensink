@@ -1,0 +1,7 @@
+---
+syntax: markdown
+---
+
+## De Morgan's laws
+!(a v b) = !a ^ !b
+!(a ^ b) = !a v !b
