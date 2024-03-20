@@ -16,6 +16,7 @@
       - "graphics-drivers"
       - "signal"
       - "spotify"
+      - "tailscale"
   register: "apt_prefs_found_files"
 
 - name: "Delete apt preferences files not managed by us"
@@ -44,6 +45,7 @@
       - "mozilla.sources"
       - "signal.sources"
       - "spotify.sources"
+      - "tailscale.sources"
   register: "apt_found_files"
 
 - name: "Delete apt list files not managed by us"
