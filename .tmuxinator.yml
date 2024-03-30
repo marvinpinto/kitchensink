@@ -5,6 +5,7 @@ root: ~/projects/kitchensink
 startup_window: code
 
 windows:
+  - notes: note ls
   - code: vim
   - cli:
       layout: main-vertical

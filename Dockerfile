@@ -56,6 +56,7 @@ RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" \
     maven \
     docker-compose \
     kubectl \
+    krew \
     doctl \
     fzf \
     restic \
