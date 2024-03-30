@@ -1,0 +1,151 @@
+{{- /* vim: set filetype=sh : */ -}}
+{{- if (eq .chezmoi.os "linux") -}}
+
+# Bash function to spin up a vpn container (using gluetun)
+function vpn() {
+  local _cmd=$1
+  local _city=$2
+  local _socks_port="${3:-8888}"
+
+  _usage() {
+    echo "usage: vpn <up | down> <city> [socks port]"
+    echo "usage: vpn <logs> <city>"
+    echo "usage: vpn <status>"
+    echo "-------------------"
+    echo "Examples:"
+    echo "$ vpn up paris"
+    echo "$ vpn up paris 8889"
+    echo "$ vpn down paris"
+    echo "$ vpn logs paris"
+    echo "$ vpn status"
+  }
+
+  if [[ $# -eq 2 || $# -eq 3 ]]; then
+    if [[ -z "${_cmd}" || -z "${_city}" || ("${_cmd}" != "up" && "${_cmd}" != "down" && "${_cmd}" != "logs") ]]; then
+      _usage
+      return 1
+    fi
+  elif [[ $# -eq 1 ]]; then
+    if [[ "${_cmd}" != "status" ]]; then
+      _usage
+      return 1
+    fi
+  else
+    _usage
+    return 1
+  fi
+
+  if [[ "${_cmd}" == "up" ]]; then
+    local data
+    data=`op item get --format=json --vault="Private" "dotfiles-secrets-vpn-config" 2>/dev/null`
+    if [ "$?" -ne 0 ]; then
+      echo "Unable to retrieve vpn config from 1password"
+      return 1
+    fi
+
+    mkdir -p ~/.config/gluetun
+    _prov_name=$(echo "${data}" | jq -r '.fields[] | select(.label == "provider_name") | .value')
+    _wg_priv_key=$(echo "${data}" | jq -r '.fields[] | select(.label == "wg_private_key") | .value')
+    _wg_psk=$(echo "${data}" | jq -r '.fields[] | select(.label == "wg_preshared_key") | .value')
+    _wg_addr=$(echo "${data}" | jq -r '.fields[] | select(.label == "wg_addresses") | .value')
+    _boxname="vpn-${_city}"
+
+    docker run \
+      -dit \
+      --name ${_boxname} \
+      --cap-add=NET_ADMIN \
+      --device /dev/net/tun \
+      -e VPN_SERVICE_PROVIDER=${_prov_name} \
+      -e VPN_TYPE=wireguard \
+      -e WIREGUARD_PRIVATE_KEY="${_wg_priv_key}" \
+      -e WIREGUARD_ADDRESSES="${_wg_addr}" \
+      -e WIREGUARD_PRESHARED_KEY="${_wg_psk}" \
+      -e SERVER_CITIES=${_city} \
+      -e HTTPPROXY=on \
+      -p ${_socks_port}:8888/tcp \
+      -e LOG_LEVEL=info \
+      -e UPDATER_PERIOD=1h \
+      -v ${HOME}/.config/gluetun:/gluetun \
+      qmcgaw/gluetun:latest > /dev/null
+
+    if [ "$?" -ne 0 ]; then
+      ret=$?
+      docker rm -f "vpn-${_city}" > /dev/null
+      echo "Unable to initiate the vpn connection connection for: vpn-${_city}"
+      _usage
+      return $ret
+    fi
+
+    echo "VPN connection successfully initiated 🎉"
+    return 0
+  fi
+
+  if [[ "${_cmd}" == "down" ]]; then
+    docker stop "vpn-${_city}" > /dev/null
+    docker rm "vpn-${_city}" > /dev/null
+    return $?
+  fi
+
+  if [[ "${_cmd}" == "logs" ]]; then
+    docker logs "vpn-${_city}"
+    if [ "$?" -ne 0 ]; then
+      echo "Unable to retrieve vpn logs for: vpn-${_city}"
+      return 1
+    fi
+    return 0
+  fi
+
+  if [[ "${_cmd}" == "status" ]]; then
+    local data filtered
+    filtered=$(docker ps -aq --filter "ancestor=docker.io/qmcgaw/gluetun:latest" 2>/dev/null)
+    if [ "${filtered}" == "" ]; then
+      # likely no vpns running
+      echo "0 vpn(s) currently active"
+      return 0
+    fi
+
+    data=`docker inspect --format=json $(docker ps -aq --filter "ancestor=docker.io/qmcgaw/gluetun:latest")`
+    num_vpns=$(echo ${data} | jq length)
+    echo "${num_vpns} vpn(s) currently active"
+    echo ${data} | jq -c '.[]' | while read i; do
+      _vpn_name=$(echo ${i} | jq -r '.Name' | sed "s/\/vpn-//g")
+      _ip_addr=$(echo ${i} | jq -r '.NetworkSettings.IPAddress')
+      _ip_data=$(curl -s http://${_ip_addr}:8000/v1/publicip/ip)
+      _public_ip=$(echo ${_ip_data} | jq -r '.public_ip // "n/a"')
+      if [[ "${_public_ip}" == "" ]]; then
+        _public_ip="n/a"
+      fi
+      _city=$(echo ${_ip_data} | jq -r '.city // "n/a"')
+      _region=$(echo ${_ip_data} | jq -r '.region // "n/a"')
+      _country=$(echo ${_ip_data} | jq -r '.country // "n/a"')
+      echo "${_vpn_name}: ${_public_ip} (${_city}, ${_region}, ${_country})"
+    done
+    return 0
+  fi
+}
+
+function _vpn_completion() {
+  COMPREPLY=()
+  local cur="${COMP_WORDS[COMP_CWORD]}"
+  local prev="${COMP_WORDS[COMP_CWORD-1]}"
+  # NOTE: the "format" argument looks weird because it needs to be
+  # escaped, as this file is interpreted as a chezmoi template
+  local words=$(docker ps --filter "ancestor=docker.io/qmcgaw/gluetun:latest" --format "{{ "{{" }}.Names{{ "}}" }}" | tr '\n' ' ' | xargs)
+  words=$(echo $words | sed "s/vpn-//g")
+  case $COMP_CWORD in
+    1)
+      COMPREPLY=( $(compgen -W "up down logs status" -- ${cur}) )
+      ;;
+    2)
+      if [[ "${COMP_WORDS[1]}" == "status"  ]]; then
+        COMEREPLY=()
+      else
+        COMPREPLY=( $(compgen -W "${words}" -- "${cur}") )
+      fi
+      ;;
+  esac
+  return 0
+}
+
+complete -F _vpn_completion vpn
+{{ end -}}
