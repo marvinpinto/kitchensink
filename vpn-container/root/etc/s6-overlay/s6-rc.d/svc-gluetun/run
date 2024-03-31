@@ -1,0 +1,8 @@
+#!/usr/bin/with-contenv bash
+
+# poll every 5 seconds, give up after 12 failures
+exec \
+    s6-notifyoncheck -d -n 12 -w 5000 -c 'curl --fail "http://127.0.0.1:9999/"' \
+        /usr/local/bin/gluetun
+
+# vi: set ft=bash:

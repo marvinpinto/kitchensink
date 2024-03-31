@@ -13,3 +13,10 @@ updates:
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10
+
+  # docker file updates
+  - package-ecosystem: "docker"
+    directory: "/vpn-container"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 10

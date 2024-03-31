@@ -3,6 +3,8 @@ ARG DEBIAN_FRONTEND=noninteractive
 ARG UBUNTU_VERSION=20.04
 FROM ubuntu:${UBUNTU_VERSION}
 LABEL org.opencontainers.image.source https://github.com/marvinpinto/kitchensink
+LABEL org.opencontainers.image.description="A Kitchen Sink Development Environment"
+LABEL org.opencontainers.image.licenses=MIT
 
 # Manually add a /.dockerenv file (to work around buildx not providing it)
 RUN touch /.dockerenv

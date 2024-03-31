@@ -55,18 +55,19 @@ function vpn() {
       --name ${_boxname} \
       --cap-add=NET_ADMIN \
       --device /dev/net/tun \
+      -e TZ="America/Toronto" \
       -e VPN_SERVICE_PROVIDER=${_prov_name} \
       -e VPN_TYPE=wireguard \
       -e WIREGUARD_PRIVATE_KEY="${_wg_priv_key}" \
       -e WIREGUARD_ADDRESSES="${_wg_addr}" \
       -e WIREGUARD_PRESHARED_KEY="${_wg_psk}" \
       -e SERVER_CITIES=${_city} \
-      -e HTTPPROXY=on \
       -p ${_socks_port}:8888/tcp \
+      -p ${_socks_port}:8888/udp \
       -e LOG_LEVEL=info \
       -e UPDATER_PERIOD=1h \
       -v ${HOME}/.config/gluetun:/gluetun \
-      qmcgaw/gluetun:latest > /dev/null
+      ghcr.io/marvinpinto/vpn:latest > /dev/null
 
     if [ "$?" -ne 0 ]; then
       ret=$?
@@ -97,14 +98,14 @@ function vpn() {
 
   if [[ "${_cmd}" == "status" ]]; then
     local data filtered
-    filtered=$(docker ps -aq --filter "ancestor=docker.io/qmcgaw/gluetun:latest" 2>/dev/null)
+    filtered=$(docker ps -aq --filter "ancestor=ghcr.io/marvinpinto/vpn:latest" 2>/dev/null)
     if [ "${filtered}" == "" ]; then
       # likely no vpns running
       echo "0 vpn(s) currently active"
       return 0
     fi
 
-    data=`docker inspect --format=json $(docker ps -aq --filter "ancestor=docker.io/qmcgaw/gluetun:latest")`
+    data=`docker inspect --format=json $(docker ps -aq --filter "ancestor=ghcr.io/marvinpinto/vpn:latest")`
     num_vpns=$(echo ${data} | jq length)
     echo "${num_vpns} vpn(s) currently active"
     echo ${data} | jq -c '.[]' | while read i; do
@@ -130,7 +131,7 @@ function _vpn_completion() {
   local prev="${COMP_WORDS[COMP_CWORD-1]}"
   # NOTE: the "format" argument looks weird because it needs to be
   # escaped, as this file is interpreted as a chezmoi template
-  local words=$(docker ps --filter "ancestor=docker.io/qmcgaw/gluetun:latest" --format "{{ "{{" }}.Names{{ "}}" }}" | tr '\n' ' ' | xargs)
+  local words=$(docker ps --filter "ancestor=ghcr.io/marvinpinto/vpn:latest" --format "{{ "{{" }}.Names{{ "}}" }}" | tr '\n' ' ' | xargs)
   words=$(echo $words | sed "s/vpn-//g")
   case $COMP_CWORD in
     1)
