@@ -219,9 +219,9 @@ function __prompt_command() {
   fi
 
   # Second line of bash prompt
-  if [ -f '/.dockerinit' ]; then
+  if [ -f '/.dockerenv' ]; then
     # We're inside a docker environment
-    PS1+="[docker-\H: \t]${RESET}${BLUE}$(__git_ps1 ' [%s]')${RESET}${PROMPTCOL} \w${RESET}\n"
+    PS1+="[docker-\$HOSTNAME: \t]${RESET}${BLUE}$(__git_ps1 ' [%s]')${RESET}${PROMPTCOL} \w${RESET}\n"
   else
     PS1+="[\H: \t]${RESET}${BLUE}$(__git_ps1 ' [%s]')${RESET}${PROMPTCOL} \w${RESET}\n"
   fi

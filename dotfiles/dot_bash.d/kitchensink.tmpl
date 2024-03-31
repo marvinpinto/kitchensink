@@ -3,12 +3,27 @@
 # Bash function to attach to, or spin up a new (named) docker container
 function sink() {
   local boxname=$1
-  local dockerargs=$2
   local workdir="/home/worker"
 
-  if [ -z "$boxname" ]; then
+  local vpn_container dockerargs
+  if [[ "${@:2}" == vpn-* ]]; then
+    vpn_container=${@:2}
+  else
+    dockerargs=${@:2}
+  fi
+
+  _usage() {
     echo "usage: sink <box name> [extra docker args]"
-    echo "e.g. sink tidycat-ui \"-p 4200:4200\""
+    echo "usage: sink <box name> [vpn-container_name]"
+    echo "-------------------"
+    echo "Examples:"
+    echo "$ sink kitchensink"
+    echo "$ sink kitchensink vpn-paris"
+    echo "$ sink kitchensink -p 4200:4200"
+  }
+
+  if [ -z "$boxname" ]; then
+    _usage
     return 1
   fi
 
@@ -16,6 +31,13 @@ function sink() {
   if [ -e "${HOME}/projects/${boxname}" ]; then
     workdir="/home/worker/app"
     projectmnt="-v ${HOME}/projects/${boxname}:/home/worker/app"
+  fi
+
+  local _vpn_cond_args
+  if [[ -z "${vpn_container}" ]]; then
+    _vpn_cond_args="--hostname ${boxname} --add-host=localgw:172.17.0.1"
+  else
+    _vpn_cond_args="--network=container:${vpn_container}"
   fi
 
   local dockerid=$(docker ps -aq --filter=name=$boxname)
@@ -27,8 +49,7 @@ function sink() {
       -e "HOSTNAME=${boxname}" \
       --log-driver=none \
       --name $boxname \
-      # --hostname ${boxname} \
-      # --add-host=localgw:172.17.0.1 \
+      ${_vpn_cond_args} \
       -v $SSH_AUTH_SOCK:/ssh-agent \
       -e SSH_AUTH_SOCK=/ssh-agent \
       -e DISPLAY \
