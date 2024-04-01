@@ -13,6 +13,8 @@ mod + <p,n>   # go to prev/next window
 mod + <0..9>  # go to window n
 mod + ,       # rename window
 mod + $       # rename session
+mod + <       # move/swap with the left window
+mod + >       # move/swap with the right window
 
 # Buffers
 mod + [  # initiates vi copy mode - which you can then use to move around the
