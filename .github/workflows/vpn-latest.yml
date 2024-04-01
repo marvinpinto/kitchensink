@@ -58,7 +58,7 @@ jobs:
       - name: "Publish to GitHub Packages"
         uses: "docker/build-push-action@v5"
         with:
-          context: .
+          context: "./vpn-container"
           file: "./vpn-container/Dockerfile"
           platforms: "linux/amd64"
           push: true

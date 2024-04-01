@@ -41,7 +41,7 @@ jobs:
       - name: "Build the kitchensink container"
         uses: "docker/build-push-action@v5"
         with:
-          context: .
+          context: "."
           file: "./Dockerfile"
           build-args: |
             UBUNTU_VERSION=${{ env.UBUNTU_LTS_VERSION }}
@@ -54,7 +54,7 @@ jobs:
       - name: "Build the vpn container"
         uses: "docker/build-push-action@v5"
         with:
-          context: .
+          context: "./vpn-container"
           file: "./vpn-container/Dockerfile"
           platforms: "linux/amd64"
           load: true
