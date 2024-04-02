@@ -8,6 +8,7 @@
 - include_tasks: "x11.yml"
 - include_tasks: "fonts.yml"
 - include_tasks: "browsers.yml"
+- include_tasks: "wireshark.yml"
 - include_tasks: "docker.yml"
 - include_tasks: "user.yml"
 - include_tasks: "ergodox.yml"

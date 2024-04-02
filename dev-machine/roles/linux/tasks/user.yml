@@ -12,7 +12,9 @@
   user:
     name: "marvin"
     append: true
-    groups: "docker"
+    groups:
+      - "docker"
+      - "wireshark"
 
 - name: "Put the ssh key in place"
   become: true

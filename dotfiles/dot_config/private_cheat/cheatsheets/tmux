@@ -37,3 +37,6 @@ mod + d                                  # detach from a session (within tmux)
 tmux attach -d -t <session-name>         # connect/attach to an existing session
 tmuxinator start <name>                  # start a named session sourced from a file in ~/.config/tmuxinator (i.e. "quickdev")
 tmuxinator start/stop                    # start or stop a named session sourced from a local ./.tmuxinator.yml file
+
+# Automatically re-number all your remaining tmux windows
+:movew -r

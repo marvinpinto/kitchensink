@@ -1,0 +1,14 @@
+---
+- name: "Allow non-superusers to be able to capture wireshark packets"
+  ansible.builtin.debconf:
+    name: "wireshark-common"
+    question: "wireshark-common/install-setuid"
+    value: "true"
+    vtype: "boolean"
+
+- name: "Install wireshark"
+  environment:
+    DEBIAN_FRONTEND: "noninteractive"
+  apt:
+    name: "wireshark"
+    state: "present"
