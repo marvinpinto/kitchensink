@@ -1,5 +1,5 @@
 ---
-- include: "programs.yml"
-- include: "hostname.yml"
-- include: "user.yml"
-- include: "fonts.yml"
+- include_tasks: "programs.yml"
+- include_tasks: "hostname.yml"
+- include_tasks: "user.yml"
+- include_tasks: "fonts.yml"
