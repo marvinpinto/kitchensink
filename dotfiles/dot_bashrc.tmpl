@@ -286,3 +286,12 @@ function drma() {
     docker rmi -f $untagged
   fi
 }
+
+# Check public IP address (respects the ALL_PROXY environment variable)
+function myip() {
+  # some other options:
+  # curl https://checkip.amazonaws.com
+  # curl https://icanhazip.com
+  # curl https://ifconfig.co
+  echo "Public IP address: $(curl -s 'https://checkip.amazonaws.com')"
+}
