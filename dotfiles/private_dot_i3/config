@@ -146,6 +146,9 @@ for_window [class="Spotify" instance="spotify"] floating enable, border normal, 
 # Always start gnome-calculator in floating mode
 for_window [class="Gnome-calculator"] floating enable, border normal, resize set 640 480
 
+# Always start vlc in floating mode
+for_window [class="vlc" instance="vlc"] floating enable, border normal
+
 # Scratchpad shortcuts
 bindsym $mod+minus scratchpad show
 bindsym $alt+t [class="Alacritty" instance="scratch-terminal"] scratchpad show
