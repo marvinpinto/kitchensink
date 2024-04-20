@@ -125,7 +125,7 @@
   default = upstream
   followTags = true
 [user]
-  email = git@pinto.im
+  email = 1159942+marvinpinto@users.noreply.github.com
   name = Marvin Pinto
   signingkey = 52654E6EB0BB564B
 [fetch]
