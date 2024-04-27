@@ -1,0 +1,31 @@
+#!/usr/bin/with-contenv bash
+
+echo "[dnsproxy-config] Initializing DNS proxy configuration.."
+
+# shadowsocks server & client config
+random_shadowsocks_pwd=$(openssl rand -hex 20)
+cat << EOF > /etc/shadowsocks-config.json
+{
+  "server": "127.0.0.1",
+  "server_port": 8388,
+  "local_address": "0.0.0.0",
+  "local_port": 8888,
+  "password": "${random_shadowsocks_pwd}",
+  "timeout": 300,
+  "method": "aes-256-gcm",
+  "mode": "tcp_and_udp",
+  "fast_open": true
+}
+EOF
+
+# Use cloudflare as the default dns servers
+dns_servers="${DNS_SERVERS:-1.1.1.1,1.0.0.1}"
+echo "" > /etc/resolv.conf
+IFS=',' read -ra ADDR <<< "$dns_servers"
+for i in "${ADDR[@]}"; do
+  echo -e "nameserver $i" >> /etc/resolv.conf
+done
+
+echo "[dnsproxy-config] DNS proxy configuration complete"
+
+# vi: set ft=bash:

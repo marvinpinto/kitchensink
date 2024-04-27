@@ -8,11 +8,13 @@ function vpn() {
   local _socks_port="${3:-8888}"
 
   _usage() {
-    echo "usage: vpn <up | down> <city> [socks port]"
+    echo "usage: vpn <up | down> <city | dns> [socks port]"
     echo "usage: vpn <logs> <city>"
     echo "usage: vpn <status>"
     echo "-------------------"
     echo "Examples:"
+    echo "$ vpn up dns"
+    echo "$ vpn down dns"
     echo "$ vpn up paris"
     echo "$ vpn up paris 8889"
     echo "$ vpn down paris"
@@ -50,24 +52,35 @@ function vpn() {
     _wg_addr=$(echo "${data}" | jq -r '.fields[] | select(.label == "wg_addresses") | .value')
     _boxname="vpn-${_city}"
 
-    docker run \
-      -dit \
-      --name ${_boxname} \
-      --cap-add=NET_ADMIN \
-      --device /dev/net/tun \
-      -e TZ="America/Toronto" \
-      -e VPN_SERVICE_PROVIDER=${_prov_name} \
-      -e VPN_TYPE=wireguard \
-      -e WIREGUARD_PRIVATE_KEY="${_wg_priv_key}" \
-      -e WIREGUARD_ADDRESSES="${_wg_addr}" \
-      -e WIREGUARD_PRESHARED_KEY="${_wg_psk}" \
-      -e SERVER_CITIES=${_city} \
-      -p ${_socks_port}:8888/tcp \
-      -p ${_socks_port}:8888/udp \
-      -e LOG_LEVEL=info \
-      -e UPDATER_PERIOD=1h \
-      -v ${HOME}/.config/gluetun:/gluetun \
-      ghcr.io/marvinpinto/vpn:latest > /dev/null
+    if [[ "${_city}" == "dns" ]]; then
+      docker run \
+        -dit \
+        --name ${_boxname} \
+        -e TZ="America/Toronto" \
+        -e DNS_SERVERS="1.1.1.1,1.0.0.1" \
+        -p 9000:8888/tcp \
+        -p 9000:8888/udp \
+        ghcr.io/marvinpinto/dnsproxy:latest > /dev/null
+    else
+      docker run \
+        -dit \
+        --name ${_boxname} \
+        --cap-add=NET_ADMIN \
+        --device /dev/net/tun \
+        -e TZ="America/Toronto" \
+        -e VPN_SERVICE_PROVIDER=${_prov_name} \
+        -e VPN_TYPE=wireguard \
+        -e WIREGUARD_PRIVATE_KEY="${_wg_priv_key}" \
+        -e WIREGUARD_ADDRESSES="${_wg_addr}" \
+        -e WIREGUARD_PRESHARED_KEY="${_wg_psk}" \
+        -e SERVER_CITIES=${_city} \
+        -p ${_socks_port}:8888/tcp \
+        -p ${_socks_port}:8888/udp \
+        -e LOG_LEVEL=info \
+        -e UPDATER_PERIOD=1h \
+        -v ${HOME}/.config/gluetun:/gluetun \
+        ghcr.io/marvinpinto/vpn:latest > /dev/null
+    fi
 
     if [ "$?" -ne 0 ]; then
       ret=$?
@@ -98,8 +111,9 @@ function vpn() {
 
   if [[ "${_cmd}" == "status" ]]; then
     local data filtered
-    filtered=$(docker ps -aq --filter "ancestor=ghcr.io/marvinpinto/vpn:latest" 2>/dev/null)
-    if [ "${filtered}" == "" ]; then
+    filtered1=$(docker ps -aq --filter "ancestor=ghcr.io/marvinpinto/vpn:latest" 2>/dev/null)
+    filtered2=$(docker ps -aq --filter "ancestor=ghcr.io/marvinpinto/dnsproxy:latest" 2>/dev/null)
+    if [[ "${filtered1}" == "" ]] && [[ "${filtered2}" == "" ]]; then
       # likely no vpns running
       echo "0 vpn(s) currently active"
       return 0
@@ -107,7 +121,7 @@ function vpn() {
 
     # NOTE: the "format" argument looks weird because it needs to be
     # escaped, as this file is interpreted as a chezmoi template
-    data=`docker inspect --format "{{ "{{" }}.NetworkSettings.IPAddress{{ "}}" }},{{ "{{" }}.Name{{ "}}" }}" $(docker ps -aq --filter "ancestor=ghcr.io/marvinpinto/vpn:latest")`
+    data=`docker inspect --format "{{ "{{" }}.NetworkSettings.IPAddress{{ "}}" }},{{ "{{" }}.Name{{ "}}" }}" $(docker ps -aq --filter "ancestor=ghcr.io/marvinpinto/vpn:latest" --filter "ancestor=ghcr.io/marvinpinto/dnsproxy:latest")`
     num_vpns=$(echo ${data} | wc -w)
     echo "${num_vpns} vpn(s) currently active"
     for line in ${data}; do
@@ -134,7 +148,7 @@ function _vpn_completion() {
   local prev="${COMP_WORDS[COMP_CWORD-1]}"
   # NOTE: the "format" argument looks weird because it needs to be
   # escaped, as this file is interpreted as a chezmoi template
-  local words=$(docker ps --filter "ancestor=ghcr.io/marvinpinto/vpn:latest" --format "{{ "{{" }}.Names{{ "}}" }}" | tr '\n' ' ' | xargs)
+  local words=$(docker ps --filter "ancestor=ghcr.io/marvinpinto/vpn:latest" --filter "ancestor=ghcr.io/marvinpinto/dnsproxy:latest" --format "{{ "{{" }}.Names{{ "}}" }}" | tr '\n' ' ' | xargs)
   words=$(echo $words | sed "s/vpn-//g")
   case $COMP_CWORD in
     1)
