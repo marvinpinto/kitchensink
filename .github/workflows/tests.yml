@@ -23,7 +23,7 @@ jobs:
           docker-images: true
           swap-storage: true
 
-      - uses: "actions/checkout@v4.1.2"
+      - uses: "actions/checkout@v4.1.4"
         with:
           lfs: true
           fetch-depth: 0
