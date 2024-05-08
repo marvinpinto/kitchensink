@@ -1,6 +1,6 @@
 ---
-name: quickdev
-root: ~/projects
+name: <%= @args[0] ||= 'quickdev' %>
+root: ~/projects/<%= @args[0] %>
 
 # Pre-created layouts: https://github.com/tmux/tmux/wiki/Getting-Started#window-layouts
 # - even-horizontal: Spread out evenly across
@@ -9,14 +9,32 @@ root: ~/projects
 # - main-vertical: One large pane on the left, the rest spread out evenly up and down
 # - tiled: Tiled in the same number of rows as columns
 
-startup_window: code
+startup_window: cli
 
 windows:
+  - notes:
+      root: ~/projects/notes
+      panes:
+        - notes:
+          - note ls
   - code: vim
   - cli:
-      layout: main-vertical
+      layout: e72e,255x70,0,0{118x70,0,0,68,136x70,119,0[136x35,119,0,70,136x34,119,36,71]}
       panes:
         - git:
           - ls -al
-        - ls -al
-        - ls -al
+          - git status
+        - run:
+          - ls -al
+        - misc:
+          - ls -al
+  - scratch:
+      root: ~/
+      layout: e72e,255x70,0,0{118x70,0,0,68,136x70,119,0[136x35,119,0,70,136x34,119,36,71]}
+      panes:
+        - shell:
+          - pwd
+        - shell:
+          - pwd
+        - shell:
+          - pwd

@@ -35,8 +35,9 @@ tmux ls                                  # list tmux sessions
 tmux kill-session -t <session-name>      # kill session
 mod + d                                  # detach from a session (within tmux)
 tmux attach -d -t <session-name>         # connect/attach to an existing session
-tmuxinator start <name>                  # start a named session sourced from a file in ~/.config/tmuxinator (i.e. "quickdev")
-tmuxinator start/stop                    # start or stop a named session sourced from a local ./.tmuxinator.yml file
+mux start quickdev kitchensink           # use the "quickdev" config in a ~/projects/<project> directory (e.g. kitchensink)
+mux start <name>                         # start a named session sourced from ~/.tmuxinator.yml or ~/.config/tmuxinator
+mux start/stop <name>                    # start or stop a named session
 
 # Automatically re-number all your remaining tmux windows
 :movew -r
