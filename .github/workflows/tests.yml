@@ -39,7 +39,7 @@ jobs:
         uses: "docker/setup-buildx-action@v3"
 
       - name: "Build the kitchensink container"
-        uses: "docker/build-push-action@v5"
+        uses: "docker/build-push-action@v6"
         with:
           context: "."
           file: "./Dockerfile"
@@ -52,7 +52,7 @@ jobs:
             ghcr.io/marvinpinto/kitchensink:${{ env.UBUNTU_LTS_VERSION }}-${{ steps.sha.outputs.value }}
 
       - name: "Build the vpn container"
-        uses: "docker/build-push-action@v5"
+        uses: "docker/build-push-action@v6"
         with:
           context: "./vpn-container"
           file: "./vpn-container/Dockerfile"
@@ -62,7 +62,7 @@ jobs:
             ghcr.io/marvinpinto/vpn:latest
 
       - name: "Build the dnsproxy container"
-        uses: "docker/build-push-action@v5"
+        uses: "docker/build-push-action@v6"
         with:
           context: "./dnsproxy-container"
           file: "./dnsproxy-container/Dockerfile"
