@@ -11,13 +11,11 @@ ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 RUN apk add --no-cache --update openssl \
     ca-certificates \
     iptables \
-    ip6tables \
-    unbound \
+    iptables-legacy \
     tzdata \
     wget \
     busybox && \
   rm -rf /var/cache/apk/* && \
-  deluser unbound && \
   mkdir /gluetun
 
 # openvpn tweaks taken from https://github.com/qdm12/gluetun/blob/v3.38.0/Dockerfile
@@ -30,7 +28,7 @@ RUN apk add --no-cache --update -l wget && \
   rm -rf /var/cache/apk/* /etc/openvpn/*.sh /usr/lib/openvpn/plugins/openvpn-plugin-down-root.so && \
   deluser openvpn
 
-COPY --from=docker.io/qmcgaw/gluetun:v3.39.1 /gluetun-entrypoint /usr/local/bin/gluetun
+COPY --from=docker.io/qmcgaw/gluetun:v3.40.0 /gluetun-entrypoint /usr/local/bin/gluetun
 COPY --from=ghcr.io/shadowsocks/sslocal-rust:v1.21.2 /usr/bin/sslocal /usr/local/bin/sslocal
 COPY root/ /
 
