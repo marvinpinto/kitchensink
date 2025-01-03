@@ -11,13 +11,11 @@ ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 RUN apk add --no-cache --update openssl \
     ca-certificates \
     iptables \
-    ip6tables \
-    unbound \
+    iptables-legacy \
     tzdata \
     wget \
     busybox && \
   rm -rf /var/cache/apk/* && \
-  deluser unbound && \
   mkdir /gluetun
 
 # openvpn tweaks taken from https://github.com/qdm12/gluetun/blob/v3.38.0/Dockerfile
