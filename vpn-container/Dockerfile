@@ -30,7 +30,7 @@ RUN apk add --no-cache --update -l wget && \
   rm -rf /var/cache/apk/* /etc/openvpn/*.sh /usr/lib/openvpn/plugins/openvpn-plugin-down-root.so && \
   deluser openvpn
 
-COPY --from=docker.io/qmcgaw/gluetun:v3.39.1 /gluetun-entrypoint /usr/local/bin/gluetun
+COPY --from=docker.io/qmcgaw/gluetun:v3.40.0 /gluetun-entrypoint /usr/local/bin/gluetun
 COPY --from=ghcr.io/shadowsocks/sslocal-rust:v1.21.2 /usr/bin/sslocal /usr/local/bin/sslocal
 COPY root/ /
 
