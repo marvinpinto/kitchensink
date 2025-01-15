@@ -1,0 +1,9 @@
+- name: "Allow everyone read/write access to specific USB/serial devices"
+  become: true
+  copy:
+    src: "50-usbtty.rules"
+    dest: "/etc/udev/rules.d/50-usbtty.rules"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  notify: "linux_restart-udev"

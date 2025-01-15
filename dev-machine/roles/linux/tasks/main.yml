@@ -12,6 +12,7 @@
 - include_tasks: "docker.yml"
 - include_tasks: "user.yml"
 - include_tasks: "ergodox.yml"
+- include_tasks: "hardware.yml"
 - include_tasks: "hostname.yml"
 - include_tasks: "nvidia.yml"
 - include_tasks: "rng_tools.yml"
