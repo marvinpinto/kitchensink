@@ -1,0 +1,3 @@
+# Allow everyone read/write access to these USB devices
+KERNEL=="ttyUSB[0-9]*",MODE="0666"
+KERNEL=="ttyACM[0-9]*",MODE="0666"
