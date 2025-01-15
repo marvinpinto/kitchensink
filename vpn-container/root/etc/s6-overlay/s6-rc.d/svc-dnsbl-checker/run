@@ -1,0 +1,3 @@
+#!/usr/bin/with-contenv bash
+exec /usr/local/bin/dnsbl-checker 2>&1
+# vi: set ft=bash:

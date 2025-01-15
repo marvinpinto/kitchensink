@@ -110,7 +110,7 @@ set_default UPDATER_PERIOD "0"
 set_default UPDATER_MIN_RATIO "0.8"
 set_default PUBLICIP_FILE "/tmp/gluetun/ip"
 set_default PUBLICIP_ENABLED "on"
-set_default PUBLICIP_API "ipinfo,ifconfigco,ip2location,cloudflare"
+set_default PUBLICIP_API "cloudflare,ipinfo,ifconfigco,ip2location"
 set_default PPROF_ENABLED "no"
 set_default PPROF_BLOCK_PROFILE_RATE "0"
 set_default PPROF_MUTEX_PROFILE_RATE "0"
@@ -120,6 +120,23 @@ set_default VERSION_INFORMATION "on"
 echo "[vpn-config] Updating gluetun VPN server list.."
 /usr/local/bin/gluetun update -enduser -providers protonvpn
 /usr/local/bin/gluetun update -enduser -providers windscribe
+
+echo "[vpn-config] Installing dnsbl-checker.py.."
+cp /etc/dnsbl-checker.py /usr/local/bin/dnsbl-checker
+chmod 0755 /usr/local/bin/dnsbl-checker
+apk add --update --no-cache python3 py3-pip
+ln -sf python3 /usr/bin/python
+pip install --break-system-packages --root-user-action=ignore requests dnspython
+
+# gluetun api auth config
+mkdir -p /gluetun/auth
+cat << EOF > /gluetun/auth/config.toml
+[[roles]]
+name = "control-server"
+# Define a list of routes with the syntax "Http-Method /path"
+routes = ["GET /v1/publicip/ip"]
+auth = "none"
+EOF
 
 echo "[vpn-config] VPN configuration complete"
 

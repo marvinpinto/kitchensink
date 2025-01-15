@@ -1,7 +1,7 @@
 # vim: set filetype=dockerfile :
 
 FROM ghcr.io/linuxserver/baseimage-alpine:3.19
-LABEL org.opencontainers.image.source https://github.com/marvinpinto/kitchensink
+LABEL org.opencontainers.image.source=https://github.com/marvinpinto/kitchensink
 LABEL org.opencontainers.image.description="VPN + SOCKS5 Proxy Container"
 LABEL org.opencontainers.image.licenses=MIT
 
@@ -31,6 +31,7 @@ RUN apk add --no-cache --update -l wget && \
 COPY --from=docker.io/qmcgaw/gluetun:v3.40.0 /gluetun-entrypoint /usr/local/bin/gluetun
 COPY --from=ghcr.io/shadowsocks/sslocal-rust:v1.21.2 /usr/bin/sslocal /usr/local/bin/sslocal
 COPY root/ /
+COPY dnsbl-checker.py /etc/
 
 # gluetun config (to keep servers.json updated)
 VOLUME /gluetun
