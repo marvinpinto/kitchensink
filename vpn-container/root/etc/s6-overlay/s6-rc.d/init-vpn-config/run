@@ -134,7 +134,7 @@ cat << EOF > /gluetun/auth/config.toml
 [[roles]]
 name = "control-server"
 # Define a list of routes with the syntax "Http-Method /path"
-routes = ["GET /v1/publicip/ip"]
+routes = ["GET /v1/publicip/ip", "GET /v1/openvpn/portforwarded"]
 auth = "none"
 EOF
 
