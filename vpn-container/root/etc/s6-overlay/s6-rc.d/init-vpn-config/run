@@ -117,6 +117,13 @@ set_default PPROF_MUTEX_PROFILE_RATE "0"
 set_default PPROF_HTTP_SERVER_ADDRESS ":6060"
 set_default VERSION_INFORMATION "on"
 
+echo "[vpn-config] Waiting until an internet connection is established.."
+# Loop until an active internet connection is established
+until $(curl --max-time 60 -s -o /dev/null https://cloudflare.com/); do
+  # Sleep to allow cooldown
+  sleep 10
+done
+
 echo "[vpn-config] Updating gluetun VPN server list.."
 /usr/local/bin/gluetun update -enduser -providers protonvpn
 /usr/local/bin/gluetun update -enduser -providers windscribe
