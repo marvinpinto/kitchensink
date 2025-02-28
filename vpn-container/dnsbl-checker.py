@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 import signal
 import requests
 import logging
@@ -47,9 +47,15 @@ def get_public_ip():
         r = s.get('http://127.0.0.1:8000/v1/publicip/ip')
         r.raise_for_status()
         public_ip = r.json().get('public_ip')
+
+        if not public_ip:
+            r = s.get('https://checkip.amazonaws.com')
+            r.raise_for_status()
+            public_ip = r.text.strip()
+
         return public_ip
     except requests.exceptions.RequestException as e:
-        logger.error('Unable to retrieve public IP address: {} - {}'.format(e, e.response.text))
+        logger.error('Unable to retrieve public IP address: {}'.format(e))
         return None
 
 
@@ -116,7 +122,7 @@ def service_loop():
             cmdline = ['/usr/bin/s6-svc', '-ruwr', '/var/run/service/svc-gluetun']
             if not exec_process(cmdline):
                 logger.error('Unable to restart the gluetun VPN process')
-                continue
+            continue
 
         previous_ip_addr = current_ip_addr
 

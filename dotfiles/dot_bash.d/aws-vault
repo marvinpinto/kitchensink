@@ -22,13 +22,13 @@ function av() {
     return 1
   fi
 
-  OP_ACCT=$(op get account > /dev/null 2>&1)
+  OP_ACCT=$(op account list > /dev/null 2>&1)
   if [[ $? != 0 ]]; then
     echo "1password session does not appear to be active, try signing in again"
     return 1
   fi
 
-  local avp=$(op get item --vault="Private" "$OP_AWS_MFA_NAME" | jq -r '.details.sections | .[0].fields | .[] | select(.t == "AWS_VAULT_FILE_PASSPHRASE").v')
+  local avp=$(op item get --format=json --vault="Private" "$OP_AWS_MFA_NAME" | jq -r '.fields[] | select(.label == "AWS_VAULT_FILE_PASSPHRASE") | .value')
   if [ "$?" -ne 0 ]; then
     echo "Failed to retrieve AWS_VAULT_FILE_PASSPHRASE"
     return 1
@@ -46,7 +46,7 @@ function av() {
     if [[ ! -f "${HOME}/.aws/config" ]]; then
       mkdir -p "${HOME}/.aws"
       chmod 0700 "${HOME}/.aws"
-      local data=$(op get item --vault="Private" "dotfiles-secrets-aws-config" | jq -r '.details.notesPlain')
+      local data=$(op item get --format=json --vault="Private" "dotfiles-secrets-aws-config" | jq -r '.fields[] | select(.id == "notesPlain") | .value')
       printf '%b' "$data" > "${HOME}/.aws/config"
     fi
 
@@ -60,7 +60,7 @@ function av() {
       return 1
     fi
 
-    aws-vault login --mfa-token=$(op get totp "$OP_AWS_MFA_NAME") --stdout $profile
+    aws-vault login --mfa-token=$(op item get "$OP_AWS_MFA_NAME" --otp) --stdout $profile
   fi
 
   if [[ "$cmd" == "check" ]]; then
@@ -70,7 +70,7 @@ function av() {
       return 1
     fi
 
-    aws-vault exec --mfa-token=$(op get totp "$OP_AWS_MFA_NAME") $profile -- aws sts get-caller-identity
+    aws-vault exec --mfa-token=$(op item get "$OP_AWS_MFA_NAME" --otp) $profile -- aws sts get-caller-identity
   fi
 }
 
@@ -90,16 +90,16 @@ function ave() {
     return 1
   fi
 
-  OP_ACCT=$(op get account > /dev/null 2>&1)
+  OP_ACCT=$(op account list > /dev/null 2>&1)
   if [[ $? != 0 ]]; then
     echo "1password session does not appear to be active, try signing in again"
     return 1
   fi
 
-  local avp=$(op get item --vault="Private" "$OP_AWS_MFA_NAME" | jq -r '.details.sections | .[0].fields | .[] | select(.t == "AWS_VAULT_FILE_PASSPHRASE").v')
+  local avp=$(op item get --format=json --vault="Private" "$OP_AWS_MFA_NAME" | jq -r '.fields[] | select(.label == "AWS_VAULT_FILE_PASSPHRASE") | .value')
   if [ "$?" -eq 0 ]; then
     export AWS_VAULT_FILE_PASSPHRASE="$avp"
   fi
 
-  aws-vault exec --mfa-token=$(op get totp "$OP_AWS_MFA_NAME") $@
+  aws-vault exec --mfa-token=$(op item get "$OP_AWS_MFA_NAME" --otp) $@
 }
