@@ -50,10 +50,10 @@ set smartcase   " ignore case if search pattern is all lowercase,
 nnoremap <F3> :set hlsearch!<CR>
 
 " Refresh all buffers with F5
-nnoremap <F5> :silent windo e!<CR>
+nnoremap <F5> :NERDTreeClose<CR> <bar> :silent windo e!<CR>
 
 " Reset the syntax highlighting in the current buffer with F12
-nnoremap <F12> <Esc>:syntax sync fromstart<CR>
+nnoremap <F12> :syntax sync fromstart <bar> :filetype detect<CR>
 
 " Navigate autocomplete popups easily
 inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
