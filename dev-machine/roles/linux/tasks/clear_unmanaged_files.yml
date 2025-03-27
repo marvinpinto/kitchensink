@@ -15,7 +15,6 @@
       - "alacritty"
       - "graphics-drivers"
       - "signal"
-      - "spotify"
       - "tailscale"
   register: "apt_prefs_found_files"
 
@@ -44,7 +43,6 @@
       - "graphics-drivers.sources"
       - "mozilla.sources"
       - "signal.sources"
-      - "spotify.sources"
       - "tailscale.sources"
   register: "apt_found_files"
 
