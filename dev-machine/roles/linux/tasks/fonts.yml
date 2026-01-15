@@ -1,41 +1,17 @@
 ---
-- name: "Add linuxbrew/fonts as a tap"
+- name: "Homebrew fonts"
   become: true
   become_user: "marvin"
-  community.general.homebrew_tap:
-    name: "linuxbrew/fonts"
-
-- name: "Homebrew fonts (from HEAD)"
-  become: true
-  become_user: "marvin"
-  community.general.homebrew:
+  community.general.homebrew_cask:
     name:
-      - "linuxbrew/fonts/font-inconsolata"
-      - "linuxbrew/fonts/font-noto-color-emoji"
-      - "linuxbrew/fonts/font-awesome-terminal-fonts"
-      - "linuxbrew/fonts/font-powerline-symbols"
-    state: "head"
+      - "font-inconsolata"
+      - "font-noto-color-emoji"
+      - "font-awesome-terminal-fonts"
+      - "font-powerline-symbols"
+      - "font-twitter-color-emoji"
+      - "font-hack-nerd-font"
+    state: "absent"
     path: "/home/linuxbrew/.linuxbrew/bin"
-  notify: 'linux_regenerate-font-cache'
-
-- name: "Homebrew fonts (present)"
-  become: true
-  become_user: "marvin"
-  community.general.homebrew:
-    name:
-      - "linuxbrew/fonts/font-twitter-color-emoji"
-      - "linuxbrew/fonts/font-hack-nerd-font"
-    state: "present"
-    path: "/home/linuxbrew/.linuxbrew/bin"
-  notify: 'linux_regenerate-font-cache'
-
-- name: "Link the system fonts to homebrew"
-  become: true
-  ansible.builtin.file:
-    src: "/home/linuxbrew/.linuxbrew/share/fonts"
-    dest: "/usr/local/share/fonts/homebrew"
-    state: "link"
-    force: "yes"
   notify: 'linux_regenerate-font-cache'
 
 - meta: flush_handlers

@@ -13,7 +13,6 @@
       - "1password"
       - "virtualbox"
       - "alacritty"
-      - "graphics-drivers"
       - "signal"
       - "tailscale"
   register: "apt_prefs_found_files"

@@ -159,35 +159,15 @@
     - ansible_system_vendor == "ASRock"
     - ansible_product_name == "B760 Pro RS"
 
-- name: "Use the graphics drivers repo only for specific packages"
-  become: true
-  copy:
-    content: |
-      Package: *
-      Pin: release o=LP-PPA-graphics-drivers
-      Pin-Priority: 100
-
-      Package: nvidia-driver-*
-      Pin: release o=LP-PPA-graphics-drivers
-      Pin-Priority: 1000
-    dest: "/etc/apt/preferences.d/graphics-drivers"
-    owner: "root"
-    group: "root"
-    mode: "0644"
-  notify: 'linux_apt-get-update'
-  when:
-    - ansible_system_vendor == "ASRock"
-    - ansible_product_name == "B760 Pro RS"
-
 - meta: flush_handlers
 
 # The "nvidia-smi" cli tool is useful here to probe the graphics card and get some basic info
-# Model: Nvidia GeForce 4070Ti
+# Model: Nvidia GeForce RTX 4070Ti
 # Can find updated driver info here: https://www.nvidia.com/download/index.aspx
 - name: "Install the supported nvidia graphics drivers"
   become: true
   apt:
-    name: "nvidia-driver-550"
+    name: "nvidia-driver-570"
     state: "present"
   when:
     - ansible_system_vendor == "ASRock"

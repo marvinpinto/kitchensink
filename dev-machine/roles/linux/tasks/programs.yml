@@ -67,7 +67,6 @@
       - "lightdm"
       - "vim-gtk"
       - "tmux"
-      - "fonts-inconsolata"
       - "scrot"
       - "imagemagick"
       - "xautolock"

@@ -12,6 +12,7 @@
 
 - name: "linux_regenerate-font-cache"
   become: true
+  become_user: "marvin"
   command: "fc-cache -f -r -v"
 
 - name: "linux_restart-udev"
