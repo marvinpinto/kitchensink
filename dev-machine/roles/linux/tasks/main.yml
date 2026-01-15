@@ -19,7 +19,6 @@
 - include_tasks: "rng_tools.yml"
 - include_tasks: "rofi.yml"
 - include_tasks: "virtualbox.yml"
-- include_tasks: "yubikey.yml"
 - include_tasks: "alacritty.yml"
 - include_tasks: "1password.yml"
 - include_tasks: "snapd.yml"

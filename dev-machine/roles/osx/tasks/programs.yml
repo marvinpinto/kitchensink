@@ -51,7 +51,6 @@
       - "slack"
       - "visual-studio-code"
       - "alacritty"
-      - "homebrew/cask-drivers/yubico-authenticator"
       - "balenaetcher"
       - "nvidia-geforce-now"
       - "discord"

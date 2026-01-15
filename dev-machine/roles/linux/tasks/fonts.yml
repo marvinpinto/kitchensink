@@ -5,12 +5,12 @@
   community.general.homebrew_cask:
     name:
       - "font-inconsolata"
-      - "font-noto-color-emoji"
+      # - "font-noto-color-emoji"  # homebrew formula appears to have the incorrect download url?
       - "font-awesome-terminal-fonts"
       - "font-powerline-symbols"
       - "font-twitter-color-emoji"
       - "font-hack-nerd-font"
-    state: "absent"
+    state: "present"
     path: "/home/linuxbrew/.linuxbrew/bin"
   notify: 'linux_regenerate-font-cache'
 

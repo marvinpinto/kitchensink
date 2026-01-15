@@ -119,7 +119,7 @@ exec_always --no-startup-id /usr/bin/xmodmap ~/.xmodmap
 exec_always --no-startup-id /usr/bin/xrdb -load ~/.xresources
 exec_always --no-startup-id /usr/bin/gnome-settings-daemon &
 exec_always --no-startup-id /usr/bin/xset r rate 250 50
-exec_always --no-startup-id xrandr --output HDMI-0 --primary --rotate normal --mode 2560x1440 --rate 60
+exec_always --no-startup-id xrandr --output HDMI-0 --primary --rotate normal --mode 2560x1440 --rate 120
 
 # NOTE: Use the "xprop" utility to find window class name strings, ref: https://www.tuxtips.info/linux/how-to-find-applications-window-class-in-i3-window-manager
 # WM_CLASS(STRING) = "<instance>", "<class>"

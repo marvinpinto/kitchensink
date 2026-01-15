@@ -8,7 +8,7 @@ I3LOCK='/usr/bin/i3lock --color 333333'
 if [ -z $@ ]; then
   function gen_options()
   {
-    option_list=("Lock Screen","Logout","Reboot Computer","Shutdown Computer","Enable Screensaver","Disable Screensaver","Toggle Do Not Disturb (DND)","Initiate Backup","Check Email","Create Development Workspace","2FA Tokens","Emoji Picker","Reset Workspace","Grab Screenshot","Calculator","URL Cleaner","Rename i3 Workspace")
+    option_list=("Lock Screen","Logout","Reboot Computer","Shutdown Computer","Enable Screensaver","Disable Screensaver","Toggle Do Not Disturb (DND)","Initiate Backup","Check Email","Create Development Workspace","Emoji Picker","Reset Workspace","Grab Screenshot","Calculator","URL Cleaner","Rename i3 Workspace")
     echo ${option_list[@]} | tr ',' '\n' | sort
   }
   gen_options
@@ -49,9 +49,6 @@ else
       ;;
     'Create Development Workspace')
       coproc (${HOME}/.i3/dev-layout.sh)
-      ;;
-    '2FA Tokens')
-      coproc (rofi-2fa)
       ;;
     'Emoji Picker')
       coproc (rofi-emoji)

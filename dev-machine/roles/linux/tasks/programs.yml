@@ -65,7 +65,6 @@
   apt:
     name:
       - "lightdm"
-      - "vim-gtk"
       - "tmux"
       - "scrot"
       - "imagemagick"
@@ -121,6 +120,7 @@
       - "cups-browsed"
       - "speech-dispatcher"
       - "command-not-found"
+      - "unattended-upgrades"
     state: "absent"
     purge: "yes"
 
