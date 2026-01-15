@@ -74,11 +74,8 @@ bindsym $mod+a focus parent
 # focus on the child container
 bindsym $mod+Shift+a focus child
 
-# Workspaces mapped to the secondary monitor
-workspace "other" output DP-3
-
 # Workspaces mapped to the primary monitor
-workspace "misc" output DP-0
+workspace "misc" output HDMI-0
 
 # Volume controls (`pactl list sinks`, second arugment is the sink #)
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 2 +5% #increase sound volume
@@ -122,7 +119,7 @@ exec_always --no-startup-id /usr/bin/xmodmap ~/.xmodmap
 exec_always --no-startup-id /usr/bin/xrdb -load ~/.xresources
 exec_always --no-startup-id /usr/bin/gnome-settings-daemon &
 exec_always --no-startup-id /usr/bin/xset r rate 250 50
-exec_always --no-startup-id xrandr --output DP-0 --primary --rotate normal --output DP-3 --left-of DP-0 --rotate right --brightness 0.8
+exec_always --no-startup-id xrandr --output HDMI-0 --primary --rotate normal --mode 2560x1440 --rate 60
 
 # NOTE: Use the "xprop" utility to find window class name strings, ref: https://www.tuxtips.info/linux/how-to-find-applications-window-class-in-i3-window-manager
 # WM_CLASS(STRING) = "<instance>", "<class>"
@@ -183,28 +180,10 @@ client.urgent               $bg        $bg         $ia
 
 # Primary monitor: bar + status
 bar {
-  output DP-0
-  tray_output DP-0
+  output HDMI-0
+  tray_output HDMI-0
   font pango:terminal-font 10
   status_command i3status -c ~/.i3/i3status.conf | ~/.i3/wrapper.py
-
-  colors {
-    background          $bg
-    statusline          $fg
-    separator           $hi
-    focused_workspace   $gn        $bg        $ac
-    active_workspace    $bg        $bg        $ia
-    inactive_workspace  $bg        $bg        $ia
-    urgent_workspace    $bg        $bg        $ia
-    binding_mode        $rd        $bg        $ac
-  }
-}
-
-# Secondary monitor: bar
-bar {
-  output DP-3
-  tray_output none
-  font pango:terminal-font 10
 
   colors {
     background          $bg
