@@ -4,8 +4,8 @@
   hostname:
     name: 'mp-linux-desktop'
   when:
-    - ansible_system_vendor == "ASRock"
-    - ansible_product_name == "B760 Pro RS"
+    - ansible_facts['system_vendor'] == "ASRock"
+    - ansible_facts['product_name'] == "B760 Pro RS"
 
 - name: 'Update the /etc/hosts entry for the mp-linux-desktop'
   become: true
@@ -18,5 +18,5 @@
     group: 'root'
     mode: '0644'
   when:
-    - ansible_system_vendor == "ASRock"
-    - ansible_product_name == "B760 Pro RS"
+    - ansible_facts['system_vendor'] == "ASRock"
+    - ansible_facts['product_name'] == "B760 Pro RS"

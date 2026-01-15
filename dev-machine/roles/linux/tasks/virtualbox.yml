@@ -5,7 +5,7 @@
     types: "deb"
     architectures: "amd64"
     uris: "http://download.virtualbox.org/virtualbox/debian"
-    suites: "{{ ansible_distribution_release }}"
+    suites: "{{ ansible_facts['distribution_release'] }}"
     components: "contrib"
     signed_by: "https://www.virtualbox.org/download/oracle_vbox_2016.asc"
     state: "present"

@@ -5,7 +5,7 @@
     types: "deb"
     architectures: "amd64"
     uris: "https://ppa.launchpadcontent.net/aslatter/ppa/ubuntu"
-    suites: "{{ansible_distribution_release|lower}}"
+    suites: "{{ansible_facts['distribution_release'] | lower}}"
     components: "main"
     signed_by: |-
       -----BEGIN PGP PUBLIC KEY BLOCK-----

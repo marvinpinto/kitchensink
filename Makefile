@@ -11,7 +11,9 @@ help:
 machine: /tmp/ansible-galaxy-roles ## setup or update the base dev machine
 	@echo "Setting up dev machine..."
 	@cd dev-machine && \
-	ANSIBLE_ROLES_PATH=./roles:/tmp/ansible-galaxy-roles ansible-playbook \
+	ANSIBLE_ROLES_PATH=./roles:/tmp/ansible-galaxy-roles \
+	GALAXY_COLLECTIONS_PATH_WARNING=False \
+	ansible-playbook \
 		--connection=local \
 		--inventory=127.0.0.1, \
 		--become --ask-become-pass \

@@ -281,10 +281,7 @@ function drma() {
   fi
 
   # Delete all untagged docker images
-  local untagged=$(docker images | grep "^<none>" | awk "{print $3}")
-  if [ -n "$untagged" ]; then
-    docker rmi -f $untagged
-  fi
+  docker image prune --filter="dangling=true" --force
 }
 
 # Check public IP address (respects the ALL_PROXY environment variable)

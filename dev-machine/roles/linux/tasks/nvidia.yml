@@ -5,7 +5,7 @@
     types: "deb"
     architectures: "amd64"
     uris: "https://ppa.launchpadcontent.net/graphics-drivers/ppa/ubuntu"
-    suites: "{{ansible_distribution_release|lower}}"
+    suites: "{{ansible_facts['distribution_release'] | lower}}"
     components: "main"
     signed_by: |-
       -----BEGIN PGP PUBLIC KEY BLOCK-----
@@ -156,8 +156,8 @@
     enabled: "yes"
   notify: 'linux_apt-get-update'
   when:
-    - ansible_system_vendor == "ASRock"
-    - ansible_product_name == "B760 Pro RS"
+    - ansible_facts['system_vendor'] == "ASRock"
+    - ansible_facts['product_name'] == "B760 Pro RS"
 
 - meta: flush_handlers
 
@@ -170,5 +170,5 @@
     name: "nvidia-driver-570"
     state: "present"
   when:
-    - ansible_system_vendor == "ASRock"
-    - ansible_product_name == "B760 Pro RS"
+    - ansible_facts['system_vendor'] == "ASRock"
+    - ansible_facts['product_name'] == "B760 Pro RS"

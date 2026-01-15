@@ -5,7 +5,7 @@
     types: "deb"
     architectures: "amd64"
     uris: "https://download.docker.com/linux/ubuntu"
-    suites: "{{ansible_distribution_release|lower}}"
+    suites: "{{ansible_facts['distribution_release'] | lower}}"
     components: "stable"
     signed_by: "https://download.docker.com/linux/ubuntu/gpg"
     state: "present"

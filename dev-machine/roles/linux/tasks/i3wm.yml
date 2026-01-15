@@ -13,7 +13,7 @@
   copy:
     dest: '/etc/apt/sources.list.d/i3wm.list'
     content: |
-      deb [arch=amd64 signed-by=/usr/share/keyrings/sur5r-keyring.gpg] http://debian.sur5r.net/i3/ {{ ansible_distribution_release }} universe
+      deb [arch=amd64 signed-by=/usr/share/keyrings/sur5r-keyring.gpg] http://debian.sur5r.net/i3/ {{ ansible_facts['distribution_release'] }} universe
 
     owner: 'root'
     group: 'root'

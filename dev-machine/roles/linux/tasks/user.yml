@@ -18,7 +18,7 @@
 
 - name: "Put the ssh key in place"
   become: true
-  authorized_key:
+  ansible.posix.authorized_key:
     user: "marvin"
     key: "https://github.com/marvinpinto.keys"
     path: "/etc/ssh/authorized_keys/marvin"

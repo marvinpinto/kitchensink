@@ -9,6 +9,5 @@
   become: true
   service:
     name: "rng-tools"
-    pattern: "/usr/sbin/rngd"
     enabled: "no"
     state: "stopped"

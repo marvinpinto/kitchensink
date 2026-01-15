@@ -5,9 +5,9 @@
     types: "deb"
     architectures: "amd64"
     uris: "https://pkgs.tailscale.com/stable/ubuntu"
-    suites: "{{ ansible_distribution_release }}"
+    suites: "{{ ansible_facts['distribution_release'] }}"
     components: "main"
-    signed_by: "https://pkgs.tailscale.com/stable/ubuntu/{{ ansible_distribution_release }}.gpg"
+    signed_by: "https://pkgs.tailscale.com/stable/ubuntu/{{ ansible_facts['distribution_release'] }}.gpg"
     state: "present"
     enabled: "yes"
   notify: 'linux_apt-get-update'
