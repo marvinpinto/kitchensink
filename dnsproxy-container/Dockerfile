@@ -1,6 +1,6 @@
 # vim: set filetype=dockerfile :
 
-FROM ghcr.io/linuxserver/baseimage-alpine:3.19
+FROM ghcr.io/linuxserver/baseimage-alpine:3.23
 LABEL org.opencontainers.image.source https://github.com/marvinpinto/kitchensink
 LABEL org.opencontainers.image.description="DNS Proxy Container"
 LABEL org.opencontainers.image.licenses=MIT
