@@ -86,20 +86,20 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # Setup nvm + install a few needed NodeJS versions
+# https://nodejs.org/en/about/previous-releases
 ENV NVM_DIR /usr/local/nvm
 RUN mkdir -p $NVM_DIR \
   && . /home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh \
   && echo "yarn" > $NVM_DIR/default-packages \
-  && nvm install lts/iron \
-  && nvm install lts/erbium \
-  && nvm install lts/fermium \
-  && nvm alias default lts/iron \
+  && nvm install lts/jod \
+  && nvm install lts/krypton \
+  && nvm alias default lts/krypton \
   && nvm use default
 
 # Utilities needed to run playwright inside the docker container
 RUN apt-get -qq update \
   && . /home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh \
-  && nvm use lts/fermium \
+  && nvm use lts/krypton \
   && npm install -g playwright \
   && npx playwright install-deps \
   && npm uninstall -g playwright \
