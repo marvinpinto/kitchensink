@@ -3,7 +3,7 @@
 - name: "Install the needed sur5r-keyring package"
   become: true
   apt:
-    deb: "https://debian.sur5r.net/i3/pool/main/s/sur5r-keyring/sur5r-keyring_2025.03.09_all.deb"
+    deb: "https://debian.sur5r.net/i3/pool/main/s/sur5r-keyring/sur5r-keyring_2025.12.14_all.deb"
   notify: "linux_apt-get-update"
 
 - meta: flush_handlers
