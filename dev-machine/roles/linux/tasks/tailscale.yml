@@ -41,5 +41,5 @@
   become: true
   service:
     name: "tailscaled"
-    state: "stopped"
-    enabled: "no"
+    state: "started"
+    enabled: true
