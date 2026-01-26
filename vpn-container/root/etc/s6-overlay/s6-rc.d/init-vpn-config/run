@@ -11,17 +11,201 @@ function set_default() {
   fi
 }
 
-# Configure gluetun & the shadowsocks server
-printf '%s' "on" > /run/s6/container_environment/SHADOWSOCKS
-printf '%s' "off" > /run/s6/container_environment/SHADOWSOCKS_LOG
-printf '%s' "0.0.0.0:8388" > /run/s6/container_environment/SHADOWSOCKS_LISTENING_ADDRESS
+##################################
+# gluetun defaults:
+# - https://github.com/qdm12/gluetun/blob/v3.41.0/Dockerfile
+##################################
+set_default VPN_SERVICE_PROVIDER "pia"
+set_default VPN_TYPE "openvpn"
 
-# gluetun shadowsocks server config
+# Common VPN options
+set_default VPN_INTERFACE "tun0"
+
+# OpenVPN
+set_default OPENVPN_ENDPOINT_IP ""
+set_default OPENVPN_ENDPOINT_PORT ""
+set_default OPENVPN_PROTOCOL "udp"
+set_default OPENVPN_USER ""
+set_default OPENVPN_PASSWORD ""
+set_default OPENVPN_USER_SECRETFILE "/run/secrets/openvpn_user"
+set_default OPENVPN_PASSWORD_SECRETFILE "/run/secrets/openvpn_password"
+set_default OPENVPN_VERSION "2.6"
+set_default OPENVPN_VERBOSITY "1"
+set_default OPENVPN_FLAGS ""
+set_default OPENVPN_CIPHERS ""
+set_default OPENVPN_AUTH ""
+set_default OPENVPN_PROCESS_USER "root"
+set_default OPENVPN_MSSFIX ""
+set_default OPENVPN_CUSTOM_CONFIG ""
+
+# Wireguard
+set_default WIREGUARD_ENDPOINT_IP ""
+set_default WIREGUARD_ENDPOINT_PORT ""
+set_default WIREGUARD_CONF_SECRETFILE "/run/secrets/wg0.conf"
+set_default WIREGUARD_PRIVATE_KEY ""
+set_default WIREGUARD_PRIVATE_KEY_SECRETFILE "/run/secrets/wireguard_private_key"
+set_default WIREGUARD_PRESHARED_KEY ""
+set_default WIREGUARD_PRESHARED_KEY_SECRETFILE "/run/secrets/wireguard_preshared_key"
+set_default WIREGUARD_PUBLIC_KEY ""
+set_default WIREGUARD_ALLOWED_IPS ""
+set_default WIREGUARD_PERSISTENT_KEEPALIVE_INTERVAL "0"
+set_default WIREGUARD_ADDRESSES ""
+set_default WIREGUARD_ADDRESSES_SECRETFILE "/run/secrets/wireguard_addresses"
+set_default WIREGUARD_MTU "1320"
+set_default WIREGUARD_IMPLEMENTATION "auto"
+
+# VPN server filtering
+set_default SERVER_REGIONS ""
+set_default SERVER_COUNTRIES ""
+set_default SERVER_CITIES ""
+set_default SERVER_HOSTNAMES ""
+set_default SERVER_CATEGORIES ""
+
+# Mullvad only:
+set_default ISP ""
+set_default OWNED_ONLY "no"
+
+# Private Internet Access only:
+set_default PRIVATE_INTERNET_ACCESS_OPENVPN_ENCRYPTION_PRESET ""
+set_default VPN_PORT_FORWARDING "off"
+set_default VPN_PORT_FORWARDING_LISTENING_PORT "0"
+set_default VPN_PORT_FORWARDING_PROVIDER ""
+set_default VPN_PORT_FORWARDING_STATUS_FILE "/tmp/gluetun/forwarded_port"
+set_default VPN_PORT_FORWARDING_USERNAME ""
+set_default VPN_PORT_FORWARDING_PASSWORD ""
+set_default VPN_PORT_FORWARDING_UP_COMMAND ""
+set_default VPN_PORT_FORWARDING_DOWN_COMMAND ""
+
+# Cyberghost only:
+set_default OPENVPN_CERT ""
+set_default OPENVPN_KEY ""
+set_default OPENVPN_CLIENTCRT_SECRETFILE "/run/secrets/openvpn_clientcrt"
+set_default OPENVPN_CLIENTKEY_SECRETFILE "/run/secrets/openvpn_clientkey"
+
+# VPNSecure only:
+set_default OPENVPN_ENCRYPTED_KEY ""
+set_default OPENVPN_ENCRYPTED_KEY_SECRETFILE "/run/secrets/openvpn_encrypted_key"
+set_default OPENVPN_KEY_PASSPHRASE ""
+set_default OPENVPN_KEY_PASSPHRASE_SECRETFILE "/run/secrets/openvpn_key_passphrase"
+
+# Nordvpn only:
+set_default SERVER_NUMBER ""
+
+# PIA only:
+set_default SERVER_NAMES ""
+
+# VPNUnlimited and ProtonVPN only:
+set_default STREAM_ONLY ""
+set_default FREE_ONLY ""
+
+# ProtonVPN only:
+set_default SECURE_CORE_ONLY ""
+set_default TOR_ONLY ""
+
+# Surfshark only:
+set_default MULTIHOP_ONLY ""
+
+# VPN Secure only:
+set_default PREMIUM_ONLY ""
+
+# PIA and ProtonVPN only:
+set_default PORT_FORWARD_ONLY ""
+
+# Firewall
+set_default FIREWALL_ENABLED_DISABLING_IT_SHOOTS_YOU_IN_YOUR_FOOT "on"
+set_default FIREWALL_VPN_INPUT_PORTS ""
+set_default FIREWALL_INPUT_PORTS ""
+set_default FIREWALL_OUTBOUND_SUBNETS ""
+set_default FIREWALL_DEBUG "off"
+
+# Logging
+set_default LOG_LEVEL "info"
+
+# Health
+set_default HEALTH_SERVER_ADDRESS "127.0.0.1:9999"
+set_default HEALTH_TARGET_ADDRESSES "cloudflare.com:443,github.com:443"
+set_default HEALTH_ICMP_TARGET_IPS "1.1.1.1,8.8.8.8"
+set_default HEALTH_SMALL_CHECK_TYPE "icmp"
+set_default HEALTH_RESTART_VPN "on"
+
+# DNS
+set_default DNS_SERVER "on"
+set_default DNS_UPSTREAM_RESOLVER_TYPE "DoT"
+set_default DNS_UPSTREAM_RESOLVERS "cloudflare"
+set_default DNS_BLOCK_IPS ""
+set_default DNS_BLOCK_IP_PREFIXES ""
+set_default DNS_CACHING "on"
+set_default DNS_UPSTREAM_IPV6 "off"
+set_default BLOCK_MALICIOUS "on"
+set_default BLOCK_SURVEILLANCE "off"
+set_default BLOCK_ADS "off"
+set_default DNS_UNBLOCK_HOSTNAMES ""
+set_default DNS_REBINDING_PROTECTION_EXEMPT_HOSTNAMES ""
+set_default DNS_UPDATE_PERIOD "24h"
+set_default DNS_ADDRESS "127.0.0.1"
+set_default DNS_KEEP_NAMESERVER "off"
+
+# HTTP proxy
+set_default HTTPPROXY ""
+set_default HTTPPROXY_LOG "off"
+set_default HTTPPROXY_LISTENING_ADDRESS ":8888"
+set_default HTTPPROXY_STEALTH "off"
+set_default HTTPPROXY_USER ""
+set_default HTTPPROXY_PASSWORD ""
+set_default HTTPPROXY_USER_SECRETFILE "/run/secrets/httpproxy_user"
+set_default HTTPPROXY_PASSWORD_SECRETFILE "/run/secrets/httpproxy_password"
+
+# Shadowsocks
+set_default SHADOWSOCKS "off"
+set_default SHADOWSOCKS_LOG "off"
+set_default SHADOWSOCKS_LISTENING_ADDRESS ":8388"
+set_default SHADOWSOCKS_PASSWORD ""
+set_default SHADOWSOCKS_PASSWORD_SECRETFILE "/run/secrets/shadowsocks_password"
+set_default SHADOWSOCKS_CIPHER "chacha20-ietf-poly1305"
+
+# Control server
+set_default HTTP_CONTROL_SERVER_LOG "on"
+set_default HTTP_CONTROL_SERVER_ADDRESS ":8000"
+set_default HTTP_CONTROL_SERVER_AUTH_CONFIG_FILEPATH "/gluetun/auth/config.toml"
+set_default HTTP_CONTROL_SERVER_AUTH_DEFAULT_ROLE "{}"
+
+# Server data updater
+set_default UPDATER_PERIOD "0"
+set_default UPDATER_MIN_RATIO "0.8"
+set_default UPDATER_VPN_SERVICE_PROVIDERS ""
+set_default UPDATER_PROTONVPN_EMAIL ""
+set_default UPDATER_PROTONVPN_PASSWORD ""
+
+# Public IP
+set_default PUBLICIP_FILE "/tmp/gluetun/ip"
+set_default PUBLICIP_ENABLED "on"
+set_default PUBLICIP_API "ipinfo,ifconfigco,ip2location,cloudflare"
+set_default PUBLICIP_API_TOKEN ""
+
+# Storage
+set_default STORAGE_FILEPATH "/gluetun/servers.json"
+
+# Pprof
+set_default PPROF_ENABLED "no"
+set_default PPROF_BLOCK_PROFILE_RATE "0"
+set_default PPROF_MUTEX_PROFILE_RATE "0"
+set_default PPROF_HTTP_SERVER_ADDRESS ":6060"
+
+# Extras
+set_default VERSION_INFORMATION "on"
+set_default TZ ""
+set_default PUID "1000"
+set_default PGID "1000"
+
+# Configure gluetun & the shadowsocks server
+set_default SHADOWSOCKS "on"
+set_default SHADOWSOCKS_LOG "off"
+set_default SHADOWSOCKS_LISTENING_ADDRESS "0.0.0.0:8388"
 ss_cipher="${SHADOWSOCKS_CIPHER:-aes-256-gcm}"
-printf '%s' "${ss_cipher}" > /run/s6/container_environment/SHADOWSOCKS_CIPHER
+set_default SHADOWSOCKS_CIPHER "${ss_cipher}"
 random_shadowsocks_pwd=$(openssl rand -hex 20)
 ss_pwd="${SHADOWSOCKS_PASSWORD:-$random_shadowsocks_pwd}"
-printf '%s' "${ss_pwd}" > /run/s6/container_environment/SHADOWSOCKS_PASSWORD
+set_default SHADOWSOCKS_PASSWORD "${ss_pwd}"
 
 # shadowsocks local (client) config
 cat << EOF > /etc/sslocal-config.json
@@ -35,87 +219,6 @@ cat << EOF > /etc/sslocal-config.json
   "password": "${ss_pwd}"
 }
 EOF
-
-# There is a weird bug atm that I observed as follows: if you supply the
-# PUID/PGID, gluetun will first create the unbound.conf as the root user, but
-# will attempt to run unbound as the PUID user. This results in unbound failing
-# with permission issues as (I guess?) it's trying to write to the config files
-# in /etc/unbound. I tried a few things to work around it but nothing seems to
-# stick 🤷
-set_default PUID "0"
-set_default PGID "0"
-
-##################################
-# gluetun defaults:
-# - https://github.com/qdm12/gluetun/blob/v3.38.0/Dockerfile
-##################################
-set_default VPN_SERVICE_PROVIDER "pia"
-set_default VPN_TYPE "openvpn"
-set_default VPN_INTERFACE "tun0"
-set_default OPENVPN_PROTOCOL "udp"
-set_default OPENVPN_USER_SECRETFILE "/run/secrets/openvpn_user"
-set_default OPENVPN_PASSWORD_SECRETFILE "/run/secrets/openvpn_password"
-set_default OPENVPN_VERSION "2.5"
-set_default OPENVPN_VERBOSITY "1"
-set_default OPENVPN_PROCESS_USER "root"
-set_default WIREGUARD_CONF_SECRETFILE "/run/secrets/wg0.conf"
-set_default WIREGUARD_PRIVATE_KEY_SECRETFILE "/run/secrets/wireguard_private_key"
-set_default WIREGUARD_PRESHARED_KEY_SECRETFILE "/run/secrets/wireguard_preshared_key"
-set_default WIREGUARD_ADDRESSES_SECRETFILE "/run/secrets/wireguard_addresses"
-set_default WIREGUARD_MTU "1320"
-set_default WIREGUARD_IMPLEMENTATION "auto"
-set_default OWNED_ONLY "no"
-set_default VPN_PORT_FORWARDING "off"
-set_default VPN_PORT_FORWARDING_LISTENING_PORT "0"
-set_default VPN_PORT_FORWARDING_STATUS_FILE "/tmp/gluetun/forwarded_port"
-set_default OPENVPN_CLIENTCRT_SECRETFILE "/run/secrets/openvpn_clientcrt"
-set_default OPENVPN_CLIENTKEY_SECRETFILE "/run/secrets/openvpn_clientkey"
-set_default OPENVPN_ENCRYPTED_KEY_SECRETFILE "/run/secrets/openvpn_encrypted_key"
-set_default OPENVPN_KEY_PASSPHRASE_SECRETFILE "/run/secrets/openvpn_key_passphrase"
-set_default FIREWALL "on"
-set_default FIREWALL_DEBUG "off"
-set_default LOG_LEVEL "info"
-set_default HEALTH_SERVER_ADDRESS "127.0.0.1:9999"
-set_default HEALTH_TARGET_ADDRESS "cloudflare.com:443"
-set_default HEALTH_SUCCESS_WAIT_DURATION "5s"
-set_default HEALTH_VPN_DURATION_INITIAL "6s"
-set_default HEALTH_VPN_DURATION_ADDITION "5s"
-set_default DOT "on"
-set_default DOT_PROVIDERS "cloudflare"
-set_default VARIABLE "value"
-set_default VARIABLE "value"
-set_default VARIABLE "value"
-set_default VARIABLE "value"
-set_default VARIABLE "value"
-set_default VARIABLE "value"
-set_default VARIABLE "value"
-set_default DOT_PRIVATE_ADDRESS "127.0.0.1/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,169.254.0.0/16,::1/128,fc00::/7,fe80::/10,::ffff:7f00:1/104,::ffff:a00:0/104,::ffff:a9fe:0/112,::ffff:ac10:0/108,::ffff:c0a8:0/112"
-set_default DOT_CACHING "on"
-set_default DOT_IPV6 "off"
-set_default BLOCK_MALICIOUS "on"
-set_default BLOCK_SURVEILLANCE "off"
-set_default BLOCK_ADS "off"
-set_default DNS_UPDATE_PERIOD "24h"
-set_default DNS_ADDRESS "127.0.0.1"
-set_default DNS_KEEP_NAMESERVER "off"
-set_default HTTPPROXY_LOG "off"
-set_default HTTPPROXY_LISTENING_ADDRESS ":8888"
-set_default HTTPPROXY_STEALTH "off"
-set_default HTTPPROXY_USER_SECRETFILE "/run/secrets/httpproxy_user"
-set_default HTTPPROXY_PASSWORD_SECRETFILE "/run/secrets/httpproxy_password"
-set_default SHADOWSOCKS_PASSWORD_SECRETFILE "/run/secrets/shadowsocks_password"
-set_default HTTP_CONTROL_SERVER_LOG "on"
-set_default HTTP_CONTROL_SERVER_ADDRESS ":8000"
-set_default UPDATER_PERIOD "0"
-set_default UPDATER_MIN_RATIO "0.8"
-set_default PUBLICIP_FILE "/tmp/gluetun/ip"
-set_default PUBLICIP_ENABLED "on"
-set_default PUBLICIP_API "cloudflare,ipinfo,ifconfigco,ip2location"
-set_default PPROF_ENABLED "no"
-set_default PPROF_BLOCK_PROFILE_RATE "0"
-set_default PPROF_MUTEX_PROFILE_RATE "0"
-set_default PPROF_HTTP_SERVER_ADDRESS ":6060"
-set_default VERSION_INFORMATION "on"
 
 echo "[vpn-config] Waiting until an internet connection is established.."
 # Loop until an active internet connection is established
@@ -141,7 +244,7 @@ cat << EOF > /gluetun/auth/config.toml
 [[roles]]
 name = "control-server"
 # Define a list of routes with the syntax "Http-Method /path"
-routes = ["GET /v1/publicip/ip", "GET /v1/openvpn/portforwarded"]
+routes = ["GET /v1/publicip/ip", "GET /v1/portforward"]
 auth = "none"
 EOF
 

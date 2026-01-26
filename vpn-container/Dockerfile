@@ -18,7 +18,7 @@ RUN apk add --no-cache --update openssl \
   rm -rf /var/cache/apk/* && \
   mkdir /gluetun
 
-# openvpn tweaks taken from https://github.com/qdm12/gluetun/blob/v3.38.0/Dockerfile
+# openvpn tweaks taken from https://github.com/qdm12/gluetun/blob/v3.41.0/Dockerfile
 RUN apk add --no-cache --update -l wget && \
   apk add --no-cache --update -X "https://dl-cdn.alpinelinux.org/alpine/v3.17/main" openvpn\~2.5 && \
   mv /usr/sbin/openvpn /usr/sbin/openvpn2.5 && \
@@ -28,8 +28,8 @@ RUN apk add --no-cache --update -l wget && \
   rm -rf /var/cache/apk/* /etc/openvpn/*.sh /usr/lib/openvpn/plugins/openvpn-plugin-down-root.so && \
   deluser openvpn
 
-COPY --from=docker.io/qmcgaw/gluetun:v3.40.0 /gluetun-entrypoint /usr/local/bin/gluetun
-COPY --from=ghcr.io/shadowsocks/sslocal-rust:v1.21.2 /usr/bin/sslocal /usr/local/bin/sslocal
+COPY --from=docker.io/qmcgaw/gluetun:v3.41.0 /gluetun-entrypoint /usr/local/bin/gluetun
+COPY --from=ghcr.io/shadowsocks/sslocal-rust:v1.24.0 /usr/bin/sslocal /usr/local/bin/sslocal
 COPY root/ /
 COPY dnsbl-checker.py /etc/
 

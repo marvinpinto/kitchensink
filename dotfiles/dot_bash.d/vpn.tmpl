@@ -50,6 +50,7 @@ function vpn() {
     _wg_priv_key=$(echo "${data}" | jq -r '.fields[] | select(.label == "wg_private_key") | .value')
     _wg_psk=$(echo "${data}" | jq -r '.fields[] | select(.label == "wg_preshared_key") | .value')
     _wg_addr=$(echo "${data}" | jq -r '.fields[] | select(.label == "wg_addresses") | .value')
+    _wg_port=$(echo "${data}" | jq -r '.fields[] | select(.label == "wg_port") | .value')
     _boxname="vpn-${_city}"
 
     if [[ "${_city}" == "dns" ]]; then
@@ -73,6 +74,7 @@ function vpn() {
         -e WIREGUARD_PRIVATE_KEY="${_wg_priv_key}" \
         -e WIREGUARD_ADDRESSES="${_wg_addr}" \
         -e WIREGUARD_PRESHARED_KEY="${_wg_psk}" \
+        -e WIREGUARD_ENDPOINT_PORT="${_wg_port}" \
         -e SERVER_CITIES=${_city} \
         -p ${_socks_port}:8888/tcp \
         -p ${_socks_port}:8888/udp \
