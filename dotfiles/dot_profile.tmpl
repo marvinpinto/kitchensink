@@ -5,7 +5,7 @@ HOMEBREW_PREFIX="/usr/local";
 export PATH="${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin:${HOMEBREW_PREFIX}/opt/python/libexec/bin:${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:$HOME/bin:/usr/local/bin:$PATH"
 {{ else if (eq .chezmoi.os "linux") }}
 HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew";
-export PATH="${HOMEBREW_PREFIX}/opt/python/libexec/bin:${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:$HOME/bin:/usr/local/bin:$PATH"
+export PATH="${HOMEBREW_PREFIX}/opt/python/libexec/bin:${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:$HOME/bin:/usr/local/bin:/usr/sbin:$PATH"
 {{ end }}
 
 # Set a restrictive umask
