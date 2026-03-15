@@ -5,14 +5,17 @@ function sink() {
   local boxname=$1
   local workdir="/home/worker"
 
-  local vpn_container dockerargs
-  if [[ "${@:2}" == vpn-* ]]; then
+  local ansible_arg vpn_container dockerargs
+  if [[ "${boxname}" == "ansible-machine" ]]; then
+    ansible_arg="yes"
+  elif [[ "${@:2}" == vpn-* ]]; then
     vpn_container=${@:2}
   else
     dockerargs=${@:2}
   fi
 
   _usage() {
+    echo "usage: sink ansible-machine"
     echo "usage: sink <box name> [extra docker args]"
     echo "usage: sink <box name> [vpn-container_name]"
     echo "-------------------"
@@ -25,6 +28,14 @@ function sink() {
   if [ -z "$boxname" ]; then
     _usage
     return 1
+  fi
+
+  if [[ "${ansible_arg}" == "yes" ]]; then
+    echo "Running ansible playbook to setup dev machine"
+    pushd ${HOME}/projects/kitchensink
+    make machine
+    popd
+    return 0
   fi
 
   local projectmnt=""
@@ -71,7 +82,8 @@ function _sink_completion() {
   local prev="${COMP_WORDS[COMP_CWORD-1]}"
   # NOTE: the "format" argument looks weird because it needs to be
   # escaped, as this file is interpreted as a chezmoi template
-  local words=$(docker ps --filter "ancestor=ghcr.io/marvinpinto/kitchensink:20.04-latest" --format "{{ "{{" }}.Names{{ "}}" }}" | tr '\n' ' ' | xargs)
+  local words="ansible-machine "
+  words+=$(docker ps --filter "ancestor=ghcr.io/marvinpinto/kitchensink:20.04-latest" --format "{{ "{{" }}.Names{{ "}}" }}" | tr '\n' ' ' | xargs)
   case $COMP_CWORD in
     1)
       COMPREPLY=( $(compgen -W "${words}" -- "${cur}") )
