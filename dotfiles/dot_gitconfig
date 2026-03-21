@@ -24,7 +24,7 @@
   # Use fzf to choose the SHA to interactively rebase onto
   reb = !git rebase -i --autostash --autosquash $(git log --color --oneline | fzf --ansi | cut -d ' ' -f1)^
   # Delete all local branches that have been merged into master
-  cleanup = "!git branch --merged | grep  -v '\\*\\|master' | xargs -n 1 git branch -d"
+  cleanup = "!git branch --merged | grep  -v '\\*\\|master' | xargs -I {} sh -c 'git branch -d {} ; git push origin :{}'"
   # Special grep -- include untracked files, case insensitive
   gr = grep --untracked --ignore-case
   # Slightly more interesting log line (SHA, date, email, abbrev subject)
