@@ -33,7 +33,6 @@
       - "age"
       - "restic"
       - "watch"
-      - "tio"
       - "xdotool"
       - "imagemagick"
     state: "present"

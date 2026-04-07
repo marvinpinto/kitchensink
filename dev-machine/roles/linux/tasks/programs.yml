@@ -56,7 +56,6 @@
       - "tmuxinator"
       - "age"
       - "restic"
-      - "tio"
     state: "present"
     path: "/home/linuxbrew/.linuxbrew/bin"
 
