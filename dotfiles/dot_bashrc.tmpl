@@ -96,6 +96,10 @@ export HOMEBREW_SHELLENV_PREFIX="${HOMEBREW_PREFIX}";
 export MANPATH="${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnuman:${HOMEBREW_PREFIX}/share/man${MANPATH+:$MANPATH}:";
 export INFOPATH="${HOMEBREW_PREFIX}/opt/coreutils/share/info:${HOMEBREW_PREFIX}/share/info:${INFOPATH:-}";
 
+# Prevent inadvertantly killing terminal sessions. Will need to ctrl+d 43 times
+# in order to actually kill a session!
+export IGNOREEOF=42
+
 #***************
 # Bash Aliases
 #***************
