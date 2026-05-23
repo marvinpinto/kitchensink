@@ -1,0 +1,65 @@
+---
+- name: 'Add marvin to the plugdev group'
+  become: true
+  user:
+    name: 'marvin'
+    groups: 'plugdev'
+    append: "yes"
+
+- name: 'Add the rules file needed for connect the Ergodox EZ to chrome via web usb'
+  become: true
+  copy:
+    src: '50-oryx.rules'
+    dest: '/etc/udev/rules.d/50-oryx.rules'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  notify: 'linux_restart-udev'
+
+- name: 'Add the rules file needed flash the Ergodox EZ'
+  become: true
+  copy:
+    src: '50-wally.rules'
+    dest: '/etc/udev/rules.d/50-wally.rules'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  notify: 'linux_restart-udev'
+
+- name: "Install the wally flashing utility"
+  become: true
+  become_user: "marvin"
+  community.general.homebrew:
+    name: "marvinpinto/kitchensink/ergodox-wally"
+    state: "present"
+    path: "/home/linuxbrew/.linuxbrew/bin"
+
+- name: "Install the dfu-util utility"
+  become: true
+  ansible.builtin.apt:
+    name: "dfu-util"
+    state: "present"
+
+# Keychron V1 Max firmware updates:
+# - manually download the "V1 Max Knob ANSI" firmware .bin file from [1]
+# - connect the keyboard using a usb cable & flip the mode switch in the back to "cable"
+# - disconnect the usb cable for 10 secs, then simultaneously hold ESC while plugging it back in
+# - should see the keyboard in firmware update mode: lsusb | grep -i dfu
+# - finally flash the firmware: dfu-util -a 0 -d 0483:df11 -s 0x08000000:leave -D firmware.bin
+# - process should finish in 30 seconds.
+# [1]: https://www.keychron.com/pages/firmware-and-json-files-of-the-keychron-qmk-v-and-v-max-series-keyboards
+#
+# Use Chrome to remap/configure the keyboard at: https://launcher.keychron.com
+- name: "Rules needed to connect the Keychron to chrome via web usb"
+  become: true
+  ansible.builtin.copy:
+    content: |
+      # Keychron V1 Max (USB)
+      KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct}=="0913", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl"
+    dest: "/etc/udev/rules.d/50-keychron.rules"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  notify: "linux_restart-udev"
+
+- meta: flush_handlers

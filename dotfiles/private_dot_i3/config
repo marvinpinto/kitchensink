@@ -45,14 +45,8 @@ bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
-# change focus to the other monitor
-bindsym $mod+o focus output left
-
 # when cycling through windows, do not move to the next window or workspace
 focus_wrapping workspace
-
-# Move the current workspace to another monitor
-bindsym $mod+Shift+o move workspace to output left
 
 # split in horizontal orientation
 bindsym $mod+semicolon split h
@@ -77,10 +71,10 @@ bindsym $mod+Shift+a focus child
 # Workspaces mapped to the primary monitor
 workspace "misc" output HDMI-0
 
-# Volume controls (`pactl list sinks`, second arugment is the sink #)
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 2 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume 2 -5% #decrease sound volume
-bindsym XF86AudioMute exec pactl set-sink-mute 2 toggle # mute sound
+# Audio volume control
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 # do not allow control+q to kill firefox or anything else
 bindsym Control+q nop
@@ -106,18 +100,13 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 focus_follows_mouse yes
 
-# Shortcut to lock the screen
-bindsym $alt+Control+Shift+l exec --no-startup-id rofi-i3-locker
-
 # Startup programs
-exec --no-startup-id compton -CGb
 exec --no-startup-id nm-applet
 exec --no-startup-id ~/.i3/ssh-agent.sh
 exec_always --no-startup-id hsetroot -solid "#00001A"
 exec_always --no-startup-id /usr/bin/xautolock -resetsaver -detectsleep -time 3 -locker 'rofi-i3-locker' -notify 30 -notifier "notify-send -i info -u normal -t 3000 -- 'Locking screen in 30 seconds'"
 exec_always --no-startup-id /usr/bin/xmodmap ~/.xmodmap
 exec_always --no-startup-id /usr/bin/xrdb -load ~/.xresources
-exec_always --no-startup-id /usr/bin/gnome-settings-daemon &
 exec_always --no-startup-id /usr/bin/xset r rate 250 50
 exec_always --no-startup-id xrandr --output HDMI-0 --primary --rotate normal --mode 2560x1440 --rate 120
 
@@ -136,25 +125,22 @@ for_window [class="scratch-terminal" instance="scratch-terminal"] floating enabl
 exec_always --no-startup-id ~/.i3/startup-app.sh "1password --disable-gpu" "1password"
 for_window [class="1Password" instance="1password"] floating enable, border normal, move to scratchpad
 
-# Always start gnome-calculator in floating mode
-for_window [class="Gnome-calculator"] floating enable, border normal, resize set 640 480
+# Always start calculator in floating mode
+for_window [class="gnome-calculator" instance="gnome-calculator"] floating enable, border normal, resize set 640 480
 
 # Always start vlc in floating mode
 for_window [class="vlc" instance="vlc"] floating enable, border normal
 
 # Scratchpad shortcuts
 bindsym $mod+minus scratchpad show
-bindsym $alt+t [class="Alacritty" instance="scratch-terminal"] scratchpad show
 bindsym $alt+p [class="1Password" instance="1password"] scratchpad show
 
 # Ensure that the following windows always start in floating mode
 for_window [class="Pavucontrol"] floating enable, border normal
-for_window [class="Blueman-manager"] floating enable, border normal, resize set 640 480
-for_window [class="Org.gnome.clocks"] floating enable, border normal
 
 # Use special Ergodox keys to cycle through workspaces
-bindsym $alt+Control+Shift+Left workspace prev_on_output
-bindsym $alt+Control+Shift+Right workspace next_on_output
+bindsym $mod+$alt+h workspace prev_on_output
+bindsym $mod+$alt+l workspace next_on_output
 
 # Do not allow any windows to steal focus or try and grab my attention
 focus_on_window_activation none

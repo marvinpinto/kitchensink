@@ -6,9 +6,6 @@ syntax: bash
 mod + enter      # new terminal
 mod + backspace  # new browser
 mod + -          # cycle through all scratchpad windows
-alt + t          # bring up the floating terminal
-alt + k          # bring up the keybase window
-alt + s          # bring up the slack window
 alt + p          # bring up the 1password window
 
 # Windows & focus
@@ -18,8 +15,9 @@ mod + space             # toggle focus between tiling/floating windows
 mod + r                 # resize window (use h,j,k,l)
 mod + shift + q         # kill window
 mod + shift + f         # toggle the tiling/floating mode on a window
-mod + o                 # focus on other monitor
-mod + shift + o         # move the focued window to the other monitor
+
+# i3 workspaces
+mod + alt + <h,l>       # cycle back & forth through workspaces
 
 # Splits
 mod + ;  # horizontal split
@@ -39,6 +37,3 @@ i3-msg restart   # restart i3 inplace (preserves your layout/session, can be
 # Dump the details of all the current windows. Useful for attempting to
 # determine window classes.
 i3-msg -t get_tree | jq -C | less
-
-# Dmenu/rofi specific
-alt + <number>  # switch between the various "modi" options (i.e. bottom tabs)

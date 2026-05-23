@@ -87,6 +87,7 @@
       - "ffmpeg"
       - "gnome-screenshot"
       - "vlc"
+      - "pavucontrol"
     state: "present"
 
 - name: "Remove a few things I do not care for"
