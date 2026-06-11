@@ -115,7 +115,7 @@ exec_always --no-startup-id xrandr --output HDMI-0 --primary --rotate normal --m
 
 # Ensure that the signal window always stays in floating mode
 exec_always --no-startup-id ~/.i3/startup-app.sh "signal-desktop" "signal-desktop"
-for_window [class="Signal" instance="signal"] floating enable, border normal, move to scratchpad
+for_window [class="(?i)signal" instance="(?i)signal"] floating enable, border normal, move to scratchpad
 
 # Start up a floating terminal & leave it in the scratchpad
 exec_always --no-startup-id alacritty --class "scratch-terminal" --title "scratch terminal"
@@ -123,7 +123,7 @@ for_window [class="scratch-terminal" instance="scratch-terminal"] floating enabl
 
 # Start 1password desktop and move it to the scratchpad
 exec_always --no-startup-id ~/.i3/startup-app.sh "1password --disable-gpu" "1password"
-for_window [class="1Password" instance="1password"] floating enable, border normal, move to scratchpad
+for_window [class="(?i)1Password" instance="(?i)1password"] floating enable, border normal, move to scratchpad
 
 # Always start calculator in floating mode
 for_window [class="gnome-calculator" instance="gnome-calculator"] floating enable, border normal, resize set 640 480
@@ -133,7 +133,6 @@ for_window [class="vlc" instance="vlc"] floating enable, border normal
 
 # Scratchpad shortcuts
 bindsym $mod+minus scratchpad show
-bindsym $alt+p [class="1Password" instance="1password"] scratchpad show
 
 # Ensure that the following windows always start in floating mode
 for_window [class="Pavucontrol"] floating enable, border normal
